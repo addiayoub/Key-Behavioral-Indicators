@@ -1,0 +1,143 @@
+[
+    {
+      "id": 1,
+      "question": "Please select your gender?",
+      "required": true,
+      "answers": ["Woman", "Man", "Other", "Prefer not to say"],
+      "category": "Basic"
+    },
+    {
+      "id": 2,
+      "question": "What is your age range?",
+      "required": true,
+      "answers": ["Under 18", "18-24", "25-34", "35-44", "45+"],
+      "category": "Basic"
+    },
+    {
+      "id": 3,
+      "question": "What is your highest level of education?",
+      "required": true,
+      "answers": ["High School", "Bachelor's Degree", "Master's Degree", "Doctorate"],
+      "category": "Basic"
+    },
+    {
+      "id": 4,
+      "question": "What is your current employment status?",
+      "required": true,
+      "answers": ["Employed", "Unemployed", "Student", "Self-employed"],
+      "category": "Basic"
+    },
+    {
+      "id": 5,
+      "question": "What is your marital status?",
+      "required": true,
+      "answers": ["Single", "Married", "Divorced", "Widowed"],
+      "category": "Basic"
+    },
+    {
+      "id": 6,
+      "question": "Do you have any children?",
+      "required": true,
+      "answers": ["Yes", "No"],
+      "category": "Basic"
+    },
+    {
+      "id": 7,
+      "question": "What is your primary language?",
+      "required": true,
+      "answers": ["English", "French", "Spanish", "Other"],
+      "category": "Basic"
+    },
+    {
+      "id": 8,
+      "question": "How would you rate your health?",
+      "required": true,
+      "answers": ["Excellent", "Good", "Fair", "Poor"],
+      "category": "Basic"
+    },
+    {
+      "id": 9,
+      "question": "Do you own or rent your home?",
+      "required": true,
+      "answers": ["Own", "Rent", "Live with family"],
+      "category": "Basic"
+    },
+    {
+      "id": 10,
+      "question": "How often do you use the internet?",
+      "required": true,
+      "answers": ["Every day", "A few times a week", "Rarely", "Never"],
+      "category": "Basic"
+    },
+    {
+      "id": 11,
+      "question": "Do you take initiative in your workplace or daily life?",
+      "required": true,
+      "answers": ["Always", "Often", "Sometimes", "Rarely", "Never"],
+      "category": "Proactivity: Willingness to Take Initiative"
+    },
+    {
+      "id": 12,
+      "question": "When you see a problem, do you try to solve it yourself before asking for help?",
+      "required": true,
+      "answers": ["Always", "Often", "Sometimes", "Rarely", "Never"],
+      "category": "Proactivity: Willingness to Take Initiative"
+    },
+    {
+      "id": 13,
+      "question": "Do you suggest improvements to processes or workflows at work?",
+      "required": true,
+      "answers": ["Regularly", "Sometimes", "Rarely", "Never"],
+      "category": "Proactivity: Willingness to Take Initiative"
+    },
+    {
+      "id": 14,
+      "question": "How do you react when faced with unexpected challenges?",
+      "required": true,
+      "answers": ["Look for solutions immediately", "Ask for guidance", "Wait for instructions", "Ignore the problem"],
+      "category": "Proactivity: Willingness to Take Initiative"
+    },
+    {
+      "id": 15,
+      "question": "Have you ever started a personal or work project without being asked?",
+      "required": true,
+      "answers": ["Yes, frequently", "Yes, occasionally", "No"],
+      "category": "Proactivity: Willingness to Take Initiative"
+    },
+    {
+      "id": 16,
+      "question": "How comfortable are you with making decisions on your own?",
+      "required": true,
+      "answers": ["Very comfortable", "Somewhat comfortable", "Neutral", "Uncomfortable"],
+      "category": "Proactivity: Willingness to Take Initiative"
+    },
+    {
+      "id": 17,
+      "question": "Do you actively seek out learning opportunities?",
+      "required": true,
+      "answers": ["Yes, always", "Sometimes", "Rarely", "Never"],
+      "category": "Proactivity: Willingness to Take Initiative"
+    },
+    {
+      "id": 18,
+      "question": "Have you ever proposed a new idea that was implemented at work or in a project?",
+      "required": true,
+      "answers": ["Yes, multiple times", "Yes, once", "No"],
+      "category": "Proactivity: Willingness to Take Initiative"
+    },
+    {
+      "id": 19,
+      "question": "Do you set personal goals to improve your skills or performance?",
+      "required": true,
+      "answers": ["Yes, frequently", "Occasionally", "No"],
+      "category": "Proactivity: Willingness to Take Initiative"
+    },
+    {
+      "id": 20,
+      "question": "How do you handle feedback on your work or performance?",
+      "required": true,
+      "answers": ["I actively seek feedback and improve", "I accept feedback but rarely act on it", "I dislike receiving feedback"],
+      "category": "Proactivity: Willingness to Take Initiative"
+    }
+  ]
+  

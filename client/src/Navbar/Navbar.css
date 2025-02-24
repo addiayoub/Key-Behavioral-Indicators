@@ -1,0 +1,13 @@
+
+nav{
+    padding-top: 5px;
+    box-shadow: -1px 5px 12px -6px ;
+    color: #fff;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+.hidden{
+font-size: 18px;
+}
+#hrmenu{
+  height: 3px;
+}
