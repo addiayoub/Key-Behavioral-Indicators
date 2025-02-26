@@ -60,3 +60,5 @@ build/
 *.sln
 *.sw?
 >>>>>>> 6d810a9 (premier commit)
+
+.vercel

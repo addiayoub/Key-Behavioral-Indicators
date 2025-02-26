@@ -1,16 +1,41 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import './Form.css';
 import logo from '/nhancit.png';
+import ApiService from './ApiService';
+import Loader from "../loader/Loader";
+import { CircleX, CircleCheckBig } from 'lucide-react';
+import Swal from 'sweetalert2';
 
 const Form = () => {
   const [step, setStep] = useState(0);
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [answers, setAnswers] = useState({});
+  const [startLoading, setStartLoading] = useState(false);
   const questionsPerPage = 10;
+  const [allQuestions, setAllQuestions] = useState([]);
+  const [isFormDirty, setIsFormDirty] = useState(false);
+  const [isLeavingPage, setIsLeavingPage] = useState(false);
+  const [showValidationIcons, setShowValidationIcons] = useState(false);
+
+  // Custom SweetAlert configuration with transparent background
+  const customSwal = Swal.mixin({
+    background: 'transparent',
+    backdrop: 'rgba(0,0,0,0.4)',
+    color: '#fff', // White text for better visibility on transparent background
+    customClass: {
+      popup: 'swal-transparent-popup', // Add this class to your CSS
+      title: 'swal-transparent-title',
+      htmlContainer: 'swal-transparent-content',
+      confirmButton: 'swal-transparent-confirm',
+      cancelButton: 'swal-transparent-cancel'
+    },
+    confirmButtonColor: '#FF3D00', // Using the requested orange color for buttons
+    cancelButtonColor: 'rgba(60, 60, 60, 0.7)'
+  });
 
   // Définir les catégories dans l'ordre que vous souhaitez les afficher
-  const categories = ['Basic', 'Proactivity: Willingness to Take Initiative', 'Leadership', 'Performance'];
+  const categories = ['Basic', 'Proactivity: Willingness to Take Initiative'];
 
   // Obtenir la catégorie actuelle en fonction de l'étape
   const getCurrentCategory = () => {
@@ -18,6 +43,7 @@ const Form = () => {
     return categories[step - 1];
   };
 
+ 
   // Charger les questions de la catégorie actuelle
   useEffect(() => {
     const currentCategory = getCurrentCategory();
@@ -26,8 +52,16 @@ const Form = () => {
       const fetchQuestions = async () => {
         setLoading(true);
         try {
-          const response = await axios.get(`http://localhost:3000/api/questions/category/${currentCategory}`);
-          setQuestions(response.data);
+          const data = await ApiService.getQuestionsByCategory(currentCategory);
+          setQuestions(data);
+          
+          // Mettre à jour allQuestions avec les nouvelles questions
+          setAllQuestions(prevAllQuestions => {
+            // Filtrer pour éviter les doublons
+            const existingIds = prevAllQuestions.map(q => q.id);
+            const newQuestions = data.filter(q => !existingIds.includes(q.id));
+            return [...prevAllQuestions, ...newQuestions];
+          });
         } catch (error) {
           console.error('Erreur lors du chargement des questions:', error);
         } finally {
@@ -39,30 +73,166 @@ const Form = () => {
     }
   }, [step]);
 
+  // Réinitialiser les icônes de validation lors du changement d'étape
+  useEffect(() => {
+    setShowValidationIcons(false);
+  }, [step]);
+
   const handleStart = () => {
-    setStep(1);
+    setStartLoading(true); // Activer le loader au démarrage
+    
+    // Simuler un temps de chargement avant d'afficher le formulaire
+    setTimeout(() => {
+      setStartLoading(false);
+      setStep(1);
+    }, 1500); // Durée du loader (1.5 secondes)
+  };
+
+  // Vérifier si toutes les questions obligatoires ont été répondues
+  const areRequiredQuestionsAnswered = () => {
+    const currentQuestions = getCurrentQuestions();
+    for (const question of currentQuestions) {
+      if (question.required && !answers[question.id]) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  // Récupérer la liste des questions obligatoires non répondues
+  const getMissingRequiredQuestions = () => {
+    const currentQuestions = getCurrentQuestions();
+    return currentQuestions
+      .filter(q => q.required && !answers[q.id])
+      .map(q => q.id);
   };
 
   const handleNext = () => {
-    if (step < categories.length) {
+    // Activer l'affichage des icônes de validation
+    setShowValidationIcons(true);
+    
+    if (areRequiredQuestionsAnswered() && step < categories.length) {
       setStep(step + 1);
+      setShowValidationIcons(false); // Réinitialiser pour la prochaine étape
+    } else {
+      // Récupérer les questions non répondues
+      const missingQuestions = getMissingRequiredQuestions();
+      
+      // Afficher une alerte SweetAlert2 si des questions obligatoires ne sont pas répondues
+      if (missingQuestions.length > 0) {
+        customSwal.fire({
+          title: 'Incomplete form',
+          html: `
+            <p>Please answer all mandatory questions before continuing.</p>
+            <p>Missing questions: ${missingQuestions.join(', ')}</p>
+          `,
+          icon: 'error',
+          confirmButtonText: 'Understood'
+        });
+      }
     }
   };
 
   const handlePrevious = () => {
     if (step > 1) {
       setStep(step - 1);
+      setShowValidationIcons(false); // Réinitialiser pour la prochaine étape
+    }
+  };
+
+  const handleAnswerChange = (questionId, value) => {
+    setIsFormDirty(true); // Marquer le formulaire comme modifié
+    setAnswers(prev => ({
+      ...prev,
+      [questionId]: value
+    }));
+  };
+
+  const handleSubmit = async () => {
+    // Activer l'affichage des icônes de validation
+    setShowValidationIcons(true);
+    
+    if (areRequiredQuestionsAnswered()) {
+      setLoading(true); // Afficher le loader pendant la soumission
+      try {
+        await ApiService.submitAnswers(answers);
+        setLoading(false);
+        setIsFormDirty(false); // Réinitialiser l'état après soumission réussie
+        
+        // Afficher un message de succès avec SweetAlert2
+        customSwal.fire({
+          title: 'Succès!',
+          text: 'Your answers have been submitted successfully.',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        }).then(() => {
+          // Rediriger vers une page de confirmation ou réinitialiser le formulaire
+          setStep(0);
+          setAnswers({});
+          setShowValidationIcons(false);
+        });
+      } catch (error) {
+        setLoading(false);
+        console.error('Erreur lors de la soumission:', error);
+        // Afficher un message d'erreur avec SweetAlert2
+        customSwal.fire({
+          title: 'Erreur!',
+          text: 'Une erreur est survenue lors de la soumission de vos réponses.',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+      }
+    } else {
+      // Récupérer les questions non répondues
+      const missingQuestions = getMissingRequiredQuestions();
+      
+      // Afficher une alerte SweetAlert2 si des questions obligatoires ne sont pas répondues
+      if (missingQuestions.length > 0) {
+        customSwal.fire({
+          title: 'Incomplete form',
+          html: `
+            <p>Please answer all mandatory questions before continuing.</p>
+            <p>Missing questions: ${missingQuestions.join(', ')}</p>
+          `,
+          icon: 'error',
+          confirmButtonText: 'Understood'
+        });
+      }
     }
   };
 
   const getCurrentQuestions = () => {
+    // Limiter à 9 questions pour la catégorie "Basic"
+    if (getCurrentCategory() === 'Basic') {
+      return questions.slice(0, 9);
+    }
     return questions.slice(0, questionsPerPage);
   };
 
-  if (loading && step !== 0) {
+  // Check if the question should use text input (when answers array is empty)
+  const isTextInputQuestion = (question) => {
+    return question.answers && question.answers.length === 0;
+  };
+
+  // Calculer le pourcentage global de toutes les questions répondues
+  const calculateTotalCompletionPercentage = () => {
+    if (allQuestions.length === 0) return 0;
+    
+    // Compter combien de questions ont été répondues sur le total
+    const answeredCount = allQuestions.filter(q => answers[q.id]).length;
+    return Math.round((answeredCount / allQuestions.length) * 100);
+  };
+
+  // Vérifier si une question spécifique a été répondue
+  const isQuestionAnswered = (questionId) => {
+    return !!answers[questionId];
+  };
+
+  // Afficher le loader pendant le chargement de la page de démarrage ou pendant le chargement des questions
+  if ((loading && step !== 0) || startLoading) {
     return (
-      <div className="fixed inset-0 w-full bg-gray-900 flex items-center justify-center">
-        <div className="text-white text-xl">Chargement des questions...</div>
+      <div className="fixed inset-0 w-full flex items-center justify-center">
+        <Loader/>
       </div>
     );
   }
@@ -109,7 +279,7 @@ const Form = () => {
                 id='demarrer'
                 className="w-full sm:w-auto px-6 py-3 rounded-lg transition-colors text-base sm:text-lg"
               >
-                Démarrer maintenant
+                Start now
               </button>
             </div>
           ) : (
@@ -125,30 +295,71 @@ const Form = () => {
                   <h3 className='text-lg text-white md:text-3xl '> {getCurrentCategory()}</h3>
                   <br />
                   <span className="text-red-500 text-sm">* Obligatoire</span>
+                  
+                  {/* Indicateur de progression global */}
+                  <div className="w-full bg-gray-700 rounded-full h-2.5 mt-4">
+                    <div 
+                      className="slicer h-2.5 rounded-full" 
+                      style={{ width: `${calculateTotalCompletionPercentage()}%` }}
+                    ></div>
+                  </div>
+                  <div className="text-right text-sm text-white mt-1">
+                    {calculateTotalCompletionPercentage()}% completed
+                  </div>
                 </div>
             
                 <div className="p-6">
                   {getCurrentQuestions().map((q, index) => (
                     <div key={q._id || index} className="mb-8">
-                      <p className="text-lg text-white font-medium mb-4">
-                        {q.id}. {q.question} {q.required && <span className="text-red-500">*</span>}
-                      </p>
-                      <div className="space-y-3">
-                        {q.answers.map((answer, i) => (
-                          <div key={i} className="flex items-center">
-                            <input
-                              type="radio"
-                              id={`q${q.id}_${i}`}
-                              name={`question_${q.id}`}
-                              value={answer}
-                              className="mr-3 h-4 w-4"
-                              required={q.required}
-                            />
-                            <label htmlFor={`q${q.id}_${i}`} className="text-white">
-                              {answer}
-                            </label>
+                      <div className="flex items-center justify-between">
+                        <p className="text-lg text-white font-medium mb-4 flex-grow">
+                          {q.id}. {q.question} {q.required && <span className="text-red-500">*</span>}
+                        </p>
+                        {q.required && showValidationIcons && (
+                          <div className="ml-2">
+                            {isQuestionAnswered(q.id) ? (
+                              <CircleCheckBig size={24} className="text-green-500" />
+                            ) : (
+                              <CircleX size={24} className="text-red-500" />
+                            )}
                           </div>
-                        ))}
+                        )}
+                      </div>
+                      <div className="space-y-3">
+                        {isTextInputQuestion(q) ? (
+                          // Render text input for questions with empty answers array
+                          <div className="flex items-center">
+                            <input
+                              type="text"
+                              id={`q${q.id}`}
+                              name={`question_${q.id}`}
+                              value={answers[q.id] || ''}
+                              onChange={(e) => handleAnswerChange(q.id, e.target.value)}
+                              className={`w-full p-2 rounded text-white ${showValidationIcons && q.required && !answers[q.id] ? 'border-2 border-red-500' : ''}`}
+                              required={q.required}
+                              placeholder="Enter your answer here"
+                            />
+                          </div>
+                        ) : (
+                          // Render radio buttons for questions with predefined answers
+                          q.answers.map((answer, i) => (
+                            <div key={i} className="flex items-center">
+                              <input
+                                type="radio"
+                                id={`q${q.id}_${i}`}
+                                name={`question_${q.id}`}
+                                value={answer}
+                                checked={answers[q.id] === answer}
+                                onChange={() => handleAnswerChange(q.id, answer)}
+                                className={`mr-3 h-4 w-4 ${showValidationIcons && q.required && !answers[q.id] ? 'ring-2 ring-red-500' : ''}`}
+                                required={q.required}
+                              />
+                              <label htmlFor={`q${q.id}_${i}`} className="text-white">
+                                {answer}
+                              </label>
+                            </div>
+                          ))
+                        )}
                       </div>
                     </div>
                   ))}
@@ -160,22 +371,23 @@ const Form = () => {
                       onClick={handlePrevious}
                       className="px-6 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
                     >
-                      Précédent
+                      Previous
                     </button>
                   )}
                   <div className="ml-auto">
                     {step < categories.length ? (
                       <button id='Suivant'
                         onClick={handleNext}
-                        className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+                        className="px-6 py-2 text-white rounded transition-colors bg-blue-600 hover:bg-blue-700"
                       >
-                        Suivant
+                        next
                       </button>
                     ) : (
                       <button id='Soumettre'
-                        className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
+                        onClick={handleSubmit}
+                        className="px-6 py-2 text-white rounded transition-colors bg-green-600 hover:bg-green-700"
                       >
-                        Soumettre
+                        Submit
                       </button>
                     )}
                   </div>

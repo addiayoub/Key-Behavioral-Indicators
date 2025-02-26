@@ -8,51 +8,61 @@
     },
     {
       "id": 2,
-      "question": "What is your age range?",
+      "question": "Do you hold a managerial position ?",
       "required": true,
-      "answers": ["Under 18", "18-24", "25-34", "35-44", "45+"],
+      "answers": ["Yes, No"],
       "category": "Basic"
     },
     {
       "id": 3,
-      "question": "What is your highest level of education?",
+      "question": "What is your age range?",
       "required": true,
-      "answers": ["High School", "Bachelor's Degree", "Master's Degree", "Doctorate"],
+      "answers": ["20-25", "25-30", "30-35", "35-45", "45-55","Over 55"],
       "category": "Basic"
     },
     {
       "id": 4,
-      "question": "What is your current employment status?",
+      "question": "Which department are you working in?",
       "required": true,
-      "answers": ["Employed", "Unemployed", "Student", "Self-employed"],
+      "answers": 
+      [
+        "Sales & Marketing"
+      , "Operations"
+      , "Management",
+       "HR / Finance / Procurement",
+      "Customer Service Support",
+      "Strategy & Development",
+      "Consulting",
+    "Autre"],
       "category": "Basic"
     },
     {
       "id": 5,
-      "question": "What is your marital status?",
+      "question": "Which company are working for (Optional) ? ",
       "required": true,
-      "answers": ["Single", "Married", "Divorced", "Widowed"],
+      "answers": [],
       "category": "Basic"
     },
     {
       "id": 6,
-      "question": "Do you have any children?",
+      "question": "In which sector/industry do you evolve ?",
       "required": true,
-      "answers": ["Yes", "No"],
+      "answers": ["IT / Telecom", "Banking / Insurance / Finance","Supply chain / Logistics","Transport","Manufacturing","Education","Construction","Media & Entertainment"
+    ,"Tourism","Retail","Healthcare & Pharmaceuticals","Public sector"],
       "category": "Basic"
     },
     {
       "id": 7,
-      "question": "What is your primary language?",
+      "question": "Enter your email here (if you want us to share the results with you) - it's optional",
       "required": true,
-      "answers": ["English", "French", "Spanish", "Other"],
+      "answers": [],
       "category": "Basic"
     },
     {
       "id": 8,
-      "question": "How would you rate your health?",
+      "question": "Change-Phase",
       "required": true,
-      "answers": ["Excellent", "Good", "Fair", "Poor"],
+      "answers": ["Pre-Change","Change, Post-Change"],
       "category": "Basic"
     },
     {
