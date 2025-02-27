@@ -5,7 +5,8 @@ import ApiService from './ApiService';
 import Loader from "../loader/Loader";
 import { CircleX, CircleCheckBig } from 'lucide-react';
 import Swal from 'sweetalert2';
-
+import LanguageSwitcher from '../Language/LanguageSwitcher ';
+import { Translations } from "../Language/datalang"
 const Form = () => {
   const [step, setStep] = useState(0);
   const [questions, setQuestions] = useState([]);
@@ -18,6 +19,7 @@ const Form = () => {
   const [isFormDirty, setIsFormDirty] = useState(false);
   const [showValidationIcons, setShowValidationIcons] = useState(false);
   const [questionsMap, setQuestionsMap] = useState({});  // Map pour accéder facilement aux questions par ID
+  const [language, setLanguage] = useState('fr'); // 'fr' pour français, 'en' pour anglais
 
   // Custom SweetAlert configuration with transparent background
   const customSwal = Swal.mixin({
@@ -36,7 +38,15 @@ const Form = () => {
   });
 
   // Définir les catégories dans l'ordre que vous souhaitez les afficher
-  const categories = ['Basic', 'Proactivity: Willingness to Take Initiative',"Collaboration: Effective Teamwork","Openness to feedback: Receptiveness to Input","Adaptability: Flexibility in change","Continuous improvement: Striving for excellence"];
+  const categoriesFr = ['Basic', 'Proactivité : volonté de prendre des initiatives', "Collaboration : travail d'équipe efficace", 'Ouverture au feedback : réceptivité aux commentaires', 'Adaptability: Flexibility in change', "Amélioration continue : viser l'excellence"];
+  const categoriesEn = ['Basic', 'Proactivity: Willingness to Take Initiative', 'Collaboration: Effective Teamwork', 'Openness to feedback: Receptiveness to Input', 'Adaptability: Flexibility in change', 'Continuous improvement: Striving for excellence'];
+
+  // Obtenir les catégories en fonction de la langue sélectionnée
+  const categories = language === 'fr' ? categoriesFr : categoriesEn;
+
+  // Traduire le texte en fonction de la langue
+  const translations = Translations
+  const t = translations[language];
 
   // Obtenir la catégorie actuelle en fonction de l'étape
   const getCurrentCategory = () => {
@@ -77,7 +87,7 @@ const Form = () => {
         } catch (error) {
           console.error('Erreur lors du chargement des questions:', error);
           customSwal.fire({
-            title: 'Error',
+            title: t.error,
             text: 'Failed to load questions. Please try again.',
             icon: 'error',
             confirmButtonText: 'OK'
@@ -89,7 +99,7 @@ const Form = () => {
 
       fetchQuestions();
     }
-  }, [step]);
+  }, [step, language]); // Added language as dependency to reload when language changes
 
   // Réinitialiser les icônes de validation lors du changement d'étape
   useEffect(() => {
@@ -139,13 +149,13 @@ const Form = () => {
       // Afficher une alerte SweetAlert2 si des questions obligatoires ne sont pas répondues
       if (missingQuestions.length > 0) {
         customSwal.fire({
-          title: 'Incomplete form',
+          title: t.incompleteForm,
           html: `
-            <p>Please answer all mandatory questions before continuing.</p>
-            <p>Missing questions: ${missingQuestions.join(', ')}</p>
+            <p>${t.answerAllQuestions}</p>
+            <p>${t.missingQuestions} ${missingQuestions.join(', ')}</p>
           `,
           icon: 'error',
-          confirmButtonText: 'Understood'
+          confirmButtonText: t.understood
         });
       }
     }
@@ -181,8 +191,8 @@ const Form = () => {
       [questionId]: value
     }));
     
-    // Si la valeur n'est pas "Autre", réinitialiser la valeur dans otherAnswers
-    if (value !== "Autre" && value !== "Other") {
+    // Si la valeur n'est pas "Autre" ou "Other", réinitialiser la valeur dans otherAnswers
+    if (value !== t.other) {
       setOtherAnswers(prev => {
         const newOtherAnswers = { ...prev };
         delete newOtherAnswers[questionId];
@@ -217,8 +227,8 @@ const Form = () => {
         
         // Afficher un message de succès avec SweetAlert2
         customSwal.fire({
-          title: 'Success!',
-          text: 'Your answers have been submitted successfully.',
+          title: t.success,
+          text: t.answersSubmitted,
           icon: 'success',
           confirmButtonText: 'OK'
         }).then(() => {
@@ -231,11 +241,11 @@ const Form = () => {
                 : 0;
               
               customSwal.fire({
-                title: 'Your Results',
+                title: t.yourResults,
                 html: `
-                  <p>Your total score: ${totalScore.score}/${totalScore.maxPossible}</p>
-                  <p>Percentage: ${percentage}%</p>
-                  <h3>Category Scores:</h3>
+                  <p>${t.yourTotalScore} ${totalScore.score}/${totalScore.maxPossible}</p>
+                  <p>${t.percentage} ${percentage}%</p>
+                  <h3>${t.categoryScores}</h3>
                   <ul>
                     ${results.categoryScores
                       .filter(cat => cat.category !== 'Basic') // Exclure la catégorie Basic des résultats affichés
@@ -263,8 +273,8 @@ const Form = () => {
         console.error('Erreur lors de la soumission:', error);
         // Afficher un message d'erreur avec SweetAlert2
         customSwal.fire({
-          title: 'Error!',
-          text: 'An error occurred while submitting your answers.',
+          title: t.error,
+          text: t.submissionError,
           icon: 'error',
           confirmButtonText: 'OK'
         });
@@ -276,13 +286,13 @@ const Form = () => {
       // Afficher une alerte SweetAlert2 si des questions obligatoires ne sont pas répondues
       if (missingQuestions.length > 0) {
         customSwal.fire({
-          title: 'Incomplete form',
+          title: t.incompleteForm,
           html: `
-            <p>Please answer all mandatory questions before continuing.</p>
-            <p>Missing questions: ${missingQuestions.join(', ')}</p>
+            <p>${t.answerAllQuestions}</p>
+            <p>${t.missingQuestions} ${missingQuestions.join(', ')}</p>
           `,
           icon: 'error',
-          confirmButtonText: 'Understood'
+          confirmButtonText: t.understood
         });
       }
     }
@@ -320,6 +330,16 @@ const Form = () => {
     return !!answers[questionId];
   };
 
+  // Obtenir le texte de la question en fonction de la langue
+  const getQuestionText = (question) => {
+    return language === 'fr' ? question.question : (question.questionAng || question.question);
+  };
+
+  // Obtenir les réponses en fonction de la langue
+  const getAnswersForLanguage = (question) => {
+    return language === 'fr' ? question.answers : (question.answersAng || question.answers);
+  };
+
   // Afficher le loader pendant le chargement de la page de démarrage ou pendant le chargement des questions
   if ((loading && step !== 0) || startLoading) {
     return (
@@ -335,6 +355,9 @@ const Form = () => {
         <div className="absolute inset-0 bg-black/30"></div>
       </div>
       
+      {/* Language Switcher */}
+      <LanguageSwitcher language={language} setLanguage={setLanguage} />
+      
       <div className="relative z-10 h-full overflow-y-auto">
         <div className="container mx-auto px-4 py-2">
           <div className="w-full max-w-[280px] md:max-w-[300px] mb-8">
@@ -347,46 +370,44 @@ const Form = () => {
 
           {step === 0 ? (
             <div className="mt-8 space-y-4 px-4 sm:px-6 md:px-8">
-              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white leading-tight">
-                Key Behavioral Indicators
-                <br className="md:block hidden" />
-                <span className="block md:inline">Estimated time 10min</span>
-              </h1>
-              <br />
-              <p className="text-lg md:text-3xl text-gray-200 leading-relaxed">
-                Change Readiness Assessment
-              </p>
-              <p className="text-gray-200 text-sm sm:text-base leading-relaxed">
-                You have been invited to participate in this survey.
-                Your honest responses will help us better 
-                <br className="hidden md:block" /> 
-                understand and enhance our organizational culture.
-                All responses 
-                <br className="hidden md:block" />
-                are confidential and anonymous.
-              </p>
-              <br />
-              <button 
-                onClick={handleStart} 
-                id='demarrer'
-                className="w-full sm:w-auto px-6 py-3 rounded-lg transition-colors text-base sm:text-lg"
-              >
-                Start now
-              </button>
-            </div>
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white leading-tight">
+              {t.keyBehavioral}
+              <br className="md:block hidden" />
+              <span className="block md:inline">{t.estimatedTime}</span>
+            </h1>
+            <br />
+            <p className="text-lg md:text-3xl text-gray-200 leading-relaxed">
+              {t.changeReadiness}
+            </p>
+            <p className="text-gray-200 text-sm sm:text-base leading-relaxed">
+              {t.invitedMessage}
+              <br className="hidden md:block" /> 
+              {t.invitedMessage1}
+              <br className="hidden md:block" />
+              {t.invitedMessage2}
+            </p>
+            <br />
+            <button 
+              onClick={handleStart} 
+              id='demarrer'
+              className="w-full sm:w-auto px-6 py-3 rounded-lg transition-colors text-base sm:text-lg"
+            >
+              {t.startNow}
+            </button>
+          </div>
           ) : (
             <div className="mt-8 w-full max-w-3xl mb-8">
               <div id='bgform' className="rounded-lg max-h-[70vh]">
                 <div className="">
                   <h2 className="text-3xl font-semibold mt-2">
-                    Key Behavioral Indicators 
+                    {t.keyBehavioral}
                     <br />
-                    Estimated time 10min
+                    {t.estimatedTime}
                   </h2>
                   <br />
                   <h3 className='text-lg text-white md:text-3xl '> {getCurrentCategory()}</h3>
                   <br />
-                  <span className="text-red-500 text-sm">* Obligatoire</span>
+                  <span className="text-red-500 text-sm">{t.obligatoire}</span>
                   
                   {/* Indicateur de progression global */}
                   <div className="w-full bg-gray-700 rounded-full h-2.5 mt-4">
@@ -396,7 +417,7 @@ const Form = () => {
                     ></div>
                   </div>
                   <div className="text-right text-sm text-white mt-1">
-                    {calculateTotalCompletionPercentage()}% completed
+                    {calculateTotalCompletionPercentage()}{t.completed}
                   </div>
                 </div>
             
@@ -405,7 +426,7 @@ const Form = () => {
                     <div key={q._id || index} className="mb-8">
                       <div className="flex items-center justify-between">
                         <p className="text-lg text-white font-medium mb-4 flex-grow">
-                          {q.id}. {q.question} {q.required && <span className="text-red-500">*</span>}
+                          {q.id}. {getQuestionText(q)} {q.required && <span className="text-red-500">*</span>}
                         </p>
                         {q.required && showValidationIcons && (
                           <div className="ml-2">
@@ -429,13 +450,13 @@ const Form = () => {
                               onChange={(e) => handleAnswerChange(q.id, e.target.value)}
                               className={`w-full p-2 rounded text-white ${showValidationIcons && q.required && !answers[q.id] ? 'border-2 border-red-500' : ''}`}
                               required={q.required}
-                              placeholder="Enter your answer here"
+                              placeholder={t.enterAnswer}
                             />
                           </div>
                         ) : (
                           // Render radio buttons for questions with predefined answers
                           <>
-                            {q.answers.map((answer, i) => (
+                            {getAnswersForLanguage(q).map((answer, i) => (
                               <div key={i} className="flex items-center">
                                 <input
                                   type="radio"
@@ -463,7 +484,7 @@ const Form = () => {
                                   value={otherAnswers[q.id] || ''}
                                   onChange={(e) => handleOtherInputChange(q.id, e.target.value)}
                                   className="w-full p-2 rounded text-white"
-                                  placeholder="Veuillez préciser"
+                                  placeholder={t.pleaseSpecify}
                                   required={q.required}
                                 />
                               </div>
@@ -481,7 +502,7 @@ const Form = () => {
                       onClick={handlePrevious}
                       className="px-6 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
                     >
-                      Previous
+                      {t.previous}
                     </button>
                   )}
                   <div className="ml-auto">
@@ -490,14 +511,14 @@ const Form = () => {
                         onClick={handleNext}
                         className="px-6 py-2 text-white rounded transition-colors bg-blue-600 hover:bg-blue-700"
                       >
-                        next
+                        {t.next}
                       </button>
                     ) : (
                       <button id='Soumettre'
                         onClick={handleSubmit}
                         className="px-6 py-2 text-white rounded transition-colors bg-green-600 hover:bg-green-700"
                       >
-                        Submit
+                        {t.submit}
                       </button>
                     )}
                   </div>

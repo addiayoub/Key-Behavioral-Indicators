@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import api from "../api"
 // URL de base de l'API - à ajuster selon votre environnement
 const API_BASE_URL = 'http://localhost:3000/api';
 
