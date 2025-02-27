@@ -1,7 +1,4 @@
-import axios from 'axios';
-import api from "../api"
-// URL de base de l'API - à ajuster selon votre environnement
-const API_BASE_URL = 'http://localhost:3000/api';
+import api from "../api";
 
 // Générer un ID utilisateur unique basé sur l'appareil/navigateur
 const getUserId = () => {
@@ -24,7 +21,7 @@ const ApiService = {
   // Fonction pour charger toutes les questions
   getAllQuestions: async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/questions`);
+      const response = await api.get('/questions');
       
       // Mettre en cache toutes les questions
       response.data.forEach(q => {
@@ -41,7 +38,7 @@ const ApiService = {
   // Fonction pour charger les questions par catégorie
   getQuestionsByCategory: async (category) => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/questions/category/${encodeURIComponent(category)}`);
+      const response = await api.get(`/questions/category/${encodeURIComponent(category)}`);
       
       // Mettre en cache les questions de cette catégorie
       response.data.forEach(q => {
@@ -140,7 +137,7 @@ const ApiService = {
       
       console.log('Submitting to API:', payload);
       
-      const response = await axios.post(`${API_BASE_URL}/responses`, payload);
+      const response = await api.post('/responses', payload);
       return response.data;
     } catch (error) {
       console.error('Erreur lors de la soumission des réponses:', error);
@@ -152,7 +149,7 @@ const ApiService = {
   getUserResults: async () => {
     try {
       const userId = getUserId();
-      const response = await axios.get(`${API_BASE_URL}/responses/${userId}`);
+      const response = await api.get(`/responses/${userId}`);
       return response.data;
     } catch (error) {
       console.error('Erreur lors de la récupération des résultats:', error);

@@ -6,17 +6,13 @@
     "required": true,
     "answers": [
       "Femme",
-      "Homme",
-      "Autre",
-      "Je préfère ne pas répondre"
+      "Homme"
     ],
     "answersAng": [
       "Woman",
-      "Man",
-      "Other",
-      "Prefer not to say"
+      "Man"
     ],
-    "Note": [0, 0, 0, 0],
+    "Note": [],
     "category": "Basic",
     "categoryAng": "Basic"
   },
@@ -33,7 +29,7 @@
       "Yes",
       "No"
     ],
-    "Note": [0, 0],
+    "Note": [],
     "category": "Basic",
     "categoryAng": "Basic"
   },
@@ -58,7 +54,7 @@
       "45-55",
       "Over 55"
     ],
-    "Note": [0, 0, 0, 0, 0, 0],
+    "Note": [],
     "category": "Basic",
     "categoryAng": "Basic"
   },
@@ -87,7 +83,7 @@
       "Consulting",
       "Autre"
     ],
-    "Note": [0, 0, 0, 0, 0, 0, 0, 0],
+    "Note": [],
     "category": "Basic",
     "categoryAng": "Basic"
   },
@@ -95,7 +91,7 @@
     "id": 5,
     "question": "Pour quelle entreprise travaillez-vous (Optionnel) ? ",
     "questionAng": "Which company are working for (Optional) ? ",
-    "required": true,
+    "required": false,
     "answers": [],
     "answersAng": [],
     "Note": [],
@@ -135,15 +131,15 @@
       "Healthcare & Pharmaceuticals",
       "Public sector"
     ],
-    "Note": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "Note": [],
     "category": "Basic",
     "categoryAng": "Basic"
   },
   {
     "id": 7,
-    "question": "Entrez votre email ici (si vous souhaitez que nous partagions les résultats avec vous) - c'est optionnel",
+    "question": "Entrez votre email ici (si vous souhaitez que nous partagions les résultats avec vous) - (c'est optionnel).",
     "questionAng": "Enter your email here (if you want us to share the results with you) - it's optional",
-    "required": true,
+    "required": false,
     "answers": [],
     "answersAng": [],
     "Note": [],
@@ -171,43 +167,31 @@
   },
   {
     "id": 9,
-    "question": "Êtes-vous propriétaire ou locataire de votre logement ?",
-    "questionAng": "Do you own or rent your home?",
+    "question": "Phase Entreprise",
+    "questionAng": "Company-Phase",
     "required": true,
     "answers": [
-      "Propriétaire",
-      "Locataire",
-      "Vis avec la famille"
+      "Croissance",
+      "Maturité"
     ],
     "answersAng": [
-      "Own",
-      "Rent",
-      "Live with family"
+      "Growth",
+      "Maturity"
     ],
-    "Note": [0, 0, 0],
+    "Note": [0, 0],
     "category": "Basic",
     "categoryAng": "Basic"
   },
   {
     "id": 10,
-    "question": "À quelle fréquence utilisez-vous internet ?",
-    "questionAng": "How often do you use the internet?",
+    "question": "",
+    "questionAng": "",
     "required": true,
-    "answers": [
-      "Tous les jours",
-      "Quelques fois par semaine",
-      "Rarement",
-      "Jamais"
-    ],
-    "answersAng": [
-      "Every day",
-      "A few times a week",
-      "Rarely",
-      "Never"
-    ],
-    "Note": [0, 0, 0, 0],
-    "category": "Basic",
-    "categoryAng": "Basic"
+    "answers": [],
+    "answersAng": [],
+    "Note": [],
+    "category": "",
+    "categoryAng": ""
   },
     {
       "id": 11,
