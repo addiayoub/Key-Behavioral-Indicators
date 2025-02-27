@@ -59,6 +59,69 @@ const Form = () => {
     return getCurrentCategory() === 'Basic';
   };
 
+  // Ajouter un gestionnaire d'événement beforeunload pour détecter les actualisations de page
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      // Vérifier si l'utilisateur est en train de remplir le formulaire (pas à l'étape 0 et avec des modifications)
+      if (step !== 0 && isFormDirty) {
+        // Message standard qui sera affiché par le navigateur
+        const message = language === 'fr' 
+          ? 'Vous allez perdre toutes vos réponses si vous quittez cette page. Êtes-vous sûr de vouloir continuer ?'
+          : 'You will lose all your answers if you leave this page. Are you sure you want to continue?';
+        
+        e.preventDefault();
+        e.returnValue = message; // Pour la compatibilité avec les anciens navigateurs
+        return message;
+      }
+    };
+
+    // Ajouter l'écouteur d'événement au chargement
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    
+    // Nettoyer l'écouteur d'événement au démontage du composant
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [step, isFormDirty, language]);
+
+  // Afficher une alerte SweetAlert lorsque l'utilisateur clique sur le bouton de rafraîchissement ou F5
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      // Détecter la touche F5 (code 116)
+      if (e.keyCode === 116 && step !== 0 && isFormDirty) {
+        e.preventDefault();
+        showRefreshWarning();
+      }
+    };
+
+    // Fonction pour afficher l'alerte
+    const showRefreshWarning = () => {
+      customSwal.fire({
+        title: language === 'fr' ? 'Attention !' : 'Warning!',
+        text: language === 'fr' 
+          ? 'Vous allez perdre toutes vos réponses si vous quittez cette page. Êtes-vous sûr de vouloir continuer ?'
+          : 'You will lose all your answers if you leave this page. Are you sure you want to continue?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: language === 'fr' ? 'Oui, quitter' : 'Yes, leave',
+        cancelButtonText: language === 'fr' ? 'Non, rester' : 'No, stay'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Si l'utilisateur confirme, recharger la page
+          window.location.reload();
+        }
+      });
+    };
+
+    // Ajouter l'écouteur d'événement pour les touches
+    document.addEventListener('keydown', handleKeyDown);
+    
+    // Nettoyer l'écouteur d'événement
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [step, isFormDirty, language]);
+
   // Charger les questions de la catégorie actuelle
   useEffect(() => {
     const currentCategory = getCurrentCategory();
