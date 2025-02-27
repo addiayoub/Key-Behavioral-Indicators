@@ -1,35 +1,46 @@
-// app.js
-const express = require('express');
-const connectDB = require('./config/db');
-const questionRoutes = require('./routes/questionRoutes');
-const cors = require('cors');
-const app = express();
-const allowedOrigins = [
-  'http://localhost:5173',                 // Frontend local (Vite par défaut)
-  'https://k_b_i.vercel.app'        // Frontend déployé sur Vercel
-];
+  const express = require('express');
+  const connectDB = require('./config/db');
+  const questionRoutes = require('./routes/questionRoutes');
+  const userResponseRoutes = require('./routes/userResponseRoutes');
+  const cors = require('cors');
 
-app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('CORS not allowed for this origin'));
-    }
-  },
-  credentials: true
-}));
-app.use(cors());
-// Middleware pour parser le JSON
-app.use(express.json());
+  const app = express();
 
-// Connexion à la base de données
-connectDB();
+  // Configuration CORS
+  const allowedOrigins = [
+    'http://localhost:5173',          // Frontend local (Vite par défaut)
+    'https://k_b_i.vercel.app'        // Frontend déployé sur Vercel
+  ];
 
-// Routes
-app.use('/api/questions', questionRoutes);
+  app.use(cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('CORS not allowed for this origin'));
+      }
+    },
+    credentials: true
+  }));
 
-const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`Serveur démarré sur le port ${PORT}`);
-});
+  // Middleware pour parser le JSON
+  app.use(express.json());
+
+  // Connexion à la base de données
+  connectDB();
+
+  // Routes
+  app.use('/api/questions', questionRoutes);
+  app.use('/api/responses', userResponseRoutes);
+
+  // Route de base pour vérifier que le serveur fonctionne
+  app.get('/', (req, res) => {
+    res.send('API de gestion des questionnaires KBI');
+  });
+
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`Serveur démarré sur le port ${PORT}`);
+  });
+
+  module.exports = app;

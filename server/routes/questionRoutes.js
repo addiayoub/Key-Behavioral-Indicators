@@ -1,8 +1,10 @@
-// questionRoutes.js
-const express = require('express');
-const router = express.Router();
-const questionController = require('../controllers/questionController');
+    const express = require('express');
+    const router = express.Router();
+    const questionController = require('../controllers/questionController');
 
-router.get('/category/:category', questionController.getQuestionsByCategory);
+    // Routes pour les questions
+    router.get('/', questionController.getAllQuestions);
+    router.get('/category/:category', questionController.getQuestionsByCategory);
+    router.post('/', questionController.createQuestion);
 
-module.exports = router;
+    module.exports = router;

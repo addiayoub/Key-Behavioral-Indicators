@@ -11,12 +11,13 @@ const Form = () => {
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [answers, setAnswers] = useState({});
+  const [otherAnswers, setOtherAnswers] = useState({}); // Pour stocker les réponses "autre"
   const [startLoading, setStartLoading] = useState(false);
   const questionsPerPage = 10;
   const [allQuestions, setAllQuestions] = useState([]);
   const [isFormDirty, setIsFormDirty] = useState(false);
-  const [isLeavingPage, setIsLeavingPage] = useState(false);
   const [showValidationIcons, setShowValidationIcons] = useState(false);
+  const [questionsMap, setQuestionsMap] = useState({});  // Map pour accéder facilement aux questions par ID
 
   // Custom SweetAlert configuration with transparent background
   const customSwal = Swal.mixin({
@@ -35,7 +36,7 @@ const Form = () => {
   });
 
   // Définir les catégories dans l'ordre que vous souhaitez les afficher
-  const categories = ['Basic', 'Proactivity: Willingness to Take Initiative'];
+  const categories = ['Basic', 'Proactivity: Willingness to Take Initiative',"Collaboration: Effective Teamwork","Openness to feedback: Receptiveness to Input","Adaptability: Flexibility in change","Continuous improvement: Striving for excellence"];
 
   // Obtenir la catégorie actuelle en fonction de l'étape
   const getCurrentCategory = () => {
@@ -43,7 +44,11 @@ const Form = () => {
     return categories[step - 1];
   };
 
- 
+  // Vérifier si on est actuellement dans la catégorie Basic
+  const isBasicCategory = () => {
+    return getCurrentCategory() === 'Basic';
+  };
+
   // Charger les questions de la catégorie actuelle
   useEffect(() => {
     const currentCategory = getCurrentCategory();
@@ -55,6 +60,13 @@ const Form = () => {
           const data = await ApiService.getQuestionsByCategory(currentCategory);
           setQuestions(data);
           
+          // Mettre à jour la map des questions pour un accès facile
+          const newQuestionsMap = { ...questionsMap };
+          data.forEach(q => {
+            newQuestionsMap[q.id] = q;
+          });
+          setQuestionsMap(newQuestionsMap);
+          
           // Mettre à jour allQuestions avec les nouvelles questions
           setAllQuestions(prevAllQuestions => {
             // Filtrer pour éviter les doublons
@@ -64,6 +76,12 @@ const Form = () => {
           });
         } catch (error) {
           console.error('Erreur lors du chargement des questions:', error);
+          customSwal.fire({
+            title: 'Error',
+            text: 'Failed to load questions. Please try again.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
         } finally {
           setLoading(false);
         }
@@ -140,9 +158,42 @@ const Form = () => {
     }
   };
 
+  // Trouver l'index de la réponse dans la liste des réponses possibles
+  const findAnswerIndex = (questionId, answerValue) => {
+    const question = questionsMap[questionId];
+    if (!question || !question.answers) return 0;
+    
+    // Chercher dans les réponses en français
+    let index = question.answers.findIndex(a => a === answerValue);
+    
+    // Si non trouvé et qu'il y a des réponses en anglais, chercher là
+    if (index === -1 && question.answersAng) {
+      index = question.answersAng.findIndex(a => a === answerValue);
+    }
+    
+    return index >= 0 ? index : 0;
+  };
+
   const handleAnswerChange = (questionId, value) => {
     setIsFormDirty(true); // Marquer le formulaire comme modifié
     setAnswers(prev => ({
+      ...prev,
+      [questionId]: value
+    }));
+    
+    // Si la valeur n'est pas "Autre", réinitialiser la valeur dans otherAnswers
+    if (value !== "Autre" && value !== "Other") {
+      setOtherAnswers(prev => {
+        const newOtherAnswers = { ...prev };
+        delete newOtherAnswers[questionId];
+        return newOtherAnswers;
+      });
+    }
+  };
+
+  const handleOtherInputChange = (questionId, value) => {
+    setIsFormDirty(true);
+    setOtherAnswers(prev => ({
       ...prev,
       [questionId]: value
     }));
@@ -155,20 +206,56 @@ const Form = () => {
     if (areRequiredQuestionsAnswered()) {
       setLoading(true); // Afficher le loader pendant la soumission
       try {
-        await ApiService.submitAnswers(answers);
+        // Préparer les réponses en incluant les réponses "autre"
+        const finalAnswers = { ...answers };
+        
+        // Nous allons passer directement l'objet otherAnswers à l'API Service
+        // au lieu de modifier l'objet answers
+        const result = await ApiService.submitAnswers(finalAnswers, otherAnswers);
         setLoading(false);
         setIsFormDirty(false); // Réinitialiser l'état après soumission réussie
         
         // Afficher un message de succès avec SweetAlert2
         customSwal.fire({
-          title: 'Succès!',
+          title: 'Success!',
           text: 'Your answers have been submitted successfully.',
           icon: 'success',
           confirmButtonText: 'OK'
         }).then(() => {
-          // Rediriger vers une page de confirmation ou réinitialiser le formulaire
+          // Obtenir et afficher les résultats
+          try {
+            ApiService.getUserResults().then(results => {
+              const totalScore = results.totalScore;
+              const percentage = totalScore.maxPossible > 0 
+                ? Math.round((totalScore.score / totalScore.maxPossible) * 100) 
+                : 0;
+              
+              customSwal.fire({
+                title: 'Your Results',
+                html: `
+                  <p>Your total score: ${totalScore.score}/${totalScore.maxPossible}</p>
+                  <p>Percentage: ${percentage}%</p>
+                  <h3>Category Scores:</h3>
+                  <ul>
+                    ${results.categoryScores
+                      .filter(cat => cat.category !== 'Basic') // Exclure la catégorie Basic des résultats affichés
+                      .map(cat => 
+                        `<li>${cat.category}: ${cat.score}/${cat.maxPossible} (${Math.round((cat.score/cat.maxPossible)*100)}%)</li>`
+                      ).join('')}
+                  </ul>
+                `,
+                icon: 'info',
+                confirmButtonText: 'OK'
+              });
+            });
+          } catch (e) {
+            console.error('Error retrieving results:', e);
+          }
+          
+          // Réinitialiser le formulaire
           setStep(0);
           setAnswers({});
+          setOtherAnswers({});
           setShowValidationIcons(false);
         });
       } catch (error) {
@@ -176,8 +263,8 @@ const Form = () => {
         console.error('Erreur lors de la soumission:', error);
         // Afficher un message d'erreur avec SweetAlert2
         customSwal.fire({
-          title: 'Erreur!',
-          text: 'Une erreur est survenue lors de la soumission de vos réponses.',
+          title: 'Error!',
+          text: 'An error occurred while submitting your answers.',
           icon: 'error',
           confirmButtonText: 'OK'
         });
@@ -211,7 +298,12 @@ const Form = () => {
 
   // Check if the question should use text input (when answers array is empty)
   const isTextInputQuestion = (question) => {
-    return question.answers && question.answers.length === 0;
+    return question && question.answers && question.answers.length === 0;
+  };
+
+  // Vérifier si l'option "autre" est sélectionnée pour une question
+  const isOtherOptionSelected = (questionId) => {
+    return answers[questionId] === "Autre" || answers[questionId] === "Other";
   };
 
   // Calculer le pourcentage global de toutes les questions répondues
@@ -342,23 +434,41 @@ const Form = () => {
                           </div>
                         ) : (
                           // Render radio buttons for questions with predefined answers
-                          q.answers.map((answer, i) => (
-                            <div key={i} className="flex items-center">
-                              <input
-                                type="radio"
-                                id={`q${q.id}_${i}`}
-                                name={`question_${q.id}`}
-                                value={answer}
-                                checked={answers[q.id] === answer}
-                                onChange={() => handleAnswerChange(q.id, answer)}
-                                className={`mr-3 h-4 w-4 ${showValidationIcons && q.required && !answers[q.id] ? 'ring-2 ring-red-500' : ''}`}
-                                required={q.required}
-                              />
-                              <label htmlFor={`q${q.id}_${i}`} className="text-white">
-                                {answer}
-                              </label>
-                            </div>
-                          ))
+                          <>
+                            {q.answers.map((answer, i) => (
+                              <div key={i} className="flex items-center">
+                                <input
+                                  type="radio"
+                                  id={`q${q.id}_${i}`}
+                                  name={`question_${q.id}`}
+                                  value={answer}
+                                  checked={answers[q.id] === answer}
+                                  onChange={() => handleAnswerChange(q.id, answer)}
+                                  className={`mr-3 h-4 w-4 ${showValidationIcons && q.required && !answers[q.id] ? 'ring-2 ring-red-500' : ''}`}
+                                  required={q.required}
+                                />
+                                <label htmlFor={`q${q.id}_${i}`} className="text-white">
+                                  {answer}
+                                </label>
+                              </div>
+                            ))}
+                            
+                            {/* Afficher le champ de saisie si "Autre" est sélectionné */}
+                            {isOtherOptionSelected(q.id) && (
+                              <div className="ml-7 mt-2">
+                                <input
+                                  type="text"
+                                  id={`q${q.id}_other`}
+                                  name={`question_${q.id}_other`}
+                                  value={otherAnswers[q.id] || ''}
+                                  onChange={(e) => handleOtherInputChange(q.id, e.target.value)}
+                                  className="w-full p-2 rounded text-white"
+                                  placeholder="Veuillez préciser"
+                                  required={q.required}
+                                />
+                              </div>
+                            )}
+                          </>
                         )}
                       </div>
                     </div>
