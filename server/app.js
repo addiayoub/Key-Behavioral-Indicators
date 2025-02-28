@@ -8,8 +8,8 @@
 
   // Configuration CORS
   const allowedOrigins = [
-    'http://localhost:5173',          // Frontend local (Vite par défaut)
-    'https://k_b_i.vercel.app'        // Frontend déployé sur Vercel
+    'http://192.168.11.144:5173',          // Frontend local (Vite par défaut)   
+    'http://localhost:5173'
   ];
 
   app.use(cors({
@@ -39,8 +39,9 @@
   });
 
   const PORT = process.env.PORT || 3000;
-  app.listen(PORT, () => {
-    console.log(`Serveur démarré sur le port ${PORT}`);
+  const HOST = '0.0.0.0'; // Permet d'accepter les connexions externes
+  app.listen(PORT, HOST, () => {
+    console.log(`Serveur lancé sur http://${HOST}:${PORT}`);
   });
 
   module.exports = app;

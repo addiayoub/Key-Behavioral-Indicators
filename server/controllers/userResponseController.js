@@ -38,7 +38,6 @@ const userResponseController = {
             (answerId !== undefined && 
             (question.answers[answerId] === "Autre" || question.answersAng[answerId] === "Other"))) {
           // Pour les réponses de type "Autre", on attribue un score par défaut
-          // Vous pouvez ajuster cette logique selon vos besoins
           score = question.Note[answerId] || 0;
         } else {
           // Récupérer la note correspondante à la réponse
@@ -46,7 +45,6 @@ const userResponseController = {
         }
         
         // Récupérer ou utiliser le texte de la réponse
-        // Si c'est une réponse "Autre", utiliser le texte personnalisé fourni
         const finalAnswerText = answerText || question.answers[answerId] || "";
         const finalAnswerTextAng = answerTextAng || question.answersAng[answerId] || "";
         
@@ -63,38 +61,52 @@ const userResponseController = {
           categoryAng: question.categoryAng
         });
 
-        // Mettre à jour les scores par catégorie
-        if (!categoriesMap.has(question.category)) {
-          categoriesMap.set(question.category, {
-            category: question.category,
-            categoryAng: question.categoryAng,
-            score: 0,
-            maxPossible: 0,
-            count: 0
-          });
+        // Ne pas inclure la catégorie "basic" dans les scores
+        if (question.category.toLowerCase() !== "basic") {
+          // Mettre à jour les scores par catégorie
+          if (!categoriesMap.has(question.category)) {
+            categoriesMap.set(question.category, {
+              category: question.category,
+              categoryAng: question.categoryAng,
+              score: 0,
+              maxPossible: 0,
+              count: 0
+            });
+          }
+          
+          const categoryData = categoriesMap.get(question.category);
+          categoryData.score += score;
+          
+          // Trouver le score maximum possible pour cette question
+          const maxPossibleScore = Math.max(...question.Note);
+          categoryData.maxPossible += maxPossibleScore;
+          categoryData.count += 1;
         }
-        
-        const categoryData = categoriesMap.get(question.category);
-        categoryData.score += score;
-        
-        // Trouver le score maximum possible pour cette question
-        const maxPossibleScore = Math.max(...question.Note);
-        categoryData.maxPossible += maxPossibleScore;
-        categoryData.count += 1;
       }
 
-      // Préparer les scores par catégorie
-      const categoryScores = Array.from(categoriesMap.values()).map(({ category, categoryAng, score, maxPossible }) => ({
-        category,
-        categoryAng,
-        score,
-        maxPossible
-      }));
+      // Préparer les scores par catégorie avec la nouvelle formule: (score * 100) / maxPossible
+      const categoryScores = Array.from(categoriesMap.values()).map(({ category, categoryAng, score, maxPossible }) => {
+        // Calculer le pourcentage: (score * 100) / maxPossible
+        const percentageScore = maxPossible > 0 ? (score * 100) / maxPossible : 0;
+        
+        return {
+          category,
+          categoryAng,
+          score: percentageScore, // Remplacer le score par le pourcentage
+          rawScore: score, // Conserver le score brut pour référence
+          maxPossible
+        };
+      });
 
-      // Calculer le score total
+      // Calculer le score total également en pourcentage
+      const totalRawScore = categoryScores.reduce((sum, cat) => sum + cat.rawScore, 0);
+      const totalMaxPossible = categoryScores.reduce((sum, cat) => sum + cat.maxPossible, 0);
+      const totalPercentage = totalMaxPossible > 0 ? (totalRawScore * 100) / totalMaxPossible : 0;
+
       const totalScore = {
-        score: categoryScores.reduce((sum, cat) => sum + cat.score, 0),
-        maxPossible: categoryScores.reduce((sum, cat) => sum + cat.maxPossible, 0)
+        score: totalPercentage, // Score total en pourcentage
+        rawScore: totalRawScore, // Score brut pour référence
+        maxPossible: totalMaxPossible
       };
 
       // Créer l'objet de réponse utilisateur

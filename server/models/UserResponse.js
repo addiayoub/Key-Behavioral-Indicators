@@ -28,11 +28,13 @@ const userResponseSchema = new mongoose.Schema({
   categoryScores: [{
     category: String,
     categoryAng: String,
-    score: Number,       // Score total pour cette catégorie
+    score: Number,       // Score en pourcentage: (score * 100) / maxPossible
+    rawScore: Number,    // Score brut avant calcul du pourcentage
     maxPossible: Number  // Score maximum possible pour cette catégorie
   }],
   totalScore: {
-    score: Number,       // Score total de toutes les catégories
+    score: Number,       // Score total en pourcentage
+    rawScore: Number,    // Score brut total avant calcul du pourcentage
     maxPossible: Number  // Score maximum possible pour toutes les catégories
   },
   createdAt: {

@@ -41,6 +41,7 @@ const Form = () => {
   const categoriesFr = ['Basic', 'Proactivité : volonté de prendre des initiatives', "Collaboration : travail d'équipe efficace", 'Ouverture au feedback : réceptivité aux commentaires', 'Adaptability: Flexibility in change', "Amélioration continue : viser l'excellence"];
   const categoriesEn = ['Basic', 'Proactivity: Willingness to Take Initiative', 'Collaboration: Effective Teamwork', 'Openness to feedback: Receptiveness to Input', 'Adaptability: Flexibility in change', 'Continuous improvement: Striving for excellence'];
 
+
   // Obtenir les catégories en fonction de la langue sélectionnée
   const categories = language === 'fr' ? categoriesFr : categoriesEn;
 
@@ -313,11 +314,11 @@ const Form = () => {
                     ${results.categoryScores
                       .filter(cat => cat.category !== 'Basic') // Exclure la catégorie Basic des résultats affichés
                       .map(cat => 
-                        `<li>${cat.category}: ${cat.score}/${cat.maxPossible} (${Math.round((cat.score/cat.maxPossible)*100)}%)</li>`
+                        `<li>${cat.category}: ${cat.rawScore}/${cat.maxPossible} (${Math.round((cat.rawScore/cat.maxPossible)*100)}%)</li>`
                       ).join('')}
                   </ul>
                 `,
-                icon: 'info',
+                icon: 'success',
                 confirmButtonText: 'OK'
               });
             });
