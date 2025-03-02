@@ -58,7 +58,10 @@ const userResponseController = {
           questionTextAng: question.questionAng,
           score,
           category: question.category,
-          categoryAng: question.categoryAng
+          categoryAng: question.categoryAng,
+          // Ajouter les abréviations des catégories
+          categoryShort: question.category.substring(0, 2),
+          categoryAngShort: question.categoryAng.substring(0, 2)
         });
 
         // Ne pas inclure la catégorie "basic" dans les scores
@@ -68,6 +71,8 @@ const userResponseController = {
             categoriesMap.set(question.category, {
               category: question.category,
               categoryAng: question.categoryAng,
+              categoryShort: question.category.substring(0, 2),     // Abréviation FR
+              categoryAngShort: question.categoryAng.substring(0, 2), // Abréviation EN
               score: 0,
               maxPossible: 0,
               count: 0
@@ -85,13 +90,15 @@ const userResponseController = {
       }
 
       // Préparer les scores par catégorie avec la nouvelle formule: (score * 100) / maxPossible
-      const categoryScores = Array.from(categoriesMap.values()).map(({ category, categoryAng, score, maxPossible }) => {
+      const categoryScores = Array.from(categoriesMap.values()).map(({ category, categoryAng, categoryShort, categoryAngShort, score, maxPossible }) => {
         // Calculer le pourcentage: (score * 100) / maxPossible
         const percentageScore = maxPossible > 0 ? (score * 100) / maxPossible : 0;
         
         return {
           category,
           categoryAng,
+          categoryShort,     // Abréviation FR
+          categoryAngShort,  // Abréviation EN
           score: percentageScore, // Remplacer le score par le pourcentage
           rawScore: score, // Conserver le score brut pour référence
           maxPossible

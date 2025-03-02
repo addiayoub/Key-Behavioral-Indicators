@@ -23,11 +23,15 @@ const userResponseSchema = new mongoose.Schema({
     questionText: String, // Texte de la question
     questionTextAng: String, // Texte de la question en anglais
     category: String,
-    categoryAng: String
+    categoryAng: String,
+    categoryShort: String,     // Abréviation de la catégorie (2 lettres) en français
+    categoryAngShort: String   // Abréviation de la catégorie (2 lettres) en anglais
   }],
   categoryScores: [{
     category: String,
     categoryAng: String,
+    categoryShort: String,     // Abréviation de la catégorie (2 lettres) en français
+    categoryAngShort: String,  // Abréviation de la catégorie (2 lettres) en anglais
     score: Number,       // Score en pourcentage: (score * 100) / maxPossible
     rawScore: Number,    // Score brut avant calcul du pourcentage
     maxPossible: Number  // Score maximum possible pour cette catégorie
