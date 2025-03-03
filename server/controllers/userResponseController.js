@@ -1,5 +1,6 @@
 const UserResponse = require('../models/UserResponse');
 const Question = require('../models/Question');
+const Ponderation = require('../models/Ponderation');
 const mongoose = require('mongoose');
 
 const userResponseController = {
@@ -16,6 +17,98 @@ const userResponseController = {
       const allQuestions = await Question.find();
       const questionMap = new Map();
       allQuestions.forEach(q => questionMap.set(q.id, q));
+
+      // Récupérer toutes les pondérations
+      const allPonderations = await Ponderation.find();
+      
+      // Log pour vérifier que les pondérations sont bien chargées
+      console.log(`Nombre de pondérations trouvées: ${allPonderations.length}`);
+      
+      if (allPonderations.length === 0) {
+        console.warn("ATTENTION: Aucune pondération n'a été trouvée dans la base de données!");
+      }
+
+      // Extraire les réponses spécifiques (6, 8, 9) - EN ANGLAIS pour la comparaison
+      const keyResponses = {};
+      const keyResponsesAng = {}; // Version anglaise des réponses
+      
+      for (const response of responses) {
+        if ([6, 8, 9].includes(response.questionId)) {
+          const question = questionMap.get(response.questionId);
+          if (question) {
+            // Stocker la version française
+            const answerText = question.answers[response.answerId] || response.answerText;
+            keyResponses[response.questionId] = answerText;
+            
+            // Stocker la version anglaise pour la comparaison avec la table de pondération
+            const answerTextAng = question.answersAng[response.answerId] || response.answerTextAng;
+            keyResponsesAng[response.questionId] = answerTextAng;
+            
+            // Log pour vérifier les valeurs extraites
+            console.log(`Question ${response.questionId} (EN): ${answerTextAng}`);
+          }
+        }
+      }
+
+      // Trouver la pondération applicable si tous les champs nécessaires sont présents
+      let applicablePonderation = null;
+      if (keyResponsesAng[6] && keyResponsesAng[8] && keyResponsesAng[9]) {
+        const industry = keyResponsesAng[6].trim();
+        const orgType = keyResponsesAng[8].trim();
+        const changePhase = keyResponsesAng[9].trim();
+        
+        console.log("Recherche de pondération pour:", JSON.stringify([industry, orgType, changePhase]));
+        
+        // Vérifier si les valeurs existent dans les pondérations
+        const matchingPonderations = allPonderations.filter(p => {
+          if (!p.possibilite || !Array.isArray(p.possibilite) || p.possibilite.length < 3) {
+            console.warn(`Pondération ${p.id} a une structure de possibilité invalide:`, p.possibilite);
+            return false;
+          }
+          return true;
+        });
+        
+        console.log(`Pondérations valides: ${matchingPonderations.length}`);
+        
+        // Recherche exacte
+        applicablePonderation = allPonderations.find(p => 
+          p.possibilite && Array.isArray(p.possibilite) && p.possibilite.length >= 3 &&
+          p.possibilite[0] === industry && 
+          p.possibilite[1] === orgType && 
+          p.possibilite[2] === changePhase
+        );
+        
+        // Si aucune correspondance exacte, essayer en ignorant la casse
+        if (!applicablePonderation) {
+          console.log("Aucune correspondance exacte, essai avec recherche insensible à la casse...");
+          applicablePonderation = allPonderations.find(p => 
+            p.possibilite && Array.isArray(p.possibilite) && p.possibilite.length >= 3 &&
+            p.possibilite[0].toLowerCase() === industry.toLowerCase() && 
+            p.possibilite[1].toLowerCase() === orgType.toLowerCase() && 
+            p.possibilite[2].toLowerCase() === changePhase.toLowerCase()
+          );
+        }
+        
+        // Si toujours aucune correspondance, afficher des infos de débogage détaillées
+        if (!applicablePonderation) {
+          console.log("AUCUNE PONDÉRATION TROUVÉE! Voici les détails pour le débogage:");
+          
+          // Afficher toutes les combinaisons de pondération disponibles
+          console.log("Combinaisons disponibles dans la base de données:");
+          allPonderations.forEach(p => {
+            if (p.possibilite && Array.isArray(p.possibilite) && p.possibilite.length >= 3) {
+              console.log(`ID: ${p.id}, Combinaison: ${JSON.stringify(p.possibilite)}`);
+            }
+          });
+        } else {
+          console.log(`Pondération trouvée: ID ${applicablePonderation.id}`);
+        }
+      } else {
+        console.log("Informations manquantes pour rechercher une pondération:", 
+                   `Q6: ${keyResponsesAng[6] || 'manquant'}, 
+                    Q8: ${keyResponsesAng[8] || 'manquant'}, 
+                    Q9: ${keyResponsesAng[9] || 'manquant'}`);
+      }
 
       // Préparer les réponses avec les scores
       const processedResponses = [];
@@ -116,12 +209,48 @@ const userResponseController = {
         maxPossible: totalMaxPossible
       };
 
+      // Appliquer les pondérations si disponibles
+      let kbiScores = null;
+      if (applicablePonderation) {
+        // Créer le profil en utilisant les versions anglaises pour la cohérence
+        const profileText = `${keyResponsesAng[6]} - ${keyResponsesAng[8]} - ${keyResponsesAng[9]}`;
+        
+        // Rechercher les scores des catégories par leurs abréviations en anglais
+        const prScore = categoryScores.find(c => c.categoryAngShort === 'Pr')?.score || 0;
+        const coScore = categoryScores.find(c => c.categoryAngShort === 'Co')?.score || 0;
+        const opScore = categoryScores.find(c => c.categoryAngShort === 'Op')?.score || 0;
+        const adScore = categoryScores.find(c => c.categoryAngShort === 'Ad')?.score || 0;
+        const ciScore = categoryScores.find(c => c.categoryAngShort === 'Ci')?.score || 0;
+        
+        kbiScores = {
+          profile: profileText,
+          Pr: prScore * (applicablePonderation.Pr / 100),
+          Co: coScore * (applicablePonderation.Co / 100),
+          Op: opScore * (applicablePonderation.Op / 100),
+          Ad: adScore * (applicablePonderation.Ad / 100),
+          Ci: ciScore * (applicablePonderation.Ci / 100),
+          KBICONSO: 0
+        };
+        
+        // Calculer le score total KBI
+        kbiScores.KBICONSO = kbiScores.Pr + kbiScores.Co + kbiScores.Op + kbiScores.Ad + kbiScores.Ci;
+      }
+
       // Créer l'objet de réponse utilisateur
       const userResponse = new UserResponse({
         userId,
         responses: processedResponses,
         categoryScores,
         totalScore,
+        kbiScores,
+        keyResponses: {
+          industry: keyResponses[6],
+          industryAng: keyResponsesAng[6],
+          organizationType: keyResponses[8],
+          organizationTypeAng: keyResponsesAng[8],
+          changePhase: keyResponses[9],
+          changePhaseAng: keyResponsesAng[9]
+        }
       });
 
       await userResponse.save();
@@ -131,7 +260,11 @@ const userResponseController = {
         data: {
           userId,
           categoryScores,
-          totalScore
+          totalScore,
+          kbiScores,
+          keyResponses: userResponse.keyResponses,
+          ponderationFound: !!applicablePonderation, // Indiquer si une pondération a été trouvée
+          ponderationId: applicablePonderation?.id || null // ID de la pondération si trouvée
         }
       });
     } catch (error) {
@@ -156,6 +289,8 @@ const userResponseController = {
         responses: userResponse.responses,
         categoryScores: userResponse.categoryScores,
         totalScore: userResponse.totalScore,
+        kbiScores: userResponse.kbiScores,
+        keyResponses: userResponse.keyResponses,
         createdAt: userResponse.createdAt
       });
     } catch (error) {

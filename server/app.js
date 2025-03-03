@@ -8,7 +8,7 @@
 
   // Configuration CORS
   const allowedOrigins = [
-    'http://192.168.11.144:5173',          // Frontend local (Vite par défaut)   
+    'http://192.168.11.141:5173',          // Frontend local (Vite par défaut)   
     'http://localhost:5173'
   ];
 

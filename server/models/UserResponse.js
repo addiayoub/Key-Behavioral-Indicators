@@ -41,6 +41,25 @@ const userResponseSchema = new mongoose.Schema({
     rawScore: Number,    // Score brut total avant calcul du pourcentage
     maxPossible: Number  // Score maximum possible pour toutes les catégories
   },
+  // Nouvelles propriétés pour stocker les réponses clés en français et en anglais
+  keyResponses: {
+    industry: String,         // Réponse à la question 6 (secteur d'activité) en français
+    industryAng: String,      // Réponse à la question 6 en anglais
+    organizationType: String, // Réponse à la question 8 (type d'organisation) en français
+    organizationTypeAng: String, // Réponse à la question 8 en anglais
+    changePhase: String,      // Réponse à la question 9 (phase de changement) en français
+    changePhaseAng: String    // Réponse à la question 9 en anglais
+  },
+  // Scores calculés après application des pondérations KBI
+  kbiScores: {
+    profile: String,      // Combinaison des 3 réponses utilisées pour la pondération (en anglais)
+    Pr: Number,           // Score pondéré pour Pr (Préparation)
+    Co: Number,           // Score pondéré pour Co (Compréhension)
+    Op: Number,           // Score pondéré pour Op (Opération)
+    Ad: Number,           // Score pondéré pour Ad (Adoption)
+    Ci: Number,           // Score pondéré pour Ci (Amélioration continue)
+    KBICONSO: Number      // Score KBI total (somme des scores pondérés)
+  },
   createdAt: {
     type: Date,
     default: Date.now

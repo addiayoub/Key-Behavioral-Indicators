@@ -39,7 +39,7 @@ const Form = () => {
 
   // Définir les catégories dans l'ordre que vous souhaitez les afficher
   const categoriesFr = ['Basic', 'Proactivité : volonté de prendre des initiatives', "Collaboration : travail d'équipe efficace", 'Ouverture au feedback : réceptivité aux commentaires', 'Adaptability: Flexibility in change', "Amélioration continue : viser l'excellence"];
-  const categoriesEn = ['Basic', 'Proactivity: Willingness to Take Initiative', 'Collaboration: Effective Teamwork', 'Openness to feedback: Receptiveness to Input', 'Adaptability: Flexibility in change', 'Continuous improvement: Striving for excellence'];
+  const categoriesEn = ['Basic', 'Proactivity: Willingness to Take Initiative', 'Collaboration: Effective Teamwork', 'Openness to feedback: Receptiveness to Input', 'Adaptability: Flexibility in change', 'Citing continuous improvement: striving for excellence.'];
 
 
   // Obtenir les catégories en fonction de la langue sélectionnée

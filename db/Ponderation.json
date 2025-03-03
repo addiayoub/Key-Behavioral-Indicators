@@ -1,761 +1,758 @@
-{
-    "Ponderation": [
-      {
-        "id": 1,
-        "possibilite": ["Banking / Insurance / Finance", "Mature Organization", "Pre-Change Phase"],
-        "Pr": 15,
-        "Co": 20,
-        "Op": 20,
-        "Ad": 20,
-        "Am": 25
-      },
-      {
-        "id": 2,
-        "possibilite": ["Banking / Insurance / Finance", "Mature Organization", "Change Phase"],
-        "Pr": 20,
-        "Co": 25,
-        "Op": 15,
-        "Ad": 20,
-        "Am": 20
-      },
-      {
-        "id": 3,
-        "possibilite": ["Banking / Insurance / Finance", "Mature Organization", "Post-Change Phase"],
-        "Pr": 20,
-        "Co": 20,
-        "Op": 20,
-        "Ad": 20,
-        "Am": 20
-      },
-      {
-        "id": 4,
-        "possibilite": ["Banking / Insurance / Finance", "Growth Phase", "Pre-Change Phase"],
-        "Pr": 25,
-        "Co": 15,
-        "Op": 20,
-        "Ad": 20,
-        "Am": 20
-      },
-      {
-        "id": 5,
-        "possibilite": ["Banking / Insurance / Finance", "Growth Phase", "Change Phase"],
-        "Pr": 25,
-        "Co": 15,
-        "Op": 20,
-        "Ad": 20,
-        "Am": 20
-      },
-      {
-        "id": 6,
-        "possibilite": ["Banking / Insurance / Finance", "Growth Phase", "Post-Change Phase"],
-        "Pr": 20,
-        "Co": 20,
-        "Op": 25,
-        "Ad": 15,
-        "Am": 20
-      },
-      {
-        "id": 7,
-        "possibilite": ["Transport", "Mature Organization", "Pre-Change Phase"],
-        "Pr": 20,
-        "Co": 20,
-        "Op": 15,
-        "Ad": 25,
-        "Am": 20
-      },
-      {
-        "id": 8,
-        "possibilite": ["Transport", "Mature Organization", "Change Phase"],
-        "Pr": 25,
-        "Co": 20,
-        "Op": 10,
-        "Ad": 25,
-        "Am": 20
-      },
-      {
-        "id": 9,
-        "possibilite": ["Transport", "Mature Organization", "Post-Change Phase"],
-        "Pr": 20,
-        "Co": 25,
-        "Op": 15,
-        "Ad": 20,
-        "Am": 20
-      },
-      {
-        "id": 10,
-        "possibilite": ["Transport", "Growth Phase", "Pre-Change Phase"],
-        "Pr": 15,
-        "Co": 25,
-        "Op": 15,
-        "Ad": 20,
-        "Am": 25
-      },
-      {
-        "id": 11,
-        "possibilite": ["Transport", "Growth Phase", "Change Phase"],
-        "Pr": 15,
-        "Co": 30,
-        "Op": 20,
-        "Ad": 15,
-        "Am": 20
-      },
-      {
-        "id": 12,
-        "possibilite": ["Transport", "Growth Phase", "Post-Change Phase"],
-        "Pr": 20,
-        "Co": 20,
-        "Op": 15,
-        "Ad": 25,
-        "Am": 20
-      },
-      {
-        "id": 13,
-        "possibilite": ["Supply chain / Logistics", "Mature Organization", "Pre-Change Phase"],
-        "Pr": 25,
-        "Co": 20,
-        "Op": 10,
-        "Ad": 25,
-        "Am": 20
-      },
-      {
-        "id": 14,
-        "possibilite": ["Supply chain / Logistics", "Mature Organization", "Change Phase"],
-        "Pr": 20,
-        "Co": 25,
-        "Op": 15,
-        "Ad": 20,
-        "Am": 20
-      },
-      {
-        "id": 15,
-        "possibilite": ["Supply chain / Logistics", "Mature Organization", "Post-Change Phase"],
-        "Pr": 15,
-        "Co": 25,
-        "Op": 15,
-        "Ad": 20,
-        "Am": 25
-      },
-      {
-        "id": 16,
-        "possibilite": ["Supply chain / Logistics", "Growth Phase", "Pre-Change Phase"],
-        "Pr": 15,
-        "Co": 30,
-        "Op": 20,
-        "Ad": 15,
-        "Am": 20
-      },
-      {
-        "id": 17,
-        "possibilite": ["Supply chain / Logistics", "Growth Phase", "Change Phase"],
-        "Pr": 15,
-        "Co": 25,
-        "Op": 20,
-        "Ad": 20,
-        "Am": 20
-      },
-      {
-        "id": 18,
-        "possibilite": ["Supply chain / Logistics", "Growth Phase", "Post-Change Phase"],
-        "Pr": 20,
-        "Co": 25,
-        "Op": 15,
-        "Ad": 20,
-        "Am": 20
-      },
-{
-    "id": 19,
-    "possibilite": ["Retail", "Mature Organization", "Pre-Change Phase"],
-    "Pr": 15,
-    "Co": 30,
-    "Op": 20,
-    "Ad": 15,
-    "Am": 20
-  },
-  {
-    "id": 20,
-    "possibilite": ["Retail", "Mature Organization", "Change Phase"],
-    "Pr": 20,
-    "Co": 20,
-    "Op": 15,
-    "Ad": 20,
-    "Am": 25
-  },
-  {
-    "id": 21,
-    "possibilite": ["Retail", "Mature Organization", "Post-Change Phase"],
-    "Pr": 15,
-    "Co": 30,
-    "Op": 20,
-    "Ad": 15,
-    "Am": 20
-  },
-  {
-    "id": 22,
-    "possibilite": ["Retail", "Growth Phase", "Pre-Change Phase"],
-    "Pr": 15,
-    "Co": 30,
-    "Op": 20,
-    "Ad": 20,
-    "Am": 15
-  },
-  {
-    "id": 23,
-    "possibilite": ["Retail", "Growth Phase", "Change Phase"],
-    "Pr": 20,
-    "Co": 25,
-    "Op": 20,
-    "Ad": 20,
-    "Am": 15
-  },
-  {
-    "id": 24,
-    "possibilite": ["Retail", "Growth Phase", "Post-Change Phase"],
-    "Pr": 15,
-    "Co": 30,
-    "Op": 25,
-    "Ad": 15,
-    "Am": 15
-  },
-  {
-    "id": 25,
-    "possibilite": ["Tourism", "Mature Organization", "Pre-Change Phase"],
-    "Pr": 20,
-    "Co": 25,
-    "Op": 15,
-    "Ad": 20,
-    "Am": 20
-  },
-  {
-    "id": 26,
-    "possibilite": ["Tourism", "Mature Organization", "Change Phase"],
-    "Pr": 15,
-    "Co": 30,
-    "Op": 20,
-    "Ad": 15,
-    "Am": 20
-  },
-  {
-    "id": 27,
-    "possibilite": ["Tourism", "Mature Organization", "Post-Change Phase"],
-    "Pr": 20,
-    "Co": 20,
-    "Op": 15,
-    "Ad": 20,
-    "Am": 25
-  },
-  {
-    "id": 28,
-    "possibilite": ["Tourism", "Growth Phase", "Pre-Change Phase"],
-    "Pr": 25,
-    "Co": 15,
-    "Op": 20,
-    "Ad": 20,
-    "Am": 20
-  },
-  {
-    "id": 29,
-    "possibilite": ["Tourism", "Growth Phase", "Change Phase"],
-    "Pr": 20,
-    "Co": 25,
-    "Op": 15,
-    "Ad": 20,
-    "Am": 20
-  },
-  {
-    "id": 30,
-    "possibilite": ["Tourism", "Growth Phase", "Post-Change Phase"],
-    "Pr": 15,
-    "Co": 20,
-    "Op": 20,
-    "Ad": 20,
-    "Am": 25
-  },
-  {
-    "id": 31,
-    "possibilite": ["Manufacturing", "Mature Organization", "Pre-Change Phase"],
-    "Pr": 15,
-    "Co": 20,
-    "Op": 25,
-    "Ad": 15,
-    "Am": 25
-  },
-  {
-    "id": 32,
-    "possibilite": ["Manufacturing", "Mature Organization", "Change Phase"],
-    "Pr": 20,
-    "Co": 25,
-    "Op": 20,
-    "Ad": 20,
-    "Am": 15
-  },
-  {
-    "id": 33,
-    "possibilite": ["Manufacturing", "Mature Organization", "Post-Change Phase"],
-    "Pr": 25,
-    "Co": 20,
-    "Op": 20,
-    "Ad": 20,
-    "Am": 15
-  },
-  {
-    "id": 34,
-    "possibilite": ["Manufacturing", "Growth Phase", "Pre-Change Phase"],
-    "Pr": 20,
-    "Co": 25,
-    "Op": 20,
-    "Ad": 15,
-    "Am": 20
-  },
-  {
-    "id": 35,
-    "possibilite": ["Manufacturing", "Growth Phase", "Change Phase"],
-    "Pr": 20,
-    "Co": 20,
-    "Op": 15,
-    "Ad": 20,
-    "Am": 25
-  },
-  {
-    "id": 36,
-    "possibilite": ["Manufacturing", "Growth Phase", "Post-Change Phase"],
-    "Pr": 20,
-    "Co": 20,
-    "Op": 25,
-    "Ad": 15,
-    "Am": 20
-  },
-  {
-    "id": 37,
-    "possibilite": ["IT / Telecom", "Mature Organization", "Pre-Change Phase"],
-    "Pr": 15,
-    "Co": 30,
-    "Op": 20,
-    "Ad": 15,
-    "Am": 20
-  },
-  {
-    "id": 38,
-    "possibilite": ["IT / Telecom", "Mature Organization", "Change Phase"],
-    "Pr": 20,
-    "Co": 25,
-    "Op": 20,
-    "Ad": 15,
-    "Am": 20
-  },
-  {
-    "id": 39,
-    "possibilite": ["IT / Telecom", "Mature Organization", "Post-Change Phase"],
-    "Pr": 15,
-    "Co": 30,
-    "Op": 25,
-    "Ad": 15,
-    "Am": 15
-  },
-  {
-    "id": 40,
-    "possibilite": ["IT / Telecom", "Growth Phase", "Pre-Change Phase"],
-    "Pr": 20,
-    "Co": 25,
-    "Op": 15,
-    "Ad": 20,
-    "Am": 20
-  },
-  {
-    "id": 41,
-    "possibilite": ["IT / Telecom", "Growth Phase", "Change Phase"],
-    "Pr": 15,
-    "Co": 30,
-    "Op": 20,
-    "Ad": 15,
-    "Am": 20
-  },
-  {
-    "id": 42,
-    "possibilite": ["IT / Telecom", "Growth Phase", "Post-Change Phase"],
-    "Pr": 10,
-    "Co": 30,
-    "Op": 20,
-    "Ad": 10,
-    "Am": 30
-  },
-  {
-    "id": 43,
-    "possibilite": ["Healthcare & Pharmaceuticals", "Mature Organization", "Pre-Change Phase"],
-    "Pr": 15,
-    "Co": 25,
-    "Op": 20,
-    "Ad": 15,
-    "Am": 25
-  },
-  {
-    "id": 44,
-    "possibilite": ["Healthcare & Pharmaceuticals", "Mature Organization", "Change Phase"],
-    "Pr": 10,
-    "Co": 25,
-    "Op": 25,
-    "Ad": 10,
-    "Am": 30
-  },
-  {
-    "id": 45,
-    "possibilite": ["Healthcare & Pharmaceuticals", "Mature Organization", "Post-Change Phase"],
-    "Pr": 15,
-    "Co": 20,
-    "Op": 15,
-    "Ad": 20,
-    "Am": 30
-  },
-  {
-    "id": 46,
-    "possibilite": ["Healthcare & Pharmaceuticals", "Growth Phase", "Pre-Change Phase"],
-    "Pr": 10,
-    "Co": 30,
-    "Op": 20,
-    "Ad": 10,
-    "Am": 30
-  },
-  {
-    "id": 47,
-    "possibilite": ["Healthcare & Pharmaceuticals", "Growth Phase", "Change Phase"],
-    "Pr": 25,
-    "Co": 25,
-    "Op": 10,
-    "Ad": 20,
-    "Am": 20
-  },
-  {
-    "id": 48,
-    "possibilite": ["Healthcare & Pharmaceuticals", "Growth Phase", "Post-Change Phase"],
-    "Pr": 30,
-    "Co": 20,
-    "Op": 15,
-    "Ad": 25,
-    "Am": 10
-  },    
-  {
-    "id": 49,
-    "possibilite": ["Public sector", "Mature Organization", "Pre-Change Phase"],
-    "Pr": 20,
-    "Co": 30,
-    "Op": 15,
-    "Ad": 20,
-    "Am": 15
-  },
-  {
-    "id": 50,
-    "possibilite": ["Public sector", "Mature Organization", "Change Phase"],
-    "Pr": 20,
-    "Co": 30,
-    "Op": 10,
-    "Ad": 20,
-    "Am": 20
-  },
-  {
-    "id": 51,
-    "possibilite": ["Public sector", "Mature Organization", "Post-Change Phase"],
-    "Pr": 15,
-    "Co": 30,
-    "Op": 10,
-    "Ad": 15,
-    "Am": 30
-  },
-  {
-    "id": 52,
-    "possibilite": ["Public sector", "Growth Phase", "Pre-Change Phase"],
-    "Pr": 15,
-    "Co": 30,
-    "Op": 20,
-    "Ad": 15,
-    "Am": 20
-  },
-  {
-    "id": 53,
-    "possibilite": ["Public sector", "Growth Phase", "Change Phase"],
-    "Pr": 20,
-    "Co": 25,
-    "Op": 25,
-    "Ad": 20,
-    "Am": 10
-  },
-  {
-    "id": 54,
-    "possibilite": ["Public sector", "Growth Phase", "Post-Change Phase"],
-    "Pr": 15,
-    "Co": 30,
-    "Op": 25,
-    "Ad": 15,
-    "Am": 15
-  },
-  {
-    "id": 55,
-    "possibilite": ["Construction", "Mature Organization", "Pre-Change Phase"],
-    "Pr": 15,
-    "Co": 30,
-    "Op": 20,
-    "Ad": 15,
-    "Am": 20
-  },
-  {
-    "id": 56,
-    "possibilite": ["Construction", "Mature Organization", "Change Phase"],
-    "Pr": 10,
-    "Co": 25,
-    "Op": 25,
-    "Ad": 10,
-    "Am": 30
-  },
-  {
-    "id": 57,
-    "possibilite": ["Construction", "Mature Organization", "Post-Change Phase"],
-    "Pr": 20,
-    "Co": 25,
-    "Op": 15,
-    "Ad": 25,
-    "Am": 15
-  },
-  {
-    "id": 58,
-    "possibilite": ["Construction", "Growth Phase", "Pre-Change Phase"],
-    "Pr": 25,
-    "Co": 20,
-    "Op": 20,
-    "Ad": 25,
-    "Am": 10
-  },
-  {
-    "id": 59,
-    "possibilite": ["Construction", "Growth Phase", "Change Phase"],
-    "Pr": 20,
-    "Co": 25,
-    "Op": 15,
-    "Ad": 20,
-    "Am": 20
-  },
-  {
-    "id": 60,
-    "possibilite": ["Construction", "Growth Phase", "Post-Change Phase"],
-    "Pr": 20,
-    "Co": 25,
-    "Op": 15,
-    "Ad": 20,
-    "Am": 20
-  },
-  {
-    "id": 61,
-    "possibilite": ["Education", "Mature Organization", "Pre-Change Phase"],
-    "Pr": 15,
-    "Co": 20,
-    "Op": 15,
-    "Ad": 20,
-    "Am": 30
-  },
-  {
-    "id": 62,
-    "possibilite": ["Education", "Mature Organization", "Change Phase"],
-    "Pr": 18,
-    "Co": 25,
-    "Op": 18,
-    "Ad": 20,
-    "Am": 20
-  },
-  {
-    "id": 63,
-    "possibilite": ["Education", "Mature Organization", "Post-Change Phase"],
-    "Pr": 23,
-    "Co": 22,
-    "Op": 18,
-    "Ad": 21,
-    "Am": 17
-  },
-  {
-    "id": 64,
-    "possibilite": ["Education", "Growth Phase", "Pre-Change Phase"],
-    "Pr": 18,
-    "Co": 27,
-    "Op": 20,
-    "Ad": 17,
-    "Am": 19
-  },
-  {
-    "id": 65,
-    "possibilite": ["Education", "Growth Phase", "Change Phase"],
-    "Pr": 18,
-    "Co": 23,
-    "Op": 16,
-    "Ad": 20,
-    "Am": 23
-  },
-  {
-    "id": 66,
-    "possibilite": ["Education", "Growth Phase", "Post-Change Phase"],
-    "Pr": 15,
-    "Co": 26,
-    "Op": 20,
-    "Ad": 15,
-    "Am": 24
-  },
-  {
-    "id": 67,
-    "possibilite": ["Media & Entertainment", "Mature Organization", "Pre-Change Phase"],
-    "Pr": 18,
-    "Co": 25,
-    "Op": 17,
-    "Ad": 20,
-    "Am": 20
-  },
-  {
-    "id": 68,
-    "possibilite": ["Media & Entertainment", "Mature Organization", "Change Phase"],
-    "Pr": 23,
-    "Co": 22,
-    "Op": 18,
-    "Ad": 21,
-    "Am": 17
-  },
-  {
-    "id": 69,
-    "possibilite": ["Media & Entertainment", "Mature Organization", "Post-Change Phase"],
-    "Pr": 17,
-    "Co": 27,
-    "Op": 20,
-    "Ad": 17,
-    "Am": 19
-  },
-  {
-    "id": 70,
-    "possibilite": ["Media & Entertainment", "Growth Phase", "Pre-Change Phase"],
-    "Pr": 18,
-    "Co": 24,
-    "Op": 15,
-    "Ad": 20,
-    "Am": 23
-  },
-  {
-    "id": 71,
-    "possibilite": ["Media & Entertainment", "Growth Phase", "Change Phase"],
-    "Pr": 15,
-    "Co": 27,
-    "Op": 20,
-    "Ad": 15,
-    "Am": 24
-  },
-  {
-    "id": 72,
-    "possibilite": ["Media & Entertainment", "Growth Phase", "Post-Change Phase"],
-    "Pr": 20,
-    "Co": 25,
-    "Op": 25,
-    "Ad": 20,
-    "Am": 10
-  },
-
-  {
-    "id": 73,
-    "possibilite": ["Other", "Mature Organization", "Pre-Change Phase"],
-    "Pr": 15,
-    "Co": 30,
-    "Op": 25,
-    "Ad": 15,
-    "Am": 15
-  },
-  {
-    "id": 74,
-    "possibilite": ["Other", "Mature Organization", "Change Phase"],
-    "Pr": 15,
-    "Co": 30,
-    "Op": 20,
-    "Ad": 15,
-    "Am": 20
-  },
-  {
-    "id": 75,
-    "possibilite": ["Other", "Mature Organization", "Post-Change Phase"],
-    "Pr": 10,
-    "Co": 25,
-    "Op": 25,
-    "Ad": 10,
-    "Am": 30
-  },
-  {
-    "id": 76,
-    "possibilite": ["Other", "Growth Phase", "Pre-Change Phase"],
-    "Pr": 20,
-    "Co": 25,
-    "Op": 15,
-    "Ad": 25,
-    "Am": 15
-  },
-  {
-    "id": 77,
-    "possibilite": ["Other", "Growth Phase", "Change Phase"],
-    "Pr": 25,
-    "Co": 20,
-    "Op": 20,
-    "Ad": 25,
-    "Am": 10
-  },
-  {
-    "id": 78,
-    "possibilite": ["Other", "Growth Phase", "Post-Change Phase"],
-    "Pr": 20,
-    "Co": 25,
-    "Op": 25,
-    "Ad": 20,
-    "Am": 10
-  },
-  {
-    "id": 79,
-    "possibilite": ["Consulting", "Mature Organization", "Pre-Change Phase"],
-    "Pr": 15,
-    "Co": 30,
-    "Op": 25,
-    "Ad": 15,
-    "Am": 15
-  },
-  {
-    "id": 80,
-    "possibilite": ["Consulting", "Mature Organization", "Change Phase"],
-    "Pr": 15,
-    "Co": 30,
-    "Op": 20,
-    "Ad": 15,
-    "Am": 20
-  },
-  {
-    "id": 81,
-    "possibilite": ["Consulting", "Mature Organization", "Post-Change Phase"],
-    "Pr": 10,
-    "Co": 25,
-    "Op": 25,
-    "Ad": 10,
-    "Am": 30
-  },
-  {
-    "id": 82,
-    "possibilite": ["Consulting", "Growth Phase", "Pre-Change Phase"],
-    "Pr": 20,
-    "Co": 25,
-    "Op": 15,
-    "Ad": 25,
-    "Am": 15
-  },
-  {
-    "id": 83,
-    "possibilite": ["Consulting", "Growth Phase", "Change Phase"],
-    "Pr": 25,
-    "Co": 20,
-    "Op": 20,
-    "Ad": 25,
-    "Am": 10
-  },
-  {
-    "id": 84,
-    "possibilite": ["Consulting", "Growth Phase", "Post-Change Phase"],
-    "Pr": 25,
-    "Co": 20,
-    "Op": 20,
-    "Ad": 25,
-    "Am": 10
-  }
-]
-}
+[
+    {
+      "id": 1,
+      "possibilite": ["Banking / Insurance / Finance","Pre-Change Phase","Mature Organization"],
+      "Pr": 15,
+      "Co": 20,
+      "Op": 20,
+      "Ad": 20,
+      "Ci": 25
+    },
+    {
+      "id": 2,
+      "possibilite": ["Banking / Insurance / Finance","Change Phase","Mature Organization"],
+      "Pr": 20,
+      "Co": 25,
+      "Op": 15,
+      "Ad": 20,
+      "Ci": 20
+    },
+    {
+      "id": 3,
+      "possibilite": ["Banking / Insurance / Finance","Post-Change Phase","Mature Organization"],
+      "Pr": 20,
+      "Co": 20,
+      "Op": 20,
+      "Ad": 20,
+      "Ci": 20
+    },
+    {
+      "id": 4,
+      "possibilite": ["Banking / Insurance / Finance","Pre-Change Phase","Growth Phase"],
+      "Pr": 25,
+      "Co": 15,
+      "Op": 20,
+      "Ad": 20,
+      "Ci": 20
+    },
+    {
+      "id": 5,
+      "possibilite": ["Banking / Insurance / Finance","Change Phase","Growth Phase"],
+      "Pr": 25,
+      "Co": 15,
+      "Op": 20,
+      "Ad": 20,
+      "Ci": 20
+    },
+    {
+      "id": 6,
+      "possibilite": ["Banking / Insurance / Finance","Post-Change Phase","Growth Phase"],
+      "Pr": 20,
+      "Co": 20,
+      "Op": 25,
+      "Ad": 15,
+      "Ci": 20
+    },
+    {
+      "id": 7,
+      "possibilite": ["Transport","Pre-Change Phase","Mature Organization"],
+      "Pr": 20,
+      "Co": 20,
+      "Op": 15,
+      "Ad": 25,
+      "Ci": 20
+    },
+    {
+      "id": 8,
+      "possibilite": ["Transport","Change Phase","Mature Organization"],
+      "Pr": 25,
+      "Co": 20,
+      "Op": 10,
+      "Ad": 25,
+      "Ci": 20
+    },
+    {
+      "id": 9,
+      "possibilite": ["Transport","Post-Change Phase","Mature Organization"],
+      "Pr": 20,
+      "Co": 25,
+      "Op": 15,
+      "Ad": 20,
+      "Ci": 20
+    },
+    {
+      "id": 10,
+      "possibilite": ["Transport","Pre-Change Phase","Growth Phase"],
+      "Pr": 15,
+      "Co": 25,
+      "Op": 15,
+      "Ad": 20,
+      "Ci": 25
+    },
+    {
+      "id": 11,
+      "possibilite": ["Transport","Change Phase","Growth Phase"],
+      "Pr": 15,
+      "Co": 30,
+      "Op": 20,
+      "Ad": 15,
+      "Ci": 20
+    },
+    {
+      "id": 12,
+      "possibilite": ["Transport","Post-Change Phase","Growth Phase"],
+      "Pr": 20,
+      "Co": 20,
+      "Op": 15,
+      "Ad": 25,
+      "Ci": 20
+    },
+    {
+      "id": 13,
+      "possibilite": ["Supply chain / Logistics","Pre-Change Phase","Mature Organization"],
+      "Pr": 25,
+      "Co": 20,
+      "Op": 10,
+      "Ad": 25,
+      "Ci": 20
+    },
+    {
+      "id": 14,
+      "possibilite": ["Supply chain / Logistics","Change Phase","Mature Organization"],
+      "Pr": 20,
+      "Co": 25,
+      "Op": 15,
+      "Ad": 20,
+      "Ci": 20
+    },
+    {
+      "id": 15,
+      "possibilite": ["Supply chain / Logistics","Post-Change Phase","Mature Organization"],
+      "Pr": 15,
+      "Co": 25,
+      "Op": 15,
+      "Ad": 20,
+      "Ci": 25
+    },
+    {
+      "id": 16,
+      "possibilite": ["Supply chain / Logistics","Pre-Change Phase","Growth Phase"],
+      "Pr": 15,
+      "Co": 30,
+      "Op": 20,
+      "Ad": 15,
+      "Ci": 20
+    },
+    {
+      "id": 17,
+      "possibilite": ["Supply chain / Logistics","Change Phase","Growth Phase"],
+      "Pr": 15,
+      "Co": 25,
+      "Op": 20,
+      "Ad": 20,
+      "Ci": 20
+    },
+    {
+      "id": 18,
+      "possibilite": ["Supply chain / Logistics","Post-Change Phase","Growth Phase"],
+      "Pr": 20,
+      "Co": 25,
+      "Op": 15,
+      "Ad": 20,
+      "Ci": 20
+    },
+    {
+      "id": 19,
+      "possibilite": ["Retail","Pre-Change Phase","Mature Organization"],
+      "Pr": 15,
+      "Co": 30,
+      "Op": 20,
+      "Ad": 15,
+      "Ci": 20
+    },
+    {
+      "id": 20,
+      "possibilite": ["Retail","Change Phase","Mature Organization"],
+      "Pr": 20,
+      "Co": 20,
+      "Op": 15,
+      "Ad": 20,
+      "Ci": 25
+    },
+    {
+      "id": 21,
+      "possibilite": ["Retail","Post-Change Phase","Mature Organization"],
+      "Pr": 15,
+      "Co": 30,
+      "Op": 20,
+      "Ad": 15,
+      "Ci": 20
+    },
+    {
+      "id": 22,
+      "possibilite": ["Retail","Pre-Change Phase","Growth Phase"],
+      "Pr": 15,
+      "Co": 30,
+      "Op": 20,
+      "Ad": 20,
+      "Ci": 15
+    },
+    {
+      "id": 23,
+      "possibilite": ["Retail","Change Phase","Growth Phase"],
+      "Pr": 20,
+      "Co": 25,
+      "Op": 20,
+      "Ad": 20,
+      "Ci": 15
+    },
+    {
+      "id": 24,
+      "possibilite": ["Retail","Post-Change Phase","Growth Phase"],
+      "Pr": 15,
+      "Co": 30,
+      "Op": 25,
+      "Ad": 15,
+      "Ci": 15
+    },
+    {
+      "id": 25,
+      "possibilite": ["Tourism","Pre-Change Phase","Mature Organization"],
+      "Pr": 20,
+      "Co": 25,
+      "Op": 15,
+      "Ad": 20,
+      "Ci": 20
+    },
+    {
+      "id": 26,
+      "possibilite": ["Tourism","Change Phase","Mature Organization"],
+      "Pr": 15,
+      "Co": 30,
+      "Op": 20,
+      "Ad": 15,
+      "Ci": 20
+    },
+    {
+      "id": 27,
+      "possibilite": ["Tourism","Post-Change Phase","Mature Organization"],
+      "Pr": 20,
+      "Co": 20,
+      "Op": 15,
+      "Ad": 20,
+      "Ci": 25
+    },
+    {
+      "id": 28,
+      "possibilite": ["Tourism","Pre-Change Phase","Growth Phase"],
+      "Pr": 25,
+      "Co": 15,
+      "Op": 20,
+      "Ad": 20,
+      "Ci": 20
+    },
+    {
+      "id": 29,
+      "possibilite": ["Tourism","Change Phase","Growth Phase"],
+      "Pr": 20,
+      "Co": 25,
+      "Op": 15,
+      "Ad": 20,
+      "Ci": 20
+    },
+    {
+      "id": 30,
+      "possibilite": ["Tourism","Post-Change Phase","Growth Phase"],
+      "Pr": 15,
+      "Co": 20,
+      "Op": 20,
+      "Ad": 20,
+      "Ci": 25
+    },
+    {
+      "id": 31,
+      "possibilite": ["Manufacturing","Pre-Change Phase","Mature Organization"],
+      "Pr": 15,
+      "Co": 20,
+      "Op": 25,
+      "Ad": 15,
+      "Ci": 25
+    },
+    {
+      "id": 32,
+      "possibilite": ["Manufacturing","Change Phase","Mature Organization"],
+      "Pr": 20,
+      "Co": 25,
+      "Op": 20,
+      "Ad": 20,
+      "Ci": 15
+    },
+    {
+      "id": 33,
+      "possibilite": ["Manufacturing","Post-Change Phase","Mature Organization"],
+      "Pr": 25,
+      "Co": 20,
+      "Op": 20,
+      "Ad": 20,
+      "Ci": 15
+    },
+    {
+      "id": 34,
+      "possibilite": ["Manufacturing","Pre-Change Phase","Growth Phase"],
+      "Pr": 20,
+      "Co": 25,
+      "Op": 20,
+      "Ad": 15,
+      "Ci": 20
+    },
+    {
+      "id": 35,
+      "possibilite": ["Manufacturing","Change Phase","Growth Phase"],
+      "Pr": 20,
+      "Co": 20,
+      "Op": 15,
+      "Ad": 20,
+      "Ci": 25
+    },
+    {
+      "id": 36,
+      "possibilite": ["Manufacturing","Post-Change Phase","Growth Phase"],
+      "Pr": 20,
+      "Co": 20,
+      "Op": 25,
+      "Ad": 15,
+      "Ci": 20
+    },
+    {
+      "id": 37,
+      "possibilite": ["IT / Telecom","Pre-Change Phase","Mature Organization"],
+      "Pr": 15,
+      "Co": 30,
+      "Op": 20,
+      "Ad": 15,
+      "Ci": 20
+    },
+    {
+      "id": 38,
+      "possibilite": ["IT / Telecom","Change Phase","Mature Organization"],
+      "Pr": 20,
+      "Co": 25,
+      "Op": 20,
+      "Ad": 15,
+      "Ci": 20
+    },
+    {
+      "id": 39,
+      "possibilite": ["IT / Telecom","Post-Change Phase","Mature Organization"],
+      "Pr": 15,
+      "Co": 30,
+      "Op": 25,
+      "Ad": 15,
+      "Ci": 15
+    },
+    {
+      "id": 40,
+      "possibilite": ["IT / Telecom","Pre-Change Phase","Growth Phase"],
+      "Pr": 20,
+      "Co": 25,
+      "Op": 15,
+      "Ad": 20,
+      "Ci": 20
+    },
+    {
+      "id": 41,
+      "possibilite": ["IT / Telecom","Change Phase","Growth Phase"],
+      "Pr": 15,
+      "Co": 30,
+      "Op": 20,
+      "Ad": 15,
+      "Ci": 20
+    },
+    {
+      "id": 42,
+      "possibilite": ["IT / Telecom","Post-Change Phase","Growth Phase"],
+      "Pr": 10,
+      "Co": 30,
+      "Op": 20,
+      "Ad": 10,
+      "Ci": 30
+    },
+    {
+      "id": 43,
+      "possibilite": ["Healthcare & Pharmaceuticals","Pre-Change Phase","Mature Organization"],
+      "Pr": 15,
+      "Co": 25,
+      "Op": 20,
+      "Ad": 15,
+      "Ci": 25
+    },
+    {
+      "id": 44,
+      "possibilite": ["Healthcare & Pharmaceuticals","Change Phase","Mature Organization"],
+      "Pr": 10,
+      "Co": 25,
+      "Op": 25,
+      "Ad": 10,
+      "Ci": 30
+    },
+    {
+      "id": 45,
+      "possibilite": ["Healthcare & Pharmaceuticals","Post-Change Phase","Mature Organization"],
+      "Pr": 15,
+      "Co": 20,
+      "Op": 15,
+      "Ad": 20,
+      "Ci": 30
+    },
+    {
+      "id": 46,
+      "possibilite": ["Healthcare & Pharmaceuticals","Pre-Change Phase","Growth Phase"],
+      "Pr": 10,
+      "Co": 30,
+      "Op": 20,
+      "Ad": 10,
+      "Ci": 30
+    },
+    {
+      "id": 47,
+      "possibilite": ["Healthcare & Pharmaceuticals","Change Phase","Growth Phase"],
+      "Pr": 25,
+      "Co": 25,
+      "Op": 10,
+      "Ad": 20,
+      "Ci": 20
+    },
+    {
+      "id": 48,
+      "possibilite": ["Healthcare & Pharmaceuticals","Post-Change Phase","Growth Phase"],
+      "Pr": 30,
+      "Co": 20,
+      "Op": 15,
+      "Ad": 25,
+      "Ci": 10
+    },
+    {
+      "id": 49,
+      "possibilite": ["Public sector","Pre-Change Phase","Mature Organization"],
+      "Pr": 20,
+      "Co": 30,
+      "Op": 15,
+      "Ad": 20,
+      "Ci": 15
+    },
+    {
+      "id": 50,
+      "possibilite": ["Public sector","Change Phase","Mature Organization"],
+      "Pr": 20,
+      "Co": 30,
+      "Op": 10,
+      "Ad": 20,
+      "Ci": 20
+    },
+    {
+      "id": 51,
+      "possibilite": ["Public sector","Post-Change Phase","Mature Organization"],
+      "Pr": 15,
+      "Co": 30,
+      "Op": 10,
+      "Ad": 15,
+      "Ci": 30
+    },
+    {
+      "id": 52,
+      "possibilite": ["Public sector","Pre-Change Phase","Growth Phase"],
+      "Pr": 15,
+      "Co": 30,
+      "Op": 20,
+      "Ad": 15,
+      "Ci": 20
+    },
+    {
+      "id": 53,
+      "possibilite": ["Public sector","Change Phase","Growth Phase"],
+      "Pr": 20,
+      "Co": 25,
+      "Op": 25,
+      "Ad": 20,
+      "Ci": 10
+    },
+    {
+      "id": 54,
+      "possibilite": ["Public sector","Post-Change Phase","Growth Phase"],
+      "Pr": 15,
+      "Co": 30,
+      "Op": 25,
+      "Ad": 15,
+      "Ci": 15
+    },
+    {
+      "id": 55,
+      "possibilite": ["Construction","Pre-Change Phase","Mature Organization"],
+      "Pr": 15,
+      "Co": 30,
+      "Op": 20,
+      "Ad": 15,
+      "Ci": 20
+    },
+    {
+      "id": 56,
+      "possibilite": ["Construction","Change Phase","Mature Organization"],
+      "Pr": 10,
+      "Co": 25,
+      "Op": 25,
+      "Ad": 10,
+      "Ci": 30
+    },
+    {
+      "id": 57,
+      "possibilite": ["Construction","Post-Change Phase","Mature Organization"],
+      "Pr": 20,
+      "Co": 25,
+      "Op": 15,
+      "Ad": 25,
+      "Ci": 15
+    },
+    {
+      "id": 58,
+      "possibilite": ["Construction","Pre-Change Phase","Growth Phase"],
+      "Pr": 25,
+      "Co": 20,
+      "Op": 20,
+      "Ad": 25,
+      "Ci": 10
+    },
+    {
+      "id": 59,
+      "possibilite": ["Construction","Change Phase","Growth Phase"],
+      "Pr": 20,
+      "Co": 25,
+      "Op": 15,
+      "Ad": 20,
+      "Ci": 20
+    },
+    {
+      "id": 60,
+      "possibilite": ["Construction","Post-Change Phase","Growth Phase"],
+      "Pr": 20,
+      "Co": 25,
+      "Op": 15,
+      "Ad": 20,
+      "Ci": 20
+    },
+    {
+      "id": 61,
+      "possibilite": ["Education","Pre-Change Phase","Mature Organization"],
+      "Pr": 15,
+      "Co": 20,
+      "Op": 15,
+      "Ad": 20,
+      "Ci": 30
+    },
+    {
+      "id": 62,
+      "possibilite": ["Education","Change Phase","Mature Organization"],
+      "Pr": 18,
+      "Co": 25,
+      "Op": 18,
+      "Ad": 20,
+      "Ci": 20
+    },
+    {
+      "id": 63,
+      "possibilite": ["Education","Post-Change Phase","Mature Organization"],
+      "Pr": 23,
+      "Co": 22,
+      "Op": 18,
+      "Ad": 21,
+      "Ci": 17
+    },
+    {
+      "id": 64,
+      "possibilite": ["Education","Pre-Change Phase","Growth Phase"],
+      "Pr": 18,
+      "Co": 27,
+      "Op": 20,
+      "Ad": 17,
+      "Ci": 19
+    },
+    {
+      "id": 65,
+      "possibilite": ["Education","Change Phase","Growth Phase"],
+      "Pr": 18,
+      "Co": 23,
+      "Op": 16,
+      "Ad": 20,
+      "Ci": 23
+    },
+    {
+      "id": 66,
+      "possibilite": ["Education","Post-Change Phase","Growth Phase"],
+      "Pr": 15,
+      "Co": 26,
+      "Op": 20,
+      "Ad": 15,
+      "Ci": 24
+    },
+    {
+      "id": 67,
+      "possibilite": ["Media & Entertainment","Pre-Change Phase","Mature Organization"],
+      "Pr": 18,
+      "Co": 25,
+      "Op": 17,
+      "Ad": 20,
+      "Ci": 20
+    },
+    {
+      "id": 68,
+      "possibilite": ["Media & Entertainment","Change Phase","Mature Organization"],
+      "Pr": 23,
+      "Co": 22,
+      "Op": 18,
+      "Ad": 21,
+      "Ci": 17
+    },
+    {
+      "id": 69,
+      "possibilite": ["Media & Entertainment","Post-Change Phase","Mature Organization"],
+      "Pr": 17,
+      "Co": 27,
+      "Op": 20,
+      "Ad": 17,
+      "Ci": 19
+    },
+    {
+      "id": 70,
+      "possibilite": ["Media & Entertainment","Pre-Change Phase","Growth Phase"],
+      "Pr": 18,
+      "Co": 24,
+      "Op": 15,
+      "Ad": 20,
+      "Ci": 23
+    },
+    {
+      "id": 71,
+      "possibilite": ["Media & Entertainment","Change Phase","Growth Phase"],
+      "Pr": 15,
+      "Co": 27,
+      "Op": 20,
+      "Ad": 15,
+      "Ci": 24
+    },
+    {
+      "id": 72,
+      "possibilite": ["Media & Entertainment","Post-Change Phase","Growth Phase"],
+      "Pr": 20,
+      "Co": 25,
+      "Op": 25,
+      "Ad": 20,
+      "Ci": 10
+    },
+    {
+      "id": 73,
+      "possibilite": ["Other","Pre-Change Phase","Mature Organization"],
+      "Pr": 15,
+      "Co": 30,
+      "Op": 25,
+      "Ad": 15,
+      "Ci": 15
+    },
+    {
+      "id": 74,
+      "possibilite": ["Other","Change Phase","Mature Organization"],
+      "Pr": 15,
+      "Co": 30,
+      "Op": 20,
+      "Ad": 15,
+      "Ci": 20
+    },
+    {
+      "id": 75,
+      "possibilite": ["Other","Post-Change Phase","Mature Organization"],
+      "Pr": 10,
+      "Co": 25,
+      "Op": 25,
+      "Ad": 10,
+      "Ci": 30
+    },
+    {
+      "id": 76,
+      "possibilite": ["Other","Pre-Change Phase","Growth Phase"],
+      "Pr": 20,
+      "Co": 25,
+      "Op": 15,
+      "Ad": 25,
+      "Ci": 15
+    },
+    {
+      "id": 77,
+      "possibilite": ["Other","Change Phase","Growth Phase"],
+      "Pr": 25,
+      "Co": 20,
+      "Op": 20,
+      "Ad": 25,
+      "Ci": 10
+    },
+    {
+      "id": 78,
+      "possibilite": ["Other","Post-Change Phase","Growth Phase"],
+      "Pr": 20,
+      "Co": 25,
+      "Op": 25,
+      "Ad": 20,
+      "Ci": 10
+    },
+    {
+      "id": 79,
+      "possibilite": ["Consulting","Pre-Change Phase","Mature Organization"],
+      "Pr": 15,
+      "Co": 30,
+      "Op": 25,
+      "Ad": 15,
+      "Ci": 15
+    },
+    {
+      "id": 80,
+      "possibilite": ["Consulting","Change Phase","Mature Organization"],
+      "Pr": 15,
+      "Co": 30,
+      "Op": 20,
+      "Ad": 15,
+      "Ci": 20
+    },
+    {
+      "id": 81,
+      "possibilite": ["Consulting","Post-Change Phase","Mature Organization"],
+      "Pr": 10,
+      "Co": 25,
+      "Op": 25,
+      "Ad": 10,
+      "Ci": 30
+    },
+    {
+      "id": 82,
+      "possibilite": ["Consulting","Pre-Change Phase","Growth Phase"],
+      "Pr": 20,
+      "Co": 25,
+      "Op": 15,
+      "Ad": 25,
+      "Ci": 15
+    },
+    {
+      "id": 83,
+      "possibilite": ["Consulting","Change Phase","Growth Phase"],
+      "Pr": 25,
+      "Co": 20,
+      "Op": 20,
+      "Ad": 25,
+      "Ci": 10
+    },
+    {
+      "id": 84,
+      "possibilite": ["Consulting","Post-Change Phase","Growth Phase"],
+      "Pr": 25,
+      "Co": 20,
+      "Op": 20,
+      "Ad": 25,
+      "Ci": 10
+    }
+  ]

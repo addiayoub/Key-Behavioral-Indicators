@@ -157,9 +157,9 @@
       "Post-changement"
     ],
     "answersAng": [
-      "Pre-Change",
-      "Change",
-      "Post-Change"
+      "Pre-Change Phase",
+      "Change Phase",
+      "Post-Change Phase"
     ],
     "Note": [0, 0, 0],
     "category": "Basic",
@@ -172,11 +172,11 @@
     "required": true,
     "answers": [
       "Croissance",
-      "Maturité"
+      "Mature Organization"
     ],
     "answersAng": [
-      "Growth",
-      "Maturity"
+      "Growth Phase",
+      "Mature Organization"
     ],
     "Note": [0, 0],
     "category": "Basic",
@@ -1052,7 +1052,7 @@
       ],
       "Note": [5, 4, 2, 1],
       "category": "Amélioration continue : viser l'excellence",
-      "categoryAng": "Continuous improvement: Striving for excellence"
+      "categoryAng": "Citing continuous improvement: striving for excellence."
     },
     {
       "id": 52,
@@ -1073,7 +1073,7 @@
       ],
       "Note": [5, 4, 2, 1],
       "category": "Amélioration continue : viser l'excellence",
-      "categoryAng": "Continuous improvement: Striving for excellence"
+      "categoryAng": "Citing continuous improvement: striving for excellence."
     },
     {
       "id": 53,
@@ -1094,7 +1094,7 @@
       ],
       "Note": [5, 4, 2, 1],
       "category": "Amélioration continue : viser l'excellence",
-      "categoryAng": "Continuous improvement: Striving for excellence"
+      "categoryAng": "Citing continuous improvement: striving for excellence."
     },
     {
       "id": 54,
@@ -1115,7 +1115,7 @@
       ],
       "Note": [5, 4, 2, 1],
       "category": "Amélioration continue : viser l'excellence",
-      "categoryAng": "Continuous improvement: Striving for excellence"
+      "categoryAng": "Citing continuous improvement: striving for excellence."
     },
     {
       "id": 55,
@@ -1136,7 +1136,7 @@
       ],
       "Note": [5, 4, 2, 1],
       "category": "Amélioration continue : viser l'excellence",
-      "categoryAng": "Continuous improvement: Striving for excellence"
+      "categoryAng": "Citing continuous improvement: striving for excellence."
     },
     {
       "id": 56,
@@ -1157,7 +1157,7 @@
       ],
       "Note": [5, 4, 2, 1],
       "category": "Amélioration continue : viser l'excellence",
-      "categoryAng": "Continuous improvement: Striving for excellence"
+      "categoryAng": "Citing continuous improvement: striving for excellence."
     },
     {
       "id": 57,
@@ -1178,7 +1178,7 @@
       ],
       "Note": [5, 4, 2, 1],
       "category": "Amélioration continue : viser l'excellence",
-      "categoryAng": "Continuous improvement: Striving for excellence"
+      "categoryAng": "Citing continuous improvement: striving for excellence."
     },
     {
       "id": 58,
@@ -1199,7 +1199,7 @@
       ],
       "Note": [5, 4, 2, 1],
       "category": "Amélioration continue : viser l'excellence",
-      "categoryAng": "Continuous improvement: Striving for excellence"
+      "categoryAng": "Citing continuous improvement: striving for excellence."
     },{
       "id": 59,
       "question": "Je m'engage à atteindre l'excellence dans tous les aspects de mon travail.",
@@ -1219,7 +1219,7 @@
       ],
       "Note": [5, 4, 2, 1],
       "category": "Amélioration continue : viser l'excellence",
-      "categoryAng": "Continuous improvement: Striving for excellence"
+      "categoryAng": "Citing continuous improvement: striving for excellence."
     }
     ,{
       "id": 60,
@@ -1240,7 +1240,7 @@
       ],
       "Note": [5, 4, 2, 1],
       "category": "Amélioration continue : viser l'excellence",
-      "categoryAng": "Continuous improvement: Striving for excellence"
+      "categoryAng": "Citing continuous improvement: striving for excellence."
     }
   ]
   
