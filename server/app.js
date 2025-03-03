@@ -38,7 +38,7 @@
     res.send('API de gestion des questionnaires KBI');
   });
 
-  const PORT = process.env.PORT || 3000;
+  const PORT = process.env.PORT || PORT;
   const HOST = '0.0.0.0'; // Permet d'accepter les connexions externes
   app.listen(PORT, HOST, () => {
     console.log(`Serveur lancé sur http://${HOST}:${PORT}`);
