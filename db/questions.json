@@ -148,8 +148,8 @@
   },
   {
     "id": 8,
-    "question": "Phase de changement",
-    "questionAng": "Change-Phase",
+    "question": "Maturity",
+    "questionAng": "Maturity",
     "required": true,
     "answers": [
       "Pré-changement",
@@ -167,8 +167,8 @@
   },
   {
     "id": 9,
-    "question": "Phase Entreprise",
-    "questionAng": "Company-Phase",
+    "question": "Phase",
+    "questionAng": "Phase",
     "required": true,
     "answers": [
       "Croissance",

@@ -1,4 +1,7 @@
 const UserResponse = require('../models/UserResponse');
+const CategoryScore = require('../models/CategoryScore');
+const TotalScore = require('../models/TotalScore');
+const KeyResponse = require('../models/KeyResponse');
 const Question = require('../models/Question');
 const Ponderation = require('../models/Ponderation');
 const mongoose = require('mongoose');
@@ -6,6 +9,10 @@ const mongoose = require('mongoose');
 const userResponseController = {
   // Enregistrer les réponses d'un utilisateur
   saveUserResponses: async (req, res) => {
+    // Démarrer une session de transaction pour garantir l'atomicité
+    const session = await mongoose.startSession();
+    session.startTransaction();
+    
     try {
       const { userId, responses } = req.body;
       
@@ -21,16 +28,15 @@ const userResponseController = {
       // Récupérer toutes les pondérations
       const allPonderations = await Ponderation.find();
       
-      // Log pour vérifier que les pondérations sont bien chargées
       console.log(`Nombre de pondérations trouvées: ${allPonderations.length}`);
       
       if (allPonderations.length === 0) {
         console.warn("ATTENTION: Aucune pondération n'a été trouvée dans la base de données!");
       }
 
-      // Extraire les réponses spécifiques (6, 8, 9) - EN ANGLAIS pour la comparaison
+      // Extraire les réponses spécifiques (6, 8, 9)
       const keyResponses = {};
-      const keyResponsesAng = {}; // Version anglaise des réponses
+      const keyResponsesAng = {};
       
       for (const response of responses) {
         if ([6, 8, 9].includes(response.questionId)) {
@@ -40,17 +46,16 @@ const userResponseController = {
             const answerText = question.answers[response.answerId] || response.answerText;
             keyResponses[response.questionId] = answerText;
             
-            // Stocker la version anglaise pour la comparaison avec la table de pondération
+            // Stocker la version anglaise
             const answerTextAng = question.answersAng[response.answerId] || response.answerTextAng;
             keyResponsesAng[response.questionId] = answerTextAng;
             
-            // Log pour vérifier les valeurs extraites
             console.log(`Question ${response.questionId} (EN): ${answerTextAng}`);
           }
         }
       }
 
-      // Trouver la pondération applicable si tous les champs nécessaires sont présents
+      // Trouver la pondération applicable
       let applicablePonderation = null;
       if (keyResponsesAng[6] && keyResponsesAng[8] && keyResponsesAng[9]) {
         const industry = keyResponsesAng[6].trim();
@@ -59,7 +64,7 @@ const userResponseController = {
         
         console.log("Recherche de pondération pour:", JSON.stringify([industry, orgType, changePhase]));
         
-        // Vérifier si les valeurs existent dans les pondérations
+        // Vérifier validité des pondérations
         const matchingPonderations = allPonderations.filter(p => {
           if (!p.possibilite || !Array.isArray(p.possibilite) || p.possibilite.length < 3) {
             console.warn(`Pondération ${p.id} a une structure de possibilité invalide:`, p.possibilite);
@@ -78,7 +83,7 @@ const userResponseController = {
           p.possibilite[2] === changePhase
         );
         
-        // Si aucune correspondance exacte, essayer en ignorant la casse
+        // Si aucune correspondance exacte, essayer insensible à la casse
         if (!applicablePonderation) {
           console.log("Aucune correspondance exacte, essai avec recherche insensible à la casse...");
           applicablePonderation = allPonderations.find(p => 
@@ -89,11 +94,8 @@ const userResponseController = {
           );
         }
         
-        // Si toujours aucune correspondance, afficher des infos de débogage détaillées
         if (!applicablePonderation) {
           console.log("AUCUNE PONDÉRATION TROUVÉE! Voici les détails pour le débogage:");
-          
-          // Afficher toutes les combinaisons de pondération disponibles
           console.log("Combinaisons disponibles dans la base de données:");
           allPonderations.forEach(p => {
             if (p.possibilite && Array.isArray(p.possibilite) && p.possibilite.length >= 3) {
@@ -130,10 +132,8 @@ const userResponseController = {
         if (question.answers.length === 0 || 
             (answerId !== undefined && 
             (question.answers[answerId] === "Autre" || question.answersAng[answerId] === "Other"))) {
-          // Pour les réponses de type "Autre", on attribue un score par défaut
           score = question.Note[answerId] || 0;
         } else {
-          // Récupérer la note correspondante à la réponse
           score = question.Note[answerId] || 0;
         }
         
@@ -152,7 +152,6 @@ const userResponseController = {
           score,
           category: question.category,
           categoryAng: question.categoryAng,
-          // Ajouter les abréviations des catégories
           categoryShort: question.category.substring(0, 2),
           categoryAngShort: question.categoryAng.substring(0, 2)
         });
@@ -164,8 +163,8 @@ const userResponseController = {
             categoriesMap.set(question.category, {
               category: question.category,
               categoryAng: question.categoryAng,
-              categoryShort: question.category.substring(0, 2),     // Abréviation FR
-              categoryAngShort: question.categoryAng.substring(0, 2), // Abréviation EN
+              categoryShort: question.category.substring(0, 2),
+              categoryAngShort: question.categoryAng.substring(0, 2),
               score: 0,
               maxPossible: 0,
               count: 0
@@ -182,40 +181,45 @@ const userResponseController = {
         }
       }
 
-      // Préparer les scores par catégorie avec la nouvelle formule: (score * 100) / maxPossible
+      // Préparer les scores par catégorie
+      const categoryScoreObjs = [];
       const categoryScores = Array.from(categoriesMap.values()).map(({ category, categoryAng, categoryShort, categoryAngShort, score, maxPossible }) => {
-        // Calculer le pourcentage: (score * 100) / maxPossible
         const percentageScore = maxPossible > 0 ? (score * 100) / maxPossible : 0;
+        
+        const categoryScoreObj = new CategoryScore({
+          userId,
+          category,
+          categoryAng,
+          categoryShort,
+          categoryAngShort,
+          score: percentageScore,
+          rawScore: score,
+          maxPossible
+        });
+        
+        categoryScoreObjs.push(categoryScoreObj);
         
         return {
           category,
           categoryAng,
-          categoryShort,     // Abréviation FR
-          categoryAngShort,  // Abréviation EN
-          score: percentageScore, // Remplacer le score par le pourcentage
-          rawScore: score, // Conserver le score brut pour référence
+          categoryShort,
+          categoryAngShort,
+          score: percentageScore,
+          rawScore: score,
           maxPossible
         };
       });
 
-      // Calculer le score total également en pourcentage
+      // Calculer le score total
       const totalRawScore = categoryScores.reduce((sum, cat) => sum + cat.rawScore, 0);
       const totalMaxPossible = categoryScores.reduce((sum, cat) => sum + cat.maxPossible, 0);
       const totalPercentage = totalMaxPossible > 0 ? (totalRawScore * 100) / totalMaxPossible : 0;
 
-      const totalScore = {
-        score: totalPercentage, // Score total en pourcentage
-        rawScore: totalRawScore, // Score brut pour référence
-        maxPossible: totalMaxPossible
-      };
-
       // Appliquer les pondérations si disponibles
       let kbiScores = null;
       if (applicablePonderation) {
-        // Créer le profil en utilisant les versions anglaises pour la cohérence
         const profileText = `${keyResponsesAng[6]} - ${keyResponsesAng[8]} - ${keyResponsesAng[9]}`;
         
-        // Rechercher les scores des catégories par leurs abréviations en anglais
         const prScore = categoryScores.find(c => c.categoryAngShort === 'Pr')?.score || 0;
         const coScore = categoryScores.find(c => c.categoryAngShort === 'Co')?.score || 0;
         const opScore = categoryScores.find(c => c.categoryAngShort === 'Op')?.score || 0;
@@ -232,44 +236,81 @@ const userResponseController = {
           KBICONSO: 0
         };
         
-        // Calculer le score total KBI
         kbiScores.KBICONSO = kbiScores.Pr + kbiScores.Co + kbiScores.Op + kbiScores.Ad + kbiScores.Ci;
       }
 
-      // Créer l'objet de réponse utilisateur
-      const userResponse = new UserResponse({
+      // Créer l'objet de réponse utilisateur avec la structure originale
+      const userResponseObj = new UserResponse({
         userId,
-        responses: processedResponses,
-        categoryScores,
-        totalScore,
-        kbiScores,
-        keyResponses: {
-          industry: keyResponses[6],
-          industryAng: keyResponsesAng[6],
-          organizationType: keyResponses[8],
-          organizationTypeAng: keyResponsesAng[8],
-          changePhase: keyResponses[9],
-          changePhaseAng: keyResponsesAng[9]
-        }
+        responses: processedResponses
       });
 
-      await userResponse.save();
+      // Créer le modèle TotalScore
+      const totalScoreObj = new TotalScore({
+        userId,
+        score: totalPercentage,
+        rawScore: totalRawScore,
+        maxPossible: totalMaxPossible,
+        kbiScores
+      });
+
+      // Créer le modèle KeyResponse
+      const keyResponseObj = new KeyResponse({
+        userId,
+        industry: keyResponses[6],
+        industryAng: keyResponsesAng[6],
+        organizationType: keyResponses[8],
+        organizationTypeAng: keyResponsesAng[8],
+        changePhase: keyResponses[9],
+        changePhaseAng: keyResponsesAng[9]
+      });
+
+      // Sauvegarder les données dans les modèles séparés
+      await UserResponse.deleteOne({ userId }, { session });
+      await CategoryScore.deleteMany({ userId }, { session });
+      await TotalScore.deleteOne({ userId }, { session });
+      await KeyResponse.deleteOne({ userId }, { session });
+      
+      // Sauvegarder les nouveaux documents
+      await userResponseObj.save({ session });
+      await Promise.all(categoryScoreObjs.map(cat => cat.save({ session })));
+      await totalScoreObj.save({ session });
+      await keyResponseObj.save({ session });
+      
+      // Valider la transaction
+      await session.commitTransaction();
       
       res.status(201).json({
         message: 'Réponses enregistrées avec succès',
         data: {
           userId,
           categoryScores,
-          totalScore,
+          totalScore: {
+            score: totalPercentage,
+            rawScore: totalRawScore,
+            maxPossible: totalMaxPossible
+          },
           kbiScores,
-          keyResponses: userResponse.keyResponses,
-          ponderationFound: !!applicablePonderation, // Indiquer si une pondération a été trouvée
-          ponderationId: applicablePonderation?.id || null // ID de la pondération si trouvée
+          keyResponses: {
+            industry: keyResponses[6],
+            industryAng: keyResponsesAng[6],
+            organizationType: keyResponses[8],
+            organizationTypeAng: keyResponsesAng[8],
+            changePhase: keyResponses[9],
+            changePhaseAng: keyResponsesAng[9]
+          },
+          ponderationFound: !!applicablePonderation,
+          ponderationId: applicablePonderation?.id || null
         }
       });
     } catch (error) {
+      // En cas d'erreur, annuler la transaction
+      await session.abortTransaction();
       console.error('Erreur:', error);
       res.status(500).json({ message: 'Erreur serveur', error: error.message });
+    } finally {
+      // Terminer la session
+      session.endSession();
     }
   },
 
@@ -278,21 +319,92 @@ const userResponseController = {
     try {
       const { userId } = req.params;
       
-      const userResponse = await UserResponse.findOne({ userId }).sort({ createdAt: -1 });
+      // Récupérer toutes les données depuis les différents modèles
+      const userResponse = await UserResponse.findOne({ userId });
+      const categoryScores = await CategoryScore.find({ userId });
+      const totalScore = await TotalScore.findOne({ userId });
+      const keyResponse = await KeyResponse.findOne({ userId });
       
-      if (!userResponse) {
+      if (!userResponse || !categoryScores.length || !totalScore || !keyResponse) {
         return res.status(404).json({ message: 'Aucun résultat trouvé pour cet utilisateur' });
       }
       
       res.json({
-        userId: userResponse.userId,
+        userId,
         responses: userResponse.responses,
-        categoryScores: userResponse.categoryScores,
-        totalScore: userResponse.totalScore,
-        kbiScores: userResponse.kbiScores,
-        keyResponses: userResponse.keyResponses,
-        createdAt: userResponse.createdAt
+        categoryScores,
+        totalScore,
+        keyResponses: keyResponse,
+        createdAt: totalScore.createdAt
       });
+    } catch (error) {
+      console.error('Erreur:', error);
+      res.status(500).json({ message: 'Erreur serveur', error: error.message });
+    }
+  },
+  
+  // Récupérer uniquement les réponses d'un utilisateur
+  getUserResponses: async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const userResponse = await UserResponse.findOne({ userId });
+      
+      if (!userResponse) {
+        return res.status(404).json({ message: 'Aucune réponse trouvée pour cet utilisateur' });
+      }
+      
+      res.json({ userId, responses: userResponse.responses });
+    } catch (error) {
+      console.error('Erreur:', error);
+      res.status(500).json({ message: 'Erreur serveur', error: error.message });
+    }
+  },
+  
+  // Récupérer uniquement les scores par catégorie d'un utilisateur
+  getUserCategoryScores: async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const categoryScores = await CategoryScore.find({ userId });
+      
+      if (!categoryScores.length) {
+        return res.status(404).json({ message: 'Aucun score par catégorie trouvé pour cet utilisateur' });
+      }
+      
+      res.json({ userId, categoryScores });
+    } catch (error) {
+      console.error('Erreur:', error);
+      res.status(500).json({ message: 'Erreur serveur', error: error.message });
+    }
+  },
+  
+  // Récupérer uniquement le score total d'un utilisateur
+  getUserTotalScore: async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const totalScore = await TotalScore.findOne({ userId });
+      
+      if (!totalScore) {
+        return res.status(404).json({ message: 'Aucun score total trouvé pour cet utilisateur' });
+      }
+      
+      res.json({ userId, totalScore });
+    } catch (error) {
+      console.error('Erreur:', error);
+      res.status(500).json({ message: 'Erreur serveur', error: error.message });
+    }
+  },
+  
+  // Récupérer uniquement les réponses clés d'un utilisateur
+  getUserKeyResponses: async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const keyResponses = await KeyResponse.findOne({ userId });
+      
+      if (!keyResponses) {
+        return res.status(404).json({ message: 'Aucune réponse clé trouvée pour cet utilisateur' });
+      }
+      
+      res.json({ userId, keyResponses });
     } catch (error) {
       console.error('Erreur:', error);
       res.status(500).json({ message: 'Erreur serveur', error: error.message });
