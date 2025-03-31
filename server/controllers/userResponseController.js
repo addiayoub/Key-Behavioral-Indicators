@@ -1,6 +1,4 @@
 const UserResponse = require('../models/UserResponse');
-const CategoryScore = require('../models/CategoryScore');
-const TotalScore = require('../models/TotalScore');
 const KeyResponse = require('../models/KeyResponse');
 const Question = require('../models/Question');
 const Ponderation = require('../models/Ponderation');
@@ -182,22 +180,8 @@ const userResponseController = {
       }
 
       // Préparer les scores par catégorie
-      const categoryScoreObjs = [];
       const categoryScores = Array.from(categoriesMap.values()).map(({ category, categoryAng, categoryShort, categoryAngShort, score, maxPossible }) => {
         const percentageScore = maxPossible > 0 ? (score * 100) / maxPossible : 0;
-        
-        const categoryScoreObj = new CategoryScore({
-          userId,
-          category,
-          categoryAng,
-          categoryShort,
-          categoryAngShort,
-          score: percentageScore,
-          rawScore: score,
-          maxPossible
-        });
-        
-        categoryScoreObjs.push(categoryScoreObj);
         
         return {
           category,
@@ -215,43 +199,56 @@ const userResponseController = {
       const totalMaxPossible = categoryScores.reduce((sum, cat) => sum + cat.maxPossible, 0);
       const totalPercentage = totalMaxPossible > 0 ? (totalRawScore * 100) / totalMaxPossible : 0;
 
+      // Préparer les données pour UserResponse avec les KBI scores
+      let profileText = '';
+      let prScore = 0;
+      let coScore = 0;
+      let opScore = 0;
+      let adScore = 0;
+      let ciScore = 0;
+      let kbiConsScore = 0;
+
       // Appliquer les pondérations si disponibles
-      let kbiScores = null;
       if (applicablePonderation) {
-        const profileText = `${keyResponsesAng[6]} - ${keyResponsesAng[8]} - ${keyResponsesAng[9]}`;
+        profileText = `${keyResponsesAng[6]} - ${keyResponsesAng[8]} - ${keyResponsesAng[9]}`;
         
-        const prScore = categoryScores.find(c => c.categoryAngShort === 'Pr')?.score || 0;
-        const coScore = categoryScores.find(c => c.categoryAngShort === 'Co')?.score || 0;
-        const opScore = categoryScores.find(c => c.categoryAngShort === 'Op')?.score || 0;
-        const adScore = categoryScores.find(c => c.categoryAngShort === 'Ad')?.score || 0;
-        const ciScore = categoryScores.find(c => c.categoryAngShort === 'Ci')?.score || 0;
+        prScore = categoryScores.find(c => c.categoryAngShort === 'Pr')?.score || 0;
+        coScore = categoryScores.find(c => c.categoryAngShort === 'Co')?.score || 0;
+        opScore = categoryScores.find(c => c.categoryAngShort === 'Op')?.score || 0;
+        adScore = categoryScores.find(c => c.categoryAngShort === 'Ad')?.score || 0;
+        ciScore = categoryScores.find(c => c.categoryAngShort === 'Ci')?.score || 0;
         
-        kbiScores = {
-          profile: profileText,
-          Pr: prScore * (applicablePonderation.Pr / 100),
-          Co: coScore * (applicablePonderation.Co / 100),
-          Op: opScore * (applicablePonderation.Op / 100),
-          Ad: adScore * (applicablePonderation.Ad / 100),
-          Ci: ciScore * (applicablePonderation.Ci / 100),
-          KBICONSO: 0
-        };
+        const weightedPr = prScore * (applicablePonderation.Pr / 100);
+        const weightedCo = coScore * (applicablePonderation.Co / 100);
+        const weightedOp = opScore * (applicablePonderation.Op / 100);
+        const weightedAd = adScore * (applicablePonderation.Ad / 100);
+        const weightedCi = ciScore * (applicablePonderation.Ci / 100);
         
-        kbiScores.KBICONSO = kbiScores.Pr + kbiScores.Co + kbiScores.Op + kbiScores.Ad + kbiScores.Ci;
+        kbiConsScore = weightedPr + weightedCo + weightedOp + weightedAd + weightedCi;
+        
+        // Mettre à jour les scores pondérés
+        prScore = weightedPr;
+        coScore = weightedCo;
+        opScore = weightedOp;
+        adScore = weightedAd;
+        ciScore = weightedCi;
       }
 
-      // Créer l'objet de réponse utilisateur avec la structure originale
+      // Créer l'objet de réponse utilisateur avec la structure mise à jour
       const userResponseObj = new UserResponse({
         userId,
-        responses: processedResponses
-      });
-
-      // Créer le modèle TotalScore
-      const totalScoreObj = new TotalScore({
-        userId,
+        responses: processedResponses,
+        categoryScores: categoryScores, // Stockage direct des scores par catégorie
         score: totalPercentage,
         rawScore: totalRawScore,
         maxPossible: totalMaxPossible,
-        kbiScores
+        profile: profileText,
+        Pr: prScore,
+        Co: coScore,
+        Op: opScore,
+        Ad: adScore,
+        Ci: ciScore,
+        KBICONSO: kbiConsScore
       });
 
       // Créer le modèle KeyResponse
@@ -267,14 +264,10 @@ const userResponseController = {
 
       // Sauvegarder les données dans les modèles séparés
       await UserResponse.deleteOne({ userId }, { session });
-      await CategoryScore.deleteMany({ userId }, { session });
-      await TotalScore.deleteOne({ userId }, { session });
       await KeyResponse.deleteOne({ userId }, { session });
       
       // Sauvegarder les nouveaux documents
       await userResponseObj.save({ session });
-      await Promise.all(categoryScoreObjs.map(cat => cat.save({ session })));
-      await totalScoreObj.save({ session });
       await keyResponseObj.save({ session });
       
       // Valider la transaction
@@ -290,7 +283,15 @@ const userResponseController = {
             rawScore: totalRawScore,
             maxPossible: totalMaxPossible
           },
-          kbiScores,
+          kbiScores: {
+            profile: profileText,
+            Pr: prScore,
+            Co: coScore,
+            Op: opScore,
+            Ad: adScore,
+            Ci: ciScore,
+            KBICONSO: kbiConsScore
+          },
           keyResponses: {
             industry: keyResponses[6],
             industryAng: keyResponsesAng[6],
@@ -319,30 +320,74 @@ const userResponseController = {
     try {
       const { userId } = req.params;
       
-      // Récupérer toutes les données depuis les différents modèles
+      // Récupérer les données depuis le modèle UserResponse
       const userResponse = await UserResponse.findOne({ userId });
-      const categoryScores = await CategoryScore.find({ userId });
-      const totalScore = await TotalScore.findOne({ userId });
       const keyResponse = await KeyResponse.findOne({ userId });
       
-      if (!userResponse || !categoryScores.length || !totalScore || !keyResponse) {
+      if (!userResponse || !keyResponse) {
         return res.status(404).json({ message: 'Aucun résultat trouvé pour cet utilisateur' });
       }
       
       res.json({
         userId,
         responses: userResponse.responses,
-        categoryScores,
-        totalScore,
+        categoryScores: userResponse.categoryScores,
+        totalScore: {
+          score: userResponse.score,
+          rawScore: userResponse.rawScore,
+          maxPossible: userResponse.maxPossible
+        },
+        kbiScores: {
+          profile: userResponse.profile,
+          Pr: userResponse.Pr,
+          Co: userResponse.Co,
+          Op: userResponse.Op,
+          Ad: userResponse.Ad,
+          Ci: userResponse.Ci,
+          KBICONSO: userResponse.KBICONSO
+        },
         keyResponses: keyResponse,
-        createdAt: totalScore.createdAt
+        createdAt: userResponse.createdAt
       });
     } catch (error) {
       console.error('Erreur:', error);
       res.status(500).json({ message: 'Erreur serveur', error: error.message });
     }
   },
-  
+ // Dans controllers/userResponseController.js
+saveImportedResponses: async (req, res) => {
+  try {
+    const { importedData } = req.body;
+
+    if (!Array.isArray(importedData)) {
+      return res.status(400).json({ message: 'Données importées invalides' });
+    }
+
+    // Utiliser bulkWrite pour optimiser les performances
+    const bulkOps = importedData.map(data => ({
+      updateOne: {
+        filter: { userId: data.userId },
+        update: { $setOnInsert: data },
+        upsert: true
+      }
+    }));
+
+    const result = await UserResponse.bulkWrite(bulkOps);
+
+    res.status(201).json({
+      message: 'Import terminé',
+      inserted: result.upsertedCount,
+      modified: result.modifiedCount,
+      total: importedData.length
+    });
+  } catch (error) {
+    console.error('Erreur lors de l\'import:', error);
+    res.status(500).json({ 
+      message: 'Erreur lors de l\'import',
+      error: error.message 
+    });
+  }
+},
   // Récupérer uniquement les réponses d'un utilisateur
   getUserResponses: async (req, res) => {
     try {
@@ -364,13 +409,13 @@ const userResponseController = {
   getUserCategoryScores: async (req, res) => {
     try {
       const { userId } = req.params;
-      const categoryScores = await CategoryScore.find({ userId });
+      const userResponse = await UserResponse.findOne({ userId });
       
-      if (!categoryScores.length) {
+      if (!userResponse || !userResponse.categoryScores.length) {
         return res.status(404).json({ message: 'Aucun score par catégorie trouvé pour cet utilisateur' });
       }
       
-      res.json({ userId, categoryScores });
+      res.json({ userId, categoryScores: userResponse.categoryScores });
     } catch (error) {
       console.error('Erreur:', error);
       res.status(500).json({ message: 'Erreur serveur', error: error.message });
@@ -381,13 +426,29 @@ const userResponseController = {
   getUserTotalScore: async (req, res) => {
     try {
       const { userId } = req.params;
-      const totalScore = await TotalScore.findOne({ userId });
+      const userResponse = await UserResponse.findOne({ userId });
       
-      if (!totalScore) {
+      if (!userResponse) {
         return res.status(404).json({ message: 'Aucun score total trouvé pour cet utilisateur' });
       }
       
-      res.json({ userId, totalScore });
+      res.json({ 
+        userId, 
+        totalScore: {
+          score: userResponse.score,
+          rawScore: userResponse.rawScore,
+          maxPossible: userResponse.maxPossible,
+          kbiScores: {
+            profile: userResponse.profile,
+            Pr: userResponse.Pr,
+            Co: userResponse.Co,
+            Op: userResponse.Op,
+            Ad: userResponse.Ad,
+            Ci: userResponse.Ci,
+            KBICONSO: userResponse.KBICONSO
+          }
+        }
+      });
     } catch (error) {
       console.error('Erreur:', error);
       res.status(500).json({ message: 'Erreur serveur', error: error.message });
@@ -412,4 +473,4 @@ const userResponseController = {
   }
 };
 
-module.exports = userResponseController;
+module.exports = userResponseController;//

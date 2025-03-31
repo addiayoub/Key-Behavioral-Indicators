@@ -1,0 +1,1667 @@
+[{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d6053e"
+  },
+  "id": 1,
+  "question": "Veuillez sélectionner votre genre ?",
+  "questionAng": "Please select your gender?",
+  "required": true,
+  "answers": [
+    "Femme",
+    "Homme"
+  ],
+  "answersAng": [
+    "Woman",
+    "Man"
+  ],
+  "Note": [],
+  "category": "Basic",
+  "categoryAng": "Basic"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d6053f"
+  },
+  "id": 2,
+  "question": "Occupez-vous un poste de direction ?",
+  "questionAng": "Do you hold a managerial position ?",
+  "required": true,
+  "answers": [
+    "Oui",
+    "Non"
+  ],
+  "answersAng": [
+    "Yes",
+    "No"
+  ],
+  "Note": [],
+  "category": "Basic",
+  "categoryAng": "Basic"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60540"
+  },
+  "id": 3,
+  "question": "Quelle est votre tranche d'âge ?",
+  "questionAng": "What is your age range?",
+  "required": true,
+  "answers": [
+    "20-25",
+    "25-30",
+    "30-35",
+    "35-45",
+    "45-55",
+    "Plus de 55"
+  ],
+  "answersAng": [
+    "20-25",
+    "25-30",
+    "30-35",
+    "35-45",
+    "45-55",
+    "Over 55"
+  ],
+  "Note": [],
+  "category": "Basic",
+  "categoryAng": "Basic"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60541"
+  },
+  "id": 4,
+  "question": "Dans quel département travaillez-vous ?",
+  "questionAng": "Which department are you working in?",
+  "required": true,
+  "answers": [
+    "Ventes & Marketing",
+    "Opérations",
+    "Direction",
+    "RH / Finance / Achats",
+    "Service client",
+    "Stratégie & Développement",
+    "Conseil",
+    "Autre"
+  ],
+  "answersAng": [
+    "Sales & Marketing",
+    "Operations",
+    "Management",
+    "HR / Finance / Procurement",
+    "Customer Service Support",
+    "Strategy & Development",
+    "Consulting",
+    "Autre"
+  ],
+  "Note": [],
+  "category": "Basic",
+  "categoryAng": "Basic"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60542"
+  },
+  "id": 5,
+  "question": "Pour quelle entreprise travaillez-vous (Optionnel) ? ",
+  "questionAng": "Which company are working for (Optional) ? ",
+  "required": false,
+  "answers": [],
+  "answersAng": [],
+  "Note": [],
+  "category": "Basic",
+  "categoryAng": "Basic"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60543"
+  },
+  "id": 6,
+  "question": "Dans quel secteur/industrie évoluez-vous ?",
+  "questionAng": "In which sector/industry do you evolve ?",
+  "required": true,
+  "answers": [
+    "IT / Télécom",
+    "Banque / Assurance / Finance",
+    "Chaîne d'approvisionnement / Logistique",
+    "Transport",
+    "Fabrication",
+    "Éducation",
+    "Construction",
+    "Médias & Divertissement",
+    "Tourisme",
+    "Commerce de détail",
+    "Santé & Pharmaceutique",
+    "Secteur public"
+  ],
+  "answersAng": [
+    "IT / Telecom",
+    "Banking / Insurance / Finance",
+    "Supply chain / Logistics",
+    "Transport",
+    "Manufacturing",
+    "Education",
+    "Construction",
+    "Media & Entertainment",
+    "Tourism",
+    "Retail",
+    "Healthcare & Pharmaceuticals",
+    "Public sector"
+  ],
+  "Note": [],
+  "category": "Basic",
+  "categoryAng": "Basic"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60544"
+  },
+  "id": 7,
+  "question": "Entrez votre email ici (si vous souhaitez que nous partagions les résultats avec vous) - (c'est optionnel).",
+  "questionAng": "Enter your email here (if you want us to share the results with you) - it's optional",
+  "required": false,
+  "answers": [],
+  "answersAng": [],
+  "Note": [],
+  "category": "Basic",
+  "categoryAng": "Basic"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60545"
+  },
+  "id": 8,
+  "question": "Maturity",
+  "questionAng": "Maturity",
+  "required": true,
+  "answers": [
+    "Pré-changement",
+    "Changement",
+    "Post-changement"
+  ],
+  "answersAng": [
+    "Pre-Change Phase",
+    "Change Phase",
+    "Post-Change Phase"
+  ],
+  "Note": [
+    0,
+    0,
+    0
+  ],
+  "category": "Basic",
+  "categoryAng": "Basic"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60546"
+  },
+  "id": 9,
+  "question": "Phase",
+  "questionAng": "Phase",
+  "required": true,
+  "answers": [
+    "Croissance",
+    "Mature Organization"
+  ],
+  "answersAng": [
+    "Growth Phase",
+    "Mature Organization"
+  ],
+  "Note": [
+    0,
+    0
+  ],
+  "category": "Basic",
+  "categoryAng": "Basic"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60548"
+  },
+  "id": 10,
+  "question": "Lorsque j'identifie des domaines à améliorer dans mon travail, je :",
+  "questionAng": "When I identify areas for improvement in my work, I:",
+  "required": true,
+  "answers": [
+    "Je prends des mesures immédiates pour y remédier.",
+    "J'en discute avec mon superviseur ou mon équipe pour obtenir des conseils supplémentaires.",
+    "Je les ignore simplement et passe à autre chose",
+    "Je ne me sens pas concerné ni intéressé"
+  ],
+  "answersAng": [
+    "Take immediate action to address them.",
+    "Discuss them with my supervisor or team for further guidance.",
+    "Wait for instructions from my supervisor before taking action.",
+    "Just ignore them and move to something else"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Proactivité : volonté de prendre des initiatives",
+  "categoryAng": "Proactivity: Willingness to Take Initiative"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60549"
+  },
+  "id": 11,
+  "question": "À quelle fréquence suggérez-vous de nouvelles idées ou des améliorations à votre équipe ou à votre organisation ?",
+  "questionAng": "How often do you suggest new ideas or improvements to your team or organization?",
+  "required": true,
+  "answers": [
+    "Toujours",
+    "Souvent",
+    "Rarement",
+    "Jamais"
+  ],
+  "answersAng": [
+    "Always",
+    "Often",
+    "Rarely",
+    "Never"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Proactivité : volonté de prendre des initiatives",
+  "categoryAng": "Proactivity: Willingness to Take Initiative"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d6054a"
+  },
+  "id": 12,
+  "question": "Lorsqu'un problème survient, je prends activement des mesures pour le résoudre plutôt que d'attendre des instructions.",
+  "questionAng": "When a problem arises, I actively take steps to solve it rather than waiting for instructions.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Proactivité : volonté de prendre des initiatives",
+  "categoryAng": "Proactivity: Willingness to Take Initiative"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d6054b"
+  },
+  "id": 13,
+  "question": "Je me sens en confiance pour prendre des décisions de manière indépendante si nécessaire.",
+  "questionAng": "I feel confident in making decisions independently when necessary.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Proactivité : volonté de prendre des initiatives",
+  "categoryAng": "Proactivity: Willingness to Take Initiative"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d6054c"
+  },
+  "id": 14,
+  "question": "Je m'approprie mon travail et mes responsabilités sans qu'on me le demande.",
+  "questionAng": "I take ownership of my work and responsibilities without being asked.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Proactivité : volonté de prendre des initiatives",
+  "categoryAng": "Proactivity: Willingness to Take Initiative"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d6054d"
+  },
+  "id": 15,
+  "question": "Je me fixe constamment des objectifs personnels pour améliorer ma croissance professionnelle.",
+  "questionAng": "I consistently set personal goals to enhance my professional growth.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Proactivité : volonté de prendre des initiatives",
+  "categoryAng": "Proactivity: Willingness to Take Initiative"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d6054e"
+  },
+  "id": 16,
+  "question": "Quelle est la probabilité que vous vous portiez volontaire pour des tâches autres que les tâches qui vous sont assignées ?",
+  "questionAng": "How likely are you to volunteer for tasks outside of your assigned duties?",
+  "required": true,
+  "answers": [
+    "Très probable",
+    "Probable",
+    "Improbable",
+    "Très peu probable"
+  ],
+  "answersAng": [
+    "Very Likely",
+    "Likely",
+    "Unlikely",
+    "Very Unlikely"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Proactivité : volonté de prendre des initiatives",
+  "categoryAng": "Proactivity: Willingness to Take Initiative"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d6054f"
+  },
+  "id": 17,
+  "question": "Dans quelle mesure êtes-vous à l'aise pour assumer de nouvelles responsabilités ou des tâches en dehors de votre champ d'action habituel ?",
+  "questionAng": "How comfortable are you with taking on new responsibilities or tasks outside your usual scope?",
+  "required": true,
+  "answers": [
+    "Très confortable",
+    "Confortable",
+    "Inconfortable",
+    "Très inconfortable"
+  ],
+  "answersAng": [
+    "Very Comfortable",
+    "Comfortable",
+    "Uncomfortable",
+    "Very uncomfortable"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Proactivité : volonté de prendre des initiatives",
+  "categoryAng": "Proactivity: Willingness to Take Initiative"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60550"
+  },
+  "id": 18,
+  "question": "Je cherche des ressources ou de l'aide pour accomplir des tâches difficiles au lieu de les repousser.",
+  "questionAng": "I seek resources or assistance to complete challenging tasks instead of postponing them.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Proactivité : volonté de prendre des initiatives",
+  "categoryAng": "Proactivity: Willingness to Take Initiative"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60551"
+  },
+  "id": 19,
+  "question": "Je prends l'initiative de trouver des solutions lorsque je suis confronté à des obstacles dans mon travail.",
+  "questionAng": "I take initiative to find solutions when faced with obstacles in my work.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Proactivité : volonté de prendre des initiatives",
+  "categoryAng": "Proactivity: Willingness to Take Initiative"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60552"
+  },
+  "id": 20,
+  "question": "À quelle fréquence recherchez-vous activement des occasions de collaborer avec des collègues de différents départements ou équipes ?",
+  "questionAng": "How often do you actively seek opportunities to collaborate with colleagues from different departments or teams?",
+  "required": true,
+  "answers": [
+    "Toujours",
+    "Souvent",
+    "Rarement",
+    "Jamais"
+  ],
+  "answersAng": [
+    "Always",
+    "Often",
+    "Rarely",
+    "Never"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Collaboration : travail d'équipe efficace",
+  "categoryAng": "Collaboration: Effective Teamwork"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60553"
+  },
+  "id": 21,
+  "question": "Lorsque je travaille sur un projet d'équipe, j'apporte mes compétences et mes connaissances pour atteindre des objectifs collectifs.",
+  "questionAng": "When working on a team project, I contribute my skills and knowledge to achieve collective goals.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Collaboration : travail d'équipe efficace",
+  "categoryAng": "Collaboration: Effective Teamwork"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60554"
+  },
+  "id": 22,
+  "question": "Je m'efforce de comprendre les points de vue et les idées de mes collègues.",
+  "questionAng": "I make an effort to understand the perspectives and ideas of my colleagues.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Collaboration : travail d'équipe efficace",
+  "categoryAng": "Collaboration: Effective Teamwork"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60555"
+  },
+  "id": 23,
+  "question": "Je partage ouvertement des informations et des mises à jour avec mon équipe pour m'assurer que tout le monde est aligné.",
+  "questionAng": "I openly share information and updates with my team to ensure everyone is aligned.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Collaboration : travail d'équipe efficace",
+  "categoryAng": "Collaboration: Effective Teamwork"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60556"
+  },
+  "id": 24,
+  "question": "J'apprécie et respecte les commentaires de tous les membres de l'équipe, même s'ils diffèrent de mon propre point de vue.",
+  "questionAng": "I value and respect input from all team members, even if it differs from my own perspective.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Collaboration : travail d'équipe efficace",
+  "categoryAng": "Collaboration: Effective Teamwork"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60557"
+  },
+  "id": 25,
+  "question": "Lorsque des conflits surviennent au sein de l'équipe, je travaille activement à les résoudre de manière constructive.",
+  "questionAng": "When conflicts arise within the team, I actively work to resolve them constructively.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Collaboration : travail d'équipe efficace",
+  "categoryAng": "Collaboration: Effective Teamwork"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60558"
+  },
+  "id": 26,
+  "question": "J'encourage la collaboration et j'implique activement les autres dans les processus de prise de décision.",
+  "questionAng": "I encourage collaboration and actively involve others in decision-making processes.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Collaboration : travail d'équipe efficace",
+  "categoryAng": "Collaboration: Effective Teamwork"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60559"
+  },
+  "id": 27,
+  "question": "Dans quelle mesure êtes-vous à l'aise pour partager des idées lors de discussions ou de réunions d'équipe ?",
+  "questionAng": "How comfortable are you sharing ideas during team discussions or meetings?",
+  "required": true,
+  "answers": [
+    "Très confortable",
+    "Confortable",
+    "Inconfortable",
+    "Très inconfortable"
+  ],
+  "answersAng": [
+    "Very Comfortable",
+    "Comfortable",
+    "Uncomfortable",
+    "Very uncomfortable"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Collaboration : travail d'équipe efficace",
+  "categoryAng": "Collaboration: Effective Teamwork"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d6055a"
+  },
+  "id": 28,
+  "question": "Je reconnais et j'apprécie souvent les contributions des autres.",
+  "questionAng": "I frequently acknowledge and appreciate the contributions of others.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Collaboration : travail d'équipe efficace",
+  "categoryAng": "Collaboration: Effective Teamwork"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d6055b"
+  },
+  "id": 29,
+  "question": "Je m'efforce d'établir de solides relations de travail avec mes collègues.",
+  "questionAng": "I make an effort to build strong working relationships with colleagues.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Collaboration : travail d'équipe efficace",
+  "categoryAng": "Collaboration: Effective Teamwork"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d6055c"
+  },
+  "id": 30,
+  "question": "Lorsque je reçois des commentaires constructifs, je :",
+  "questionAng": "When receiving constructive feedback, I:",
+  "required": true,
+  "answers": [
+    "J'agis toujours en conséquence pour m'améliorer.",
+    "J'y pense mais je n'agis pas toujours.",
+    "Je le rejete souvent.",
+    "Je l'évite complètement."
+  ],
+  "answersAng": [
+    "Always act on it to improve.",
+    "Consider it but may not always act.",
+    "Often dismiss it.",
+    "Avoid it completely."
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Ouverture au feedback : réceptivité aux commentaires",
+  "categoryAng": "Openness to feedback: Receptiveness to Input"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d6055d"
+  },
+  "id": 31,
+  "question": "À quelle fréquence recherchez-vous activement les commentaires de vos superviseurs ou de vos collègues pour améliorer votre performance ?",
+  "questionAng": "How often do you actively seek feedback from your supervisors or colleagues to enhance your performance?",
+  "required": true,
+  "answers": [
+    "Toujours",
+    "Souvent",
+    "Rarement",
+    "Jamais"
+  ],
+  "answersAng": [
+    "Very Often",
+    "Often",
+    "Rarely",
+    "Never"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Ouverture au feedback : réceptivité aux commentaires",
+  "categoryAng": "Openness to feedback: Receptiveness to Input"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d6055e"
+  },
+  "id": 32,
+  "question": "Je considère le feedback comme une opportunité de croissance et de développement.",
+  "questionAng": "I view feedback as an opportunity for growth and development.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Ouverture au feedback : réceptivité aux commentaires",
+  "categoryAng": "Openness to feedback: Receptiveness to Input"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d6055f"
+  },
+  "id": 33,
+  "question": "Je reste ouvert d'esprit lorsque je reçois des suggestions d'amélioration.",
+  "questionAng": "I remain open-minded when receiving suggestions for improvement.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Ouverture au feedback : réceptivité aux commentaires",
+  "categoryAng": "Openness to feedback: Receptiveness to Input"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60560"
+  },
+  "id": 34,
+  "question": "Lorsque je ne suis pas d'accord avec les commentaires, je les traite de manière professionnelle et respectueuse.",
+  "questionAng": "When I disagree with feedback, I address it professionally and respectfully.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Ouverture au feedback : réceptivité aux commentaires",
+  "categoryAng": "Openness to feedback: Receptiveness to Input"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60561"
+  },
+  "id": 35,
+  "question": "Je fais un suivi proactif auprès de mes collègues ou superviseurs pour clarifier les commentaires au besoin.",
+  "questionAng": "I proactively follow up with colleagues or supervisors to clarify feedback when needed.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Ouverture au feedback : réceptivité aux commentaires",
+  "categoryAng": "Openness to feedback: Receptiveness to Input"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60562"
+  },
+  "id": 36,
+  "question": "Dans quelle mesure êtes-vous à l'aise de donner de la rétroaction aux autres de manière constructive ?",
+  "questionAng": "How comfortable are you providing feedback to others in a constructive manner?",
+  "required": true,
+  "answers": [
+    "Très Confortable",
+    "Confortable",
+    "Inconfortable",
+    "Très inconfortable"
+  ],
+  "answersAng": [
+    "Very Comfortable",
+    "Comfortable",
+    "Uncomfortable",
+    "Very uncomfortable"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Ouverture au feedback : réceptivité aux commentaires",
+  "categoryAng": "Openness to feedback: Receptiveness to Input"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60563"
+  },
+  "id": 37,
+  "question": "J'examine régulièrement les commentaires antérieurs pour m'assurer que j'y ai répondu efficacement.",
+  "questionAng": "I regularly review past feedback to ensure I have addressed it effectively.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Ouverture au feedback : réceptivité aux commentaires",
+  "categoryAng": "Openness to feedback: Receptiveness to Input"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60564"
+  },
+  "id": 38,
+  "question": "J'apprécie de recevoir de la reconnaissance pour le travail bien fait.",
+  "questionAng": "I appreciate receiving recognition for work well done.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Ouverture au feedback : réceptivité aux commentaires",
+  "categoryAng": "Openness to feedback: Receptiveness to Input"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60565"
+  },
+  "id": 39,
+  "question": "J'encourage une culture de rétroaction au sein de mon équipe ou de mon département.",
+  "questionAng": "I encourage a culture of feedback within my team or department.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Ouverture au feedback : réceptivité aux commentaires",
+  "categoryAng": "Openness to feedback: Receptiveness to Input"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60566"
+  },
+  "id": 40,
+  "question": "Je suis à l'aise pour ajuster mon approche lorsque les objectifs ou les exigences d'un projet changent.",
+  "questionAng": "I am comfortable adjusting my approach when a project's goals or requirements change.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Adaptability: Flexibility in change",
+  "categoryAng": "Adaptability: Flexibility in change"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60567"
+  },
+  "id": 41,
+  "question": "À quelle vitesse vous adaptez-vous aux changements de processus ou de procédures ?",
+  "questionAng": "How quickly do you adapt to changes in processes or procedures?",
+  "required": true,
+  "answers": [
+    "Très rapidement",
+    "Rapidement",
+    "Lentement",
+    "Très lentement"
+  ],
+  "answersAng": [
+    "Very Quickly",
+    "Quickly",
+    "Slowly",
+    "Very Slowly"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Adaptability: Flexibility in change",
+  "categoryAng": "Adaptability: Flexibility in change"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60568"
+  },
+  "id": 42,
+  "question": "Je vois le changement comme une opportunité de croissance plutôt qu'un défi à surmonter.",
+  "questionAng": "I see change as an opportunity for growth rather than a challenge to overcome.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Adaptability: Flexibility in change",
+  "categoryAng": "Adaptability: Flexibility in change"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60569"
+  },
+  "id": 43,
+  "question": "Lorsque les priorités changent de manière inattendue, je reste concentré et productif.",
+  "questionAng": "When priorities shift unexpectedly, I stay focused and productive.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Adaptability: Flexibility in change",
+  "categoryAng": "Adaptability: Flexibility in change"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d6056a"
+  },
+  "id": 44,
+  "question": "Je peux apprendre rapidement et appliquer de nouvelles compétences ou connaissances au besoin.",
+  "questionAng": "I can quickly learn and apply new skills or knowledge as needed.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Adaptability: Flexibility in change",
+  "categoryAng": "Adaptability: Flexibility in change"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d6056b"
+  },
+  "id": 45,
+  "question": "Dans quelle mesure êtes-vous à l'aise de travailler dans un environnement imprévisible ou en évolution rapide ?",
+  "questionAng": "How comfortable are you working in an unpredictable or fast-changing environment?",
+  "required": true,
+  "answers": [
+    "Très Confortable",
+    "Confortable",
+    "Inconfortable",
+    "Très Inconfortable"
+  ],
+  "answersAng": [
+    "Very Comfortable",
+    "Comfortable",
+    "Uncomfortable",
+    "Very uncomfortable"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Adaptability: Flexibility in change",
+  "categoryAng": "Adaptability: Flexibility in change"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d6056c"
+  },
+  "id": 46,
+  "question": "Je reste positif et calme sous la pression ou lors de changements majeurs.",
+  "questionAng": "I remain positive and calm under pressure or during major changes.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Adaptability: Flexibility in change",
+  "categoryAng": "Adaptability: Flexibility in change"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d6056d"
+  },
+  "id": 47,
+  "question": "Je cherche activement des moyens d'aider mon équipe à s'adapter aux changements.",
+  "questionAng": "I actively seek out ways to help my team adapt to changes.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Adaptability: Flexibility in change",
+  "categoryAng": "Adaptability: Flexibility in change"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d6056e"
+  },
+  "id": 48,
+  "question": "J'aime relever de nouveaux défis, même s'ils m'obligent à sortir de ma zone de confort.",
+  "questionAng": "I enjoy taking on new challenges, even if they require me to step outside of my comfort zone.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Adaptability: Flexibility in change",
+  "categoryAng": "Adaptability: Flexibility in change"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d6056f"
+  },
+  "id": 49,
+  "question": "Je cherche à obtenir des commentaires sur la façon dont je gère le changement afin d'améliorer ma capacité d'adaptation à l'avenir.",
+  "questionAng": "I seek feedback on how I handle change to improve my adaptability in the future.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Adaptability: Flexibility in change",
+  "categoryAng": "Adaptability: Flexibility in change"
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60570"
+  },
+  "id": 50,
+  "question": "Je cherche constamment des moyens d'améliorer mes propres performances et mon efficacité au travail.",
+  "questionAng": "I consistently look for ways to improve my own performance and efficiency at work.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Amélioration continue : viser l'excellence",
+  "categoryAng": "Citing continuous improvement: striving for excellence."
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60571"
+  },
+  "id": 51,
+  "question": "À quelle fréquence identifiez-vous les domaines de l'organisation qui pourraient bénéficier d'améliorations ?",
+  "questionAng": "How often do you identify areas within the organization that could benefit from improvement?",
+  "required": true,
+  "answers": [
+    "Toujours",
+    "Souvent",
+    "Rarement",
+    "Jamais"
+  ],
+  "answersAng": [
+    "Very Often",
+    "Often",
+    "Sometimes",
+    "Rarely"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Amélioration continue : viser l'excellence",
+  "categoryAng": "Citing continuous improvement: striving for excellence."
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60572"
+  },
+  "id": 52,
+  "question": "Je suis prêt à investir du temps dans l'apprentissage de nouvelles méthodes, outils ou processus pour améliorer mon travail.",
+  "questionAng": "I am willing to invest time in learning new methods, tools, or processes to enhance my work.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Amélioration continue : viser l'excellence",
+  "categoryAng": "Citing continuous improvement: striving for excellence."
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60573"
+  },
+  "id": 53,
+  "question": "Lorsque je fais une erreur, je m'efforce d'en tirer des leçons pour éviter qu'elle ne se reproduise.",
+  "questionAng": "When I make a mistake, I focus on learning from it to prevent it from happening again.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Amélioration continue : viser l'excellence",
+  "categoryAng": "Citing continuous improvement: striving for excellence."
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60574"
+  },
+  "id": 54,
+  "question": "J'encourage les autres à partager des idées novatrices pour améliorer les processus ou résoudre des problèmes.",
+  "questionAng": "I encourage others to share innovative ideas to improve processes or solve problems.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Amélioration continue : viser l'excellence",
+  "categoryAng": "Citing continuous improvement: striving for excellence."
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60575"
+  },
+  "id": 55,
+  "question": "Je me tiens au courant des derniers développements et tendances dans mon domaine.",
+  "questionAng": "I keep myself updated with the latest developments and trends in my field.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Amélioration continue : viser l'excellence",
+  "categoryAng": "Citing continuous improvement: striving for excellence."
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60576"
+  },
+  "id": 56,
+  "question": "À quelle fréquence suggérez-vous de nouvelles façons d'augmenter l'efficacité ou la productivité dans votre rôle ?",
+  "questionAng": "How frequently do you suggest new ways to increase efficiency or productivity in your role?",
+  "required": true,
+  "answers": [
+    "Toujours",
+    "Souvent",
+    "Rarement",
+    "Très rarement"
+  ],
+  "answersAng": [
+    "Very Frequently",
+    "Frequently",
+    "Rarely",
+    "Very Rarely"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Amélioration continue : viser l'excellence",
+  "categoryAng": "Citing continuous improvement: striving for excellence."
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60577"
+  },
+  "id": 57,
+  "question": "Je cherche des occasions d'apprendre auprès de collègues expérimentés ou d'experts de l'industrie.",
+  "questionAng": "I seek opportunities to learn from experienced colleagues or industry experts.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Amélioration continue : viser l'excellence",
+  "categoryAng": "Citing continuous improvement: striving for excellence."
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60578"
+  },
+  "id": 58,
+  "question": "Je m'engage à atteindre l'excellence dans tous les aspects de mon travail.",
+  "questionAng": "I am committed to achieving excellence in all aspects of my work.",
+  "required": true,
+  "answers": [
+    "Tout à fait d'accord",
+    "D'accord",
+    "En désaccord",
+    "Pas du tout d'accord"
+  ],
+  "answersAng": [
+    "Strongly Agree",
+    "Agree",
+    "Disagree",
+    "Strongly Disagree"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Amélioration continue : viser l'excellence",
+  "categoryAng": "Citing continuous improvement: striving for excellence."
+},
+{
+  "_id": {
+    "$oid": "67d8a8f15b86c10941d60579"
+  },
+  "id": 59,
+  "question": "Dans quelle mesure êtes-vous susceptible d'adopter de nouvelles technologies ou de nouveaux outils pour améliorer la qualité du travail ?",
+  "questionAng": "How likely are you to adopt new technologies or tools to improve work quality?",
+  "required": true,
+  "answers": [
+    "Très probable",
+    "Probable",
+    "Improbable",
+    "Très peu probable"
+  ],
+  "answersAng": [
+    "Very Likely",
+    "Likely",
+    "Unlikely",
+    "Very unlikely"
+  ],
+  "Note": [
+    5,
+    4,
+    2,
+    1
+  ],
+  "category": "Amélioration continue : viser l'excellence",
+  "categoryAng": "Citing continuous improvement: striving for excellence."
+}]

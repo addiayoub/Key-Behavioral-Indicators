@@ -1,6 +1,5 @@
 // models/UserResponse.js
 const mongoose = require('mongoose');
-
 const userResponseSchema = new mongoose.Schema({
   userId: {
     type: String,
@@ -12,27 +11,35 @@ const userResponseSchema = new mongoose.Schema({
       type: Number,
       required: true
     },
-    answerId: {
-      type: Number,
-      required: true
-    },
-    answerText: String,
+    answerId: Number,
     answerTextAng: String,
     score: {
       type: Number,
       required: true
     },
-    questionText: String,
     questionTextAng: String,
-    category: String,
-    categoryAng: String,
-    categoryShort: String,
     categoryAngShort: String
   }],
+  categoryScores: [{
+    categoryAng: String,
+    categoryAngShort: String,
+    score: Number,        
+    rawScore: Number,     
+    maxPossible: Number  
+  }],
+  score: Number,
+  rawScore: Number,
+  maxPossible: Number,
+  profile: String,
+  Pr: Number,
+  Co: Number,
+  Op: Number,
+  Ad: Number,
+  Ci: Number,
+  KBICONSO: Number,
   createdAt: {
     type: Date,
     default: Date.now
   }
 }, { collection: 'user_responses' });
-
 module.exports = mongoose.model('UserResponse', userResponseSchema);

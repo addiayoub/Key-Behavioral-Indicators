@@ -1,44 +1,55 @@
-  const express = require('express');
-  const connectDB = require('./config/db');
-  const questionRoutes = require('./routes/questionRoutes');
-  const userResponseRoutes = require('./routes/userResponseRoutes');
-  const cors = require('cors');
+const express = require('express');
+const connectDB = require('./config/db');
+const questionRoutes = require('./routes/questionRoutes');
+const userResponseRoutes = require('./routes/userResponseRoutes');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 
-  const app = express();
+const app = express();
 
-  // Configuration CORS
-  const allowedOrigins = process.env.FRONTEND_URL.split(',');
+// Configuration CORS
+const allowedOrigins = process.env.FRONTEND_URL ? 
+  process.env.FRONTEND_URL.split(',') : 
+  ['http://localhost:3000'];
 
-  app.use(cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('CORS not allowed for this origin'));
-      }
-    },
-    credentials: true
-  }));
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('CORS not allowed for this origin'));
+    }
+  },
+  credentials: true
+}));
 
-  // Middleware pour parser le JSON
-  app.use(express.json());
+// Configuration des limites de taille
+app.use(bodyParser.json({ limit: '100mb' }));
+app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
 
-  // Connexion à la base de données
-  connectDB();
+// Connexion à la base de données
+connectDB();
 
-  // Routes
-  app.use('/api/questions', questionRoutes);
-  app.use('/api/responses', userResponseRoutes);
+// Routes
+app.use('/api/questions', questionRoutes);
+app.use('/api/responses', userResponseRoutes);
 
-  // Route de base pour vérifier que le serveur fonctionne
-  app.get('/', (req, res) => {
-    res.send('API de gestion des questionnaires KBI');
-  });
+// Route de base
+app.get('/', (req, res) => {
+  res.send('API de gestion des questionnaires KBI');
+});
 
-  const PORT = process.env.PORT || PORT;
-  const HOST = '0.0.0.0'; // Permet d'accepter les connexions externes
-  app.listen(PORT, HOST, () => {
-    console.log(`Serveur lancé sur http://${HOST}:${PORT}`);
-  });
+// Gestion des erreurs
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
 
-  module.exports = app;
+const PORT = process.env.PORT || 5000;
+const HOST = process.env.HOST || '0.0.0.0';
+
+app.listen(PORT, HOST, () => {
+  console.log(`Serveur lancé sur http://${HOST}:${PORT}`);
+});
+
+module.exports = app;

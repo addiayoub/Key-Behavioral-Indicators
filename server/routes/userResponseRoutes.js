@@ -7,7 +7,8 @@ router.post('/', userResponseController.saveUserResponses);
 
 // Route qui récupère toutes les données combinées
 router.get('/:userId', userResponseController.getUserResults);
-
+// Dans routes/userResponseRoutes.js
+router.post('/import', userResponseController.saveImportedResponses);
 // Routes spécifiques pour chaque type de données
 router.get('/:userId/responses', userResponseController.getUserResponses);
 router.get('/:userId/category-scores', userResponseController.getUserCategoryScores);
