@@ -1,11 +1,11 @@
 import './App.css'
-import TestExcel  from './TestExcel'
+import KBILyticsComponent from './KBILytics/KBILyticsComponent '
 
 function App() {
 
   return (
     <>
-     <TestExcel/>
+   <KBILyticsComponent/>
     </>
   )
 }
