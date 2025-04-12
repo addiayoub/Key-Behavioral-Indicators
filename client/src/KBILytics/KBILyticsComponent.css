@@ -5,3 +5,6 @@
 #img_equipe{
     animation: fadeIn 0.9s;
 }
+.border_content{
+    border-radius: 50px;
+}
