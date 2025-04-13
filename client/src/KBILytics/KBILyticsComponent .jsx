@@ -3,14 +3,18 @@ import logo from '/Picture2.png';
 import tete from '/tete.png';
 import picture10 from '/Picture10.png';
 import menuImage from '/menu-vertical.png';
-import './KBILyticsComponent.css';
+import './style/KBILyticsComponent.css';
 import atGlanceIcon from '/Picture4.png';
 import howItWorksIcon from '/Picture5.png';
 import assessmentIcon from '/Picture6.png';
 import dashboardIcon from '/Picture7.png';
 import reportsIcon from '/Picture8.png';
 import knowledgeHubIcon from '/Picture9.png';
-import { Undo2 } from 'lucide-react';
+
+// Import des composants séparés
+import { 
+  ContentViewHandler
+} from './MenuItemComponents';
 
 const KBILyticsComponent = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -80,7 +84,7 @@ const KBILyticsComponent = () => {
       description: "Methodology, process, workflow explanation",
       content: {
         title: "Methodology, process, workflow explanation",
-        text: "Detailed methodology explanation goes here. Process workflow description. Step-by-step guide on how the system works."
+        text: ""
       }
     },
     {
@@ -89,7 +93,7 @@ const KBILyticsComponent = () => {
       description: "Create, manage, and run behavioral evaluations",
       content: {
         title: "Create, manage, and run behavioral evaluations",
-        text: "Assessment creation process description. Management tools overview. How to run behavioral evaluations."
+        customContent: true
       }
     },
     {
@@ -160,7 +164,7 @@ const KBILyticsComponent = () => {
       </div>
 
       <div 
-        className={`absolute transition-all duration-1000 ease-in-out ${animationComplete ? 'bottom-4 right-4 w-20 h-20 md:w-32 md:h-32' : 'top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-40 md:w-64 md:h-64'}`}
+        className={`absolute transition-all duration-1000 ease-in-out ${animationComplete ? 'bottom-4 right-14 w-20 h-20 md:w-32 md:h-32' : 'top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-40 md:w-64 md:h-64'}`}
       >
         <img src={logo} alt="KBI-LYTICS Logo" className="w-full h-full object-contain" />
       </div>
@@ -216,7 +220,7 @@ const KBILyticsComponent = () => {
                 <div 
                   key={index} 
                   onClick={() => handleMenuItemClick(index)}
-                  className={`flex items-start my-3 sm:my-4 md:my-6 cursor-pointer hover:bg-gray-900 p-2 md:p-3 rounded-lg transition-all
+                  className={`selection flex items-start my-3 sm:my-4 md:my-6 cursor-pointer hover: p-2 md:p-3 rounded-lg transition-all
                             ${menuItemsVisible.includes(index) ? 
                                 'animate-float' : 
                                 'opacity-0 translate-x-10'}`}
@@ -241,58 +245,22 @@ const KBILyticsComponent = () => {
         </div>
       </div>
 
-      {/* Content view */}
+      {/* Content view - utilisation du ContentViewHandler */}
       {selectedItem !== null && (
-        <div className="absolute inset-0 flex flex-col pt-10 px-4 sm:px-8 md:px-20">
-          {/* Title with animation */}
-          <h1 
-            className={`text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6 text-orange-500 text-center  transition-all duration-500
-                      ${contentElementsVisible.includes(0) ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-6'}`}
-          >
-            {menuItems[selectedItem].content.title}
-          </h1>
-          
-          <div className="flex flex-col md:flex-row gap-4 sm:gap-6 pt-20 md:gap-8 items-start flex-grow">
-            {/* Left section with animation */}
-            <div 
-              className={`w-full md:w-1/6 flex flex-col items-center md:items-start mb-4 transition-all duration-500
-                        ${contentElementsVisible.includes(1) ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-6'}`}
-            >
-              <div className="flex items-center space-x-2 sm:space-x-3 text-white">
-                <img src={menuItems[selectedItem].icon} alt="Icon" className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />
-                <h2 className="text-lg sm:text-xl font-bold">{menuItems[selectedItem].title}</h2>
-              </div>
-            </div>
-
-            {/* Main content with paragraph */}
-            <div className="w-full md:w-5/6 relative">
-              <div className="border border-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-18 border_content ">
-                <div className="text-base sm:text-lg">
-                  <p 
-                    className={`transition-all duration-500
-                              ${contentElementsVisible.includes(2) ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-6'}`}
-                  >
-                    {menuItems[selectedItem].content.text}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          {/* Back button */}
-          <div className="flex justify-center pb-6 md:pb-8">
-            <button 
-              onClick={handleBackClick}
-              className="bg-orange-500 text-white px-4 py-2 sm:px-6 sm:py-3 rounded-full hover:bg-orange-600 cursor-pointer transition-colors text-sm sm:text-base"
-            >
-              <Undo2 />
-            </button>
-          </div>
+        <div 
+          className={`absolute inset-0 transition-all duration-500 ease-in-out 
+                     ${contentElementsVisible.length > 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+        >
+          <ContentViewHandler 
+            selectedItem={selectedItem} 
+            menuItems={menuItems} 
+            onBackClick={handleBackClick} 
+          />
         </div>
       )}
 
       {/* CSS Animations */}
-      <style jsx>{`
+      <style >{`
         @keyframes float {
           0% {
             transform: translateX(0);

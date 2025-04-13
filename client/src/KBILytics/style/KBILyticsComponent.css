@@ -1,0 +1,54 @@
+#Landing_page_view{
+    animation: fadeIn 0.9s;
+
+}
+#img_equipe{
+    animation: fadeIn 0.9s;
+}
+.border_content{
+    border-radius: 50px;
+}
+.MoveRight{
+    color: orangered;
+}
+#demarrer {
+    background: rgb(255, 68, 0);
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+    animation: fadeIn 0.9s;
+  }
+  
+  #demarrer:hover {
+    clip-path: polygon(0 0, 75% 0, 100% 50%, 75% 100%, 0 100%);
+    background: orangered;
+    color: white;
+    padding: 12px 50px;
+  }
+  .partciper{
+    transition: 0.5s;
+    padding: 10px;
+    border-radius: 50px;
+  }
+  .partciper:hover{
+    transition: 0.5s;
+    background-color: rgba(255, 68, 0, 0.384);
+    
+  }
+  .selection{
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+    animation: fadeIn 0.9s;
+  }
+  .selection:hover{
+    background:  rgba(255, 68, 0, 0.384);
+    color: white;
+    padding: 12px 50px;
+  }
