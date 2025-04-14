@@ -5,24 +5,24 @@ import './LanguageSwitcher.css';
 const LanguageSwitcher = ({ language, setLanguage }) => {
   return (
     <div className="language-switcher">
-      <div className="flex items-center gap-2 bg-gray-800 rounded-lg p-2">
-        <Globe size={18} className="text-gray-300" />
+      <div className="flex items-center gap-2 bg-black border border-white rounded-lg p-2">
+        <Globe size={18} className="text-orange-500" />
         <div className="flex rounded overflow-hidden">
           <button
             className={`px-3 py-1 text-sm font-medium transition-colors ${
               language === 'fr' 
                 ? 'bg-orange-600 text-white' 
-                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                : 'bg-black text-white border-2 hover:bg-orange-900 cursor-pointer'
             }`}
             onClick={() => setLanguage('fr')}
           >
             FR
           </button>
           <button
-            className={`px-3 py-1 text-sm font-medium transition-colors ${
+            className={`px-3 py-1 text-sm font-medium border-2 transition-colors ${
               language === 'en' 
                 ? 'bg-orange-600 text-white' 
-                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                : 'bg-black text-white hover:bg-orange-900 cursor-pointer'
             }`}
             onClick={() => setLanguage('en')}
           >

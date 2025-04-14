@@ -6,10 +6,7 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   server: {
     host: true, // Permet d'exposer sur le réseau
-    port: 5173,
-    proxy: {
-      '/api': 'http://localhost:3000', // Backend en local
-    },
+    port: 5172,
   },
   plugins: [react(),
     tailwindcss(),

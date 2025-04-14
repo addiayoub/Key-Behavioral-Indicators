@@ -3,9 +3,38 @@ import { useState } from 'react';
 import '../style/KBILyticsComponent.css';
 import AssessmentCategoriesComponent from './AssessmentCategoriesComponent';
 
-const AssessmentComponent = () => {
+const AssessmentComponent = ({ language }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [showCategories, setShowCategories] = useState(false);
+  
+  // Translations for the component
+  const translations = {
+    fr: {
+      introduction: "L'évaluation est composée de 6 sections. Environ 10 minutes seront nécessaires pour les compléter toutes",
+      section1: "Section 1: 9 questions pour le filtrage et l'analyse croisée des données.",
+      section2to6: "Section 2 à 6: 10 questions pour chaque catégorie.",
+      individualOption: "Je suis un particulier, je veux explorer et tester la solution",
+      companyOption: "J'ai déjà un login et pwd, je participe avec mon entreprise",
+      testButton: "TESTER",
+      loginPlaceholder: "Login",
+      passwordPlaceholder: "Mot de passe",
+      participateButton: "Participer en tant qu'entreprise"
+    },
+    en: {
+      introduction: "The assessment is composed of 6 sections. Around 10min will be needed to complete them all",
+      section1: "Section 1: 9 questions for filtering and cross analysis of data.",
+      section2to6: "Section 2 to 6: 10 questions for each category.",
+      individualOption: "I am an individual, I want to explore and test the solution",
+      companyOption: "I already have a login and password, I'm participating with my company",
+      testButton: "TEST",
+      loginPlaceholder: "Login",
+      passwordPlaceholder: "Password",
+      participateButton: "Participate as company"
+    }
+  };
+  
+  // Get translations based on selected language
+  const t = translations[language] || translations.fr; // Default to French if language not found
   
   const handleTestClick = () => {
     console.log("Test button clicked");
@@ -29,9 +58,9 @@ const AssessmentComponent = () => {
       {!showCategories ? (
         <>
           <div className="mb-6">
-            <p className="text-lg text-white mb-2">The assessment is composed of 6 sections. Around 10min will be needed to complete them all</p>
-            <p className="text-lg text-white mb-2">Section 1: 9 questions for filtering and cross analysis of data.</p>
-            <p className="text-lg text-white mb-2">Section 2 to 6: 10 questions for each category.</p>
+            <p className="text-lg text-white mb-2">{t.introduction}</p>
+            <p className="text-lg text-white mb-2">{t.section1}</p>
+            <p className="text-lg text-white mb-2">{t.section2to6}</p>
           </div>
               
           <div className="flex flex-col space-y-8 mt-4">
@@ -46,7 +75,7 @@ const AssessmentComponent = () => {
                 {selectedOption === 'test' ? <BookmarkCheck /> : <Bookmark />}
                 </div>
               </div>
-              <div className="flex-1 text-lg">Je suis un particulier, je veux explorer et tester la solution</div>
+              <div className="flex-1 text-lg">{t.individualOption}</div>
               
               {selectedOption === 'test' && (
                 <button 
@@ -54,7 +83,7 @@ const AssessmentComponent = () => {
                   id='demarrer'
                   className="w-full sm:w-auto px-6 py-3 rounded-lg text-center transition-colors text-base sm:text-lg animate-fadeIn"
                 >
-                  TESTER
+                  {t.testButton}
                 </button>
               )}
             </div>
@@ -71,7 +100,7 @@ const AssessmentComponent = () => {
                   </div>
                 </div>
                 <div className={`flex-1 text-lg ${selectedOption === 'participate' ? 'opacity-20' : 'opacity-100'} transition-opacity duration-300`}>
-                  J'ai déjà un login et pwd, je participe avec mon entreprise
+                  {t.companyOption}
                 </div>
               </div>
               
@@ -83,12 +112,12 @@ const AssessmentComponent = () => {
                     <div className="flex space-x-4">
                       <input
                         type="text"
-                        placeholder="Login"
+                        placeholder={t.loginPlaceholder}
                         className="flex-1 px-4 py-3 border-2 border-white rounded-lg bg-transparent text-white focus:outline-none"
                       />
                       <input
                         type="password"
-                        placeholder="Password"
+                        placeholder={t.passwordPlaceholder}
                         className="flex-1 px-4 py-3 border-2 border-white rounded-lg bg-transparent text-white focus:outline-none"
                       />
                       <button 
@@ -96,7 +125,7 @@ const AssessmentComponent = () => {
                         id='demarrer'
                         className="px-6 py-3 rounded-lg text-center transition-colors text-base sm:text-lg whitespace-nowrap"
                       >
-                        Participer au tant que entreprise 
+                        {t.participateButton}
                       </button>
                     </div>
                   </div>
@@ -106,7 +135,7 @@ const AssessmentComponent = () => {
           </div>
         </>
       ) : (
-        <AssessmentCategoriesComponent />
+        <AssessmentCategoriesComponent language={language} />
       )}
       
       <style>{`

@@ -4,7 +4,7 @@ const questionController = {
   // Récupérer toutes les questions
   getAllQuestions: async (req, res) => {
     try {
-      const questions = await Question.find();
+      const questions = await Question.find().sort({ id: 1 }); // Trie croissant
       res.json(questions);
     } catch (error) {
       console.error('Erreur:', error);

@@ -1,16 +1,15 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import logo from '/Picture2.png';
 import tete from '/tete.png';
 import picture10 from '/Picture10.png';
 import menuImage from '/menu-vertical.png';
 import './style/KBILyticsComponent.css';
-import atGlanceIcon from '/Picture4.png';
-import howItWorksIcon from '/Picture5.png';
-import assessmentIcon from '/Picture6.png';
-import dashboardIcon from '/Picture7.png';
-import reportsIcon from '/Picture8.png';
-import knowledgeHubIcon from '/Picture9.png';
-
+import MenuItems from '../data/menuItems';
+// Import du composant LanguageSwitcher
+// Import du composant LanguageSwitcher
+import LanguageSwitcher from '../Language/LanguageSwitcher ';
+// Import des traductions
+import { Translations } from "../Language/datalang";
 // Import des composants séparés
 import { 
   ContentViewHandler
@@ -24,6 +23,20 @@ const KBILyticsComponent = () => {
   const [menuItemsVisible, setMenuItemsVisible] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const [contentElementsVisible, setContentElementsVisible] = useState([]);
+  // État pour la langue avec récupération de la préférence utilisateur si disponible
+  const [language, setLanguage] = useState(() => {
+    const savedLanguage = localStorage.getItem('preferredLanguage');
+    return savedLanguage || 'fr'; // Default to French if no preference is saved
+  });
+
+  // Traduire le texte en fonction de la langue
+  const translations = Translations;
+  const t = translations[language];
+
+  // Sauvegarder la préférence linguistique quand elle change
+  useEffect(() => {
+    localStorage.setItem('preferredLanguage', language);
+  }, [language]);
 
   const handleStartClick = () => {
     setShowMenu(true);
@@ -68,66 +81,16 @@ const KBILyticsComponent = () => {
     }, 300);
   };
 
-  const menuItems = [
-    {
-      icon: atGlanceIcon,
-      title: "At a Glance",
-      description: "Why KBIlytics? The rationale, purpose, and value",
-      content: {
-        title: "Why KBIlytics? The rationale, purpose, and value",
-        text: "Rather than reacting to people's attitudes and behaviors during a project, organizations can proactively assess and map behavioral trends within the company. By leveraging this factual understanding, businesses can develop a tailored change management plan before or during a digital or organizational transformation. This approach enhances the likelihood of achieving successful and sustainable outcomes."
-      }
-    },
-    {
-      icon: howItWorksIcon,
-      title: "How it Works",
-      description: "Methodology, process, workflow explanation",
-      content: {
-        title: "Methodology, process, workflow explanation",
-        text: ""
-      }
-    },
-    {
-      icon: assessmentIcon,
-      title: "Assessment",
-      description: "Create, manage, and run behavioral evaluations",
-      content: {
-        title: "Create, manage, and run behavioral evaluations",
-        customContent: true
-      }
-    },
-    {
-      icon: dashboardIcon,
-      title: "Dashboard",
-      description: "Quick insights, navigation hub",
-      content: {
-        title: "Quick insights, navigation hub",
-        text: "Dashboard features overview. How to navigate the interface. Key insights visualization."
-      }
-    },
-    {
-      icon: reportsIcon,
-      title: "Reports",
-      description: "Assessment results, analytics, trends, AI-driven insights",
-      content: {
-        title: "Assessment results, analytics, trends, AI-driven insights",
-        text: "Understanding your assessment results. Analytics and trends interpretation. AI-driven insights explanation."
-      }
-    },
-    {
-      icon: knowledgeHubIcon,
-      title: "Knowledge Hub",
-      description: "Background on KBIs, research, case studies",
-      content: {
-        title: "Background on KBIs, research, case studies",
-        text: "Key Behavioral Indicators background. Research findings and white papers. Case studies and success stories."
-      }
-    }
-  ];
-
+  const menuItems = MenuItems;
+  
   if (!showMenu) {
     return (
-      <div id='Landing_page_view' className="flex flex-col items-center justify-center w-full h-screen bg-black text-white px-4">
+      <div id='Landing_page_view' className="flex flex-col items-center justify-center w-full h-screen bg-black text-white px-4 relative">
+        {/* Language Switcher dans le coin supérieur droit */}
+        <div className="absolute top-4 right-4">
+          <LanguageSwitcher language={language} setLanguage={setLanguage} />
+        </div>
+        
         <div className="flex flex-col md:flex-row items-center justify-between w-full max-w-6xl">
           <div className="flex flex-col items-center md:items-start space-y-2 mb-8 md:mb-0">
             <img src={logo} alt="KBI-LYTICS Logo" className="w-40 md:w-150" />
@@ -147,7 +110,7 @@ const KBILyticsComponent = () => {
             onClick={handleStartClick}
             className="px-6 py-3 md:px-8 md:py-3 bg-orange-500 text-white font-bold text-lg md:text-xl rounded-full hover:bg-orange-600 cursor-pointer transition-colors duration-300 shadow-lg"
           >
-            DÉMARRER
+            {language === 'fr' ? 'DÉMARRER' : 'START'}
           </button>
         </div>
       </div>
@@ -156,6 +119,11 @@ const KBILyticsComponent = () => {
 
   return (
     <div className="w-full h-screen bg-black text-white overflow-hidden relative">
+      {/* Language Switcher dans le coin supérieur droit */}
+      <div className="absolute top-4 right-20 z-20">
+        <LanguageSwitcher language={language} setLanguage={setLanguage} />
+      </div>
+      
       {/* Background elements */}
       <div 
         className={`absolute transition-all duration-1000 ease-in-out ${animationComplete ? 'top-4 left-4 w-12 h-12 md:w-20 md:h-20' : 'top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 md:w-48 md:h-48'}`}
@@ -233,9 +201,11 @@ const KBILyticsComponent = () => {
                     <img src={item.icon} alt="Icon" className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8" />
                   </div>
                   <div className="text-sm sm:text-base md:text-base">
-                    <span className="font-medium text-orange-500">{item.title}</span>
+                    <span className="font-medium text-orange-500">
+                      {language === 'fr' ? item.title : (item.titleEn || item.title)}
+                    </span>
                     <div className="sm:inline">
-                      <span className="text-white"> : {item.description}</span>
+                      <span className="text-white"> : {language === 'fr' ? item.description : (item.descriptionEn || item.description)}</span>
                     </div>
                   </div>
                 </div>
@@ -245,7 +215,7 @@ const KBILyticsComponent = () => {
         </div>
       </div>
 
-      {/* Content view - utilisation du ContentViewHandler */}
+      {/* Content view - utilisation du ContentViewHandler avec passage de la langue */}
       {selectedItem !== null && (
         <div 
           className={`absolute inset-0 transition-all duration-500 ease-in-out 
@@ -254,7 +224,9 @@ const KBILyticsComponent = () => {
           <ContentViewHandler 
             selectedItem={selectedItem} 
             menuItems={menuItems} 
-            onBackClick={handleBackClick} 
+            onBackClick={handleBackClick}
+            language={language}
+            setLanguage={setLanguage}
           />
         </div>
       )}
