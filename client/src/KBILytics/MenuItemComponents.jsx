@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 // ContentViewHandler.jsx
 import { Undo2 } from 'lucide-react';
+=======
+// AtGlanceComponent.jsx
+import {  Undo2 } from 'lucide-react';
+>>>>>>> c544daafe4501996aec58a987f9fcfe441e40a12
 import './style/KBILyticsComponent.css';
 import AtGlanceComponent from './menu/AtGlanceComponent';
 import HowItWorksComponent from './menu/HowItWorksComponent';
@@ -7,6 +12,7 @@ import AssessmentComponent from './menu/AssessmentComponent';
 import DashboardComponent from './menu/DashboardComponent';
 import ReportsComponent from './menu/ReportsComponent';
 import KnowledgeHubComponent from './menu/KnowledgeHubComponent';
+<<<<<<< HEAD
 import LanguageSwitcher from '../Language/LanguageSwitcher ';
 
 const ContentViewHandler = ({ selectedItem, menuItems, onBackClick, language, setLanguage }) => {
@@ -24,12 +30,36 @@ const ContentViewHandler = ({ selectedItem, menuItems, onBackClick, language, se
         return <ReportsComponent icon={menuItems[selectedItem].icon} title={language === 'fr' ? menuItems[selectedItem].title : (menuItems[selectedItem].titleEn || menuItems[selectedItem].title)} language={language} />;
       case 5:
         return <KnowledgeHubComponent icon={menuItems[selectedItem].icon} title={language === 'fr' ? menuItems[selectedItem].title : (menuItems[selectedItem].titleEn || menuItems[selectedItem].title)} language={language} />;
+=======
+
+
+
+// Main Component to import and use these components
+
+
+const ContentViewHandler = ({ selectedItem, menuItems, onBackClick }) => {
+  const renderContent = () => {
+    switch (selectedItem) {
+      case 0:
+        return <AtGlanceComponent icon={menuItems[selectedItem].icon} title={menuItems[selectedItem].title} />;
+      case 1:
+        return <HowItWorksComponent icon={menuItems[selectedItem].icon} title={menuItems[selectedItem].title} />;
+      case 2:
+        return <AssessmentComponent icon={menuItems[selectedItem].icon} title={menuItems[selectedItem].title} />;
+      case 3:
+        return <DashboardComponent icon={menuItems[selectedItem].icon} title={menuItems[selectedItem].title} />;
+      case 4:
+        return <ReportsComponent icon={menuItems[selectedItem].icon} title={menuItems[selectedItem].title} />;
+      case 5:
+        return <KnowledgeHubComponent icon={menuItems[selectedItem].icon} title={menuItems[selectedItem].title} />;
+>>>>>>> c544daafe4501996aec58a987f9fcfe441e40a12
       default:
         return <div>No content available</div>;
     }
   };
 
   return (
+<<<<<<< HEAD
     <div className="absolute inset-0 flex flex-col pt-10 px-4 sm:px-8 md:px-20 overflow-y-auto">
       {/* Language Switcher in the top-right corner */}
       <div className="absolute top-4 right-4 z-20">
@@ -40,6 +70,12 @@ const ContentViewHandler = ({ selectedItem, menuItems, onBackClick, language, se
         {language === 'fr' 
           ? menuItems[selectedItem].content.title 
           : (menuItems[selectedItem].content.titleEn || menuItems[selectedItem].content.title)}
+=======
+    <div className="absolute inset-0 flex flex-col pt-10 px-4 sm:px-8 md:px-20 overflow-y-auto ">
+      {/* Title */}
+      <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6 text-orange-500 text-center">
+        {menuItems[selectedItem].content.title}
+>>>>>>> c544daafe4501996aec58a987f9fcfe441e40a12
       </h1>
       
       <div className="flex flex-col md:flex-row gap-4 sm:gap-6 pt-6 md:gap-8 items-start flex-grow">
@@ -47,11 +83,15 @@ const ContentViewHandler = ({ selectedItem, menuItems, onBackClick, language, se
         <div className="w-full md:w-1/6 flex flex-col items-center md:items-start mb-4">
           <div className="flex items-center space-x-2 sm:space-x-3 text-white">
             <img src={menuItems[selectedItem].icon} alt="Icon" className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />
+<<<<<<< HEAD
             <h2 className="text-lg sm:text-xl font-bold">
               {language === 'fr' 
                 ? menuItems[selectedItem].title 
                 : (menuItems[selectedItem].titleEn || menuItems[selectedItem].title)}
             </h2>
+=======
+            <h2 className="text-lg sm:text-xl font-bold">{menuItems[selectedItem].title}</h2>
+>>>>>>> c544daafe4501996aec58a987f9fcfe441e40a12
           </div>
         </div>
 
