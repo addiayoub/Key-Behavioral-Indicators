@@ -4,22 +4,12 @@ import tete from '/tete.png';
 import picture10 from '/Picture10.png';
 import menuImage from '/menu-vertical.png';
 import './style/KBILyticsComponent.css';
-<<<<<<< HEAD
 import MenuItems from '../data/menuItems';
 // Import du composant LanguageSwitcher
 // Import du composant LanguageSwitcher
 import LanguageSwitcher from '../Language/LanguageSwitcher ';
 // Import des traductions
 import { Translations } from "../Language/datalang";
-=======
-import atGlanceIcon from '/Picture4.png';
-import howItWorksIcon from '/Picture5.png';
-import assessmentIcon from '/Picture6.png';
-import dashboardIcon from '/Picture7.png';
-import reportsIcon from '/Picture8.png';
-import knowledgeHubIcon from '/Picture9.png';
-
->>>>>>> c544daafe4501996aec58a987f9fcfe441e40a12
 // Import des composants séparés
 import { 
   ContentViewHandler
@@ -91,68 +81,8 @@ const KBILyticsComponent = () => {
     }, 300);
   };
 
-<<<<<<< HEAD
   const menuItems = MenuItems;
   
-=======
-  const menuItems = [
-    {
-      icon: atGlanceIcon,
-      title: "At a Glance",
-      description: "Why KBIlytics? The rationale, purpose, and value",
-      content: {
-        title: "Why KBIlytics? The rationale, purpose, and value",
-        text: "Rather than reacting to people's attitudes and behaviors during a project, organizations can proactively assess and map behavioral trends within the company. By leveraging this factual understanding, businesses can develop a tailored change management plan before or during a digital or organizational transformation. This approach enhances the likelihood of achieving successful and sustainable outcomes."
-      }
-    },
-    {
-      icon: howItWorksIcon,
-      title: "How it Works",
-      description: "Methodology, process, workflow explanation",
-      content: {
-        title: "Methodology, process, workflow explanation",
-        text: ""
-      }
-    },
-    {
-      icon: assessmentIcon,
-      title: "Assessment",
-      description: "Create, manage, and run behavioral evaluations",
-      content: {
-        title: "Create, manage, and run behavioral evaluations",
-        customContent: true
-      }
-    },
-    {
-      icon: dashboardIcon,
-      title: "Dashboard",
-      description: "Quick insights, navigation hub",
-      content: {
-        title: "Quick insights, navigation hub",
-        text: "Dashboard features overview. How to navigate the interface. Key insights visualization."
-      }
-    },
-    {
-      icon: reportsIcon,
-      title: "Reports",
-      description: "Assessment results, analytics, trends, AI-driven insights",
-      content: {
-        title: "Assessment results, analytics, trends, AI-driven insights",
-        text: "Understanding your assessment results. Analytics and trends interpretation. AI-driven insights explanation."
-      }
-    },
-    {
-      icon: knowledgeHubIcon,
-      title: "Knowledge Hub",
-      description: "Background on KBIs, research, case studies",
-      content: {
-        title: "Background on KBIs, research, case studies",
-        text: "Key Behavioral Indicators background. Research findings and white papers. Case studies and success stories."
-      }
-    }
-  ];
-
->>>>>>> c544daafe4501996aec58a987f9fcfe441e40a12
   if (!showMenu) {
     return (
       <div id='Landing_page_view' className="flex flex-col items-center justify-center w-full h-screen bg-black text-white px-4 relative">
@@ -285,11 +215,7 @@ const KBILyticsComponent = () => {
         </div>
       </div>
 
-<<<<<<< HEAD
       {/* Content view - utilisation du ContentViewHandler avec passage de la langue */}
-=======
-      {/* Content view - utilisation du ContentViewHandler */}
->>>>>>> c544daafe4501996aec58a987f9fcfe441e40a12
       {selectedItem !== null && (
         <div 
           className={`absolute inset-0 transition-all duration-500 ease-in-out 
@@ -298,13 +224,9 @@ const KBILyticsComponent = () => {
           <ContentViewHandler 
             selectedItem={selectedItem} 
             menuItems={menuItems} 
-<<<<<<< HEAD
             onBackClick={handleBackClick}
             language={language}
             setLanguage={setLanguage}
-=======
-            onBackClick={handleBackClick} 
->>>>>>> c544daafe4501996aec58a987f9fcfe441e40a12
           />
         </div>
       )}

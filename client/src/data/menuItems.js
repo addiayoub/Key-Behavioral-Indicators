@@ -5,7 +5,6 @@ import dashboardIcon from '/Picture7.png';
 import reportsIcon from '/Picture8.png';
 import knowledgeHubIcon from '/Picture9.png';
 
-<<<<<<< HEAD
 const MenuItems = [
   {
     icon: atGlanceIcon,
@@ -18,21 +17,10 @@ const MenuItems = [
       titleEn: "Why KBIlytics? The rationale, purpose, and value",
       text: "Plutôt que de réagir aux attitudes et aux comportements des personnes pendant un projet, les organisations peuvent évaluer et cartographier de manière proactive les tendances comportementales au sein de l'entreprise. En s'appuyant sur cette compréhension factuelle, les entreprises peuvent élaborer un plan de gestion du changement adapté avant ou pendant une transformation numérique ou organisationnelle. Cette approche augmente les chances d'obtenir des résultats réussis et durables.",
       textEn: "Rather than reacting to people's attitudes and behaviors during a project, organizations can proactively assess and map behavioral trends within the company. By leveraging this factual understanding, businesses can develop a tailored change management plan before or during a digital or organizational transformation. This approach enhances the likelihood of achieving successful and sustainable outcomes."
-=======
-const menuItems = [
-  {
-    icon: atGlanceIcon,
-    title: "At a Glance",
-    description: "Why KBIlytics? The rationale, purpose, and value",
-    content: {
-      title: "Why KBIlytics? The rationale, purpose, and value",
-      text: "Rather than reacting to people's attitudes and behaviors during a project, organizations can proactively assess and map behavioral trends within the company. By leveraging this factual understanding, businesses can develop a tailored change management plan before or during a digital or organizational transformation. This approach enhances the likelihood of achieving successful and sustainable outcomes."
->>>>>>> c544daafe4501996aec58a987f9fcfe441e40a12
     }
   },
   {
     icon: howItWorksIcon,
-<<<<<<< HEAD
     title: "Comment ça marche",
     titleEn: "How it Works",
     description: "Méthodologie, processus, explication du flux de travail",
@@ -42,18 +30,10 @@ const menuItems = [
       titleEn: "Methodology, process, workflow explanation",
       text: "L'explication détaillée de la méthodologie est disponible ici. Description du processus de travail. Guide étape par étape sur le fonctionnement du système.",
       textEn: "Detailed methodology explanation goes here. Process workflow description. Step-by-step guide on how the system works."
-=======
-    title: "How it Works",
-    description: "Methodology, process, workflow explanation",
-    content: {
-      title: "Methodology, process, workflow explanation",
-      text: "Detailed methodology explanation goes here. Process workflow description. Step-by-step guide on how the system works."
->>>>>>> c544daafe4501996aec58a987f9fcfe441e40a12
     }
   },
   {
     icon: assessmentIcon,
-<<<<<<< HEAD
     title: "Évaluation",
     titleEn: "Assessment",
     description: "Créer, gérer et exécuter des évaluations comportementales",
@@ -63,18 +43,10 @@ const menuItems = [
       titleEn: "Create, manage, and run behavioral evaluations",
       text: "Description du processus de création d'évaluation. Aperçu des outils de gestion. Comment exécuter des évaluations comportementales.",
       textEn: "Assessment creation process description. Management tools overview. How to run behavioral evaluations."
-=======
-    title: "Assessment",
-    description: "Create, manage, and run behavioral evaluations",
-    content: {
-      title: "Create, manage, and run behavioral evaluations",
-      text: "Assessment creation process description. Management tools overview. How to run behavioral evaluations."
->>>>>>> c544daafe4501996aec58a987f9fcfe441e40a12
     }
   },
   {
     icon: dashboardIcon,
-<<<<<<< HEAD
     title: "Tableau de bord",
     titleEn: "Dashboard",
     description: "Aperçus rapides, hub de navigation",
@@ -84,18 +56,10 @@ const menuItems = [
       titleEn: "Quick insights, navigation hub",
       text: "Aperçu des fonctionnalités du tableau de bord. Comment naviguer dans l'interface. Visualisation des informations clés.",
       textEn: "Dashboard features overview. How to navigate the interface. Key insights visualization."
-=======
-    title: "Dashboard",
-    description: "Quick insights, navigation hub",
-    content: {
-      title: "Quick insights, navigation hub",
-      text: "Dashboard features overview. How to navigate the interface. Key insights visualization."
->>>>>>> c544daafe4501996aec58a987f9fcfe441e40a12
     }
   },
   {
     icon: reportsIcon,
-<<<<<<< HEAD
     title: "Rapports",
     titleEn: "Reports",
     description: "Résultats d'évaluation, analyses, tendances, insights basés sur l'IA",
@@ -105,18 +69,10 @@ const menuItems = [
       titleEn: "Assessment results, analytics, trends, AI-driven insights",
       text: "Comprendre vos résultats d'évaluation. Interprétation des analyses et des tendances. Explication des insights générés par l'IA.",
       textEn: "Understanding your assessment results. Analytics and trends interpretation. AI-driven insights explanation."
-=======
-    title: "Reports",
-    description: "Assessment results, analytics, trends, AI-driven insights",
-    content: {
-      title: "Assessment results, analytics, trends, AI-driven insights",
-      text: "Understanding your assessment results. Analytics and trends interpretation. AI-driven insights explanation."
->>>>>>> c544daafe4501996aec58a987f9fcfe441e40a12
     }
   },
   {
     icon: knowledgeHubIcon,
-<<<<<<< HEAD
     title: "Centre de connaissances",
     titleEn: "Knowledge Hub",
     description: "Contexte sur les KBI, recherches, études de cas",
@@ -126,19 +82,8 @@ const menuItems = [
       titleEn: "Background on KBIs, research, case studies",
       text: "Informations générales sur les Indicateurs Comportementaux Clés. Résultats de recherche et livres blancs. Études de cas et histoires de réussite.",
       textEn: "Key Behavioral Indicators background. Research findings and white papers. Case studies and success stories."
-=======
-    title: "Knowledge Hub",
-    description: "Background on KBIs, research, case studies",
-    content: {
-      title: "Background on KBIs, research, case studies",
-      text: "Key Behavioral Indicators background. Research findings and white papers. Case studies and success stories."
->>>>>>> c544daafe4501996aec58a987f9fcfe441e40a12
     }
   }
 ];
 
-<<<<<<< HEAD
 export default MenuItems;
-=======
-export default menuItems;
->>>>>>> c544daafe4501996aec58a987f9fcfe441e40a12

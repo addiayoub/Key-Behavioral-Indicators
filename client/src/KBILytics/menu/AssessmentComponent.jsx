@@ -3,7 +3,6 @@ import { useState } from 'react';
 import '../style/KBILyticsComponent.css';
 import AssessmentCategoriesComponent from './AssessmentCategoriesComponent';
 
-<<<<<<< HEAD
 const AssessmentComponent = ({ language }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [showCategories, setShowCategories] = useState(false);
@@ -37,12 +36,6 @@ const AssessmentComponent = ({ language }) => {
   // Get translations based on selected language
   const t = translations[language] || translations.fr; // Default to French if language not found
   
-=======
-const AssessmentComponent = () => {
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [showCategories, setShowCategories] = useState(false);
-  
->>>>>>> c544daafe4501996aec58a987f9fcfe441e40a12
   const handleTestClick = () => {
     console.log("Test button clicked");
     setShowCategories(true);
@@ -65,15 +58,9 @@ const AssessmentComponent = () => {
       {!showCategories ? (
         <>
           <div className="mb-6">
-<<<<<<< HEAD
             <p className="text-lg text-white mb-2">{t.introduction}</p>
             <p className="text-lg text-white mb-2">{t.section1}</p>
             <p className="text-lg text-white mb-2">{t.section2to6}</p>
-=======
-            <p className="text-lg text-white mb-2">The assessment is composed of 6 sections. Around 10min will be needed to complete them all</p>
-            <p className="text-lg text-white mb-2">Section 1: 9 questions for filtering and cross analysis of data.</p>
-            <p className="text-lg text-white mb-2">Section 2 to 6: 10 questions for each category.</p>
->>>>>>> c544daafe4501996aec58a987f9fcfe441e40a12
           </div>
               
           <div className="flex flex-col space-y-8 mt-4">
@@ -88,11 +75,7 @@ const AssessmentComponent = () => {
                 {selectedOption === 'test' ? <BookmarkCheck /> : <Bookmark />}
                 </div>
               </div>
-<<<<<<< HEAD
               <div className="flex-1 text-lg">{t.individualOption}</div>
-=======
-              <div className="flex-1 text-lg">Je suis un particulier, je veux explorer et tester la solution</div>
->>>>>>> c544daafe4501996aec58a987f9fcfe441e40a12
               
               {selectedOption === 'test' && (
                 <button 
@@ -100,11 +83,7 @@ const AssessmentComponent = () => {
                   id='demarrer'
                   className="w-full sm:w-auto px-6 py-3 rounded-lg text-center transition-colors text-base sm:text-lg animate-fadeIn"
                 >
-<<<<<<< HEAD
                   {t.testButton}
-=======
-                  TESTER
->>>>>>> c544daafe4501996aec58a987f9fcfe441e40a12
                 </button>
               )}
             </div>
@@ -121,11 +100,7 @@ const AssessmentComponent = () => {
                   </div>
                 </div>
                 <div className={`flex-1 text-lg ${selectedOption === 'participate' ? 'opacity-20' : 'opacity-100'} transition-opacity duration-300`}>
-<<<<<<< HEAD
                   {t.companyOption}
-=======
-                  J'ai déjà un login et pwd, je participe avec mon entreprise
->>>>>>> c544daafe4501996aec58a987f9fcfe441e40a12
                 </div>
               </div>
               
@@ -137,20 +112,12 @@ const AssessmentComponent = () => {
                     <div className="flex space-x-4">
                       <input
                         type="text"
-<<<<<<< HEAD
                         placeholder={t.loginPlaceholder}
-=======
-                        placeholder="Login"
->>>>>>> c544daafe4501996aec58a987f9fcfe441e40a12
                         className="flex-1 px-4 py-3 border-2 border-white rounded-lg bg-transparent text-white focus:outline-none"
                       />
                       <input
                         type="password"
-<<<<<<< HEAD
                         placeholder={t.passwordPlaceholder}
-=======
-                        placeholder="Password"
->>>>>>> c544daafe4501996aec58a987f9fcfe441e40a12
                         className="flex-1 px-4 py-3 border-2 border-white rounded-lg bg-transparent text-white focus:outline-none"
                       />
                       <button 
@@ -158,11 +125,7 @@ const AssessmentComponent = () => {
                         id='demarrer'
                         className="px-6 py-3 rounded-lg text-center transition-colors text-base sm:text-lg whitespace-nowrap"
                       >
-<<<<<<< HEAD
                         {t.participateButton}
-=======
-                        Participer au tant que entreprise 
->>>>>>> c544daafe4501996aec58a987f9fcfe441e40a12
                       </button>
                     </div>
                   </div>
@@ -172,11 +135,7 @@ const AssessmentComponent = () => {
           </div>
         </>
       ) : (
-<<<<<<< HEAD
         <AssessmentCategoriesComponent language={language} />
-=======
-        <AssessmentCategoriesComponent />
->>>>>>> c544daafe4501996aec58a987f9fcfe441e40a12
       )}
       
       <style>{`
