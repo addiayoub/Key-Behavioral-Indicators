@@ -9,7 +9,7 @@ const app = express();
 
 // Configuration CORS
 const allowedOrigins = process.env.FRONTEND_URL ? 
-  process.env.FRONTEND_URL.split(',') : ''
+  process.env.FRONTEND_URL.split(',') : 'https://key-behavioral-indicators.vercel.app/'
   
 
 app.use(cors({
