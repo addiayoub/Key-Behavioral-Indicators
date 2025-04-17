@@ -31,8 +31,8 @@ app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
 connectDB();
 
 // Routes
-app.use('/api/questions', questionRoutes);
-app.use('/api/responses', userResponseRoutes);
+app.use('/questions', questionRoutes);
+app.use('/responses', userResponseRoutes);
 
 // Route de base
 app.get('/', (req, res) => {
