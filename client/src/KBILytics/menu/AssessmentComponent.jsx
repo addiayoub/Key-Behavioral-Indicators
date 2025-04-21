@@ -1,5 +1,5 @@
 import { Bookmark, BookmarkCheck } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import '../style/KBILyticsComponent.css';
 import AssessmentCategoriesComponent from './AssessmentCategoriesComponent';
 
@@ -36,6 +36,21 @@ const AssessmentComponent = ({ language }) => {
   // Get translations based on selected language
   const t = translations[language] || translations.fr; // Default to French if language not found
   
+  // Écouteur d'événement pour le retour au menu
+  useEffect(() => {
+    const handleReturnToMenu = () => {
+      setShowCategories(false);
+      setSelectedOption(null);
+    };
+
+    window.addEventListener('returnToMenu', handleReturnToMenu);
+    
+    // Nettoyage de l'écouteur d'événement lors du démontage du composant
+    return () => {
+      window.removeEventListener('returnToMenu', handleReturnToMenu);
+    };
+  }, []);
+  
   const handleTestClick = () => {
     console.log("Test button clicked");
     setShowCategories(true);
@@ -51,6 +66,11 @@ const AssessmentComponent = ({ language }) => {
     if (option !== 'test') {
       setShowCategories(false);
     }
+  };
+
+  const handleReturnFromAssessment = () => {
+    setShowCategories(false);
+    setSelectedOption(null);
   };
   
   return (
@@ -135,7 +155,10 @@ const AssessmentComponent = ({ language }) => {
           </div>
         </>
       ) : (
-        <AssessmentCategoriesComponent language={language} />
+        <AssessmentCategoriesComponent 
+          language={language} 
+          onReturnToMenu={handleReturnFromAssessment}
+        />
       )}
       
       <style>{`

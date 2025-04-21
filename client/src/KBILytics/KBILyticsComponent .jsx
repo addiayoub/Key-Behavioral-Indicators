@@ -172,15 +172,7 @@ const KBILyticsComponent = () => {
         <div className="w-full h-full flex justify-center pt-16 sm:pt-20 md:pt-28">
           <div className="flex flex-col sm:flex-row w-full max-w-5xl px-4 md:px-8">
             <div className="flex justify-center sm:justify-start mb-6 sm:mb-0 sm:mr-4 md:mr-6">
-              <img 
-                src={menuImage} 
-                alt="Vertical Menu" 
-                className="h-32 sm:h-100 md:h-120 object-contain opacity-0 animate-fade-in"
-                style={{
-                  animation: 'fadeIn 0.8s forwards',
-                  animationDelay: '0.5s'
-                }}
-              />
+            
             </div>
             
             <div className="flex-1 relative">

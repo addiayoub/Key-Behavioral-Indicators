@@ -7,11 +7,11 @@ import Adaptability from '/Picture17.png';
 import Continuous from '/Picture18.png';
 import ApiService from './ApiService';
 import Loader from "../../loader/Loader";
-import { CircleCheckBig, CircleX, ChevronDown, ChevronUp } from 'lucide-react';
+import { CircleCheckBig, ChevronLeft, ChevronRight, ChevronDown, ChevronUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Swal from 'sweetalert2';
 
-const AssessmentCategoriesComponent = ({ language = 'fr' }) => {
+const AssessmentCategoriesComponent = ({ language = 'fr', onReturnToMenu }) => {
   // États pour gérer les questions et les réponses
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [questions, setQuestions] = useState([]);
@@ -65,6 +65,15 @@ const AssessmentCategoriesComponent = ({ language = 'fr' }) => {
       introduction: "L'évaluation est composée de 6 sections. Environ 10 minutes seront nécessaires pour les compléter toutes",
       section1: "Section 1: 9 questions pour le filtrage et l'analyse croisée des données.",
       section2to6: "Section 2 à 6: 10 questions pour chaque catégorie.",
+      categoriesIncomplete: "Catégories incomplètes",
+      allCategoriesRequired: "Toutes les catégories doivent être complétées avant de soumettre.",
+      followingCategoriesIncomplete: "Les catégories suivantes sont incomplètes :",
+      completeAllRequired: "Veuillez compléter toutes les questions obligatoires avant de soumettre.",
+      categoryProgress: "Progression des catégories",
+      categoryCompleted: "% complété",
+      saveAndContinue: "Enregistrer et continuer",
+      nextCategory: "Catégorie suivante",
+      previousCategory: "Catégorie précédente",
       categoryNames: {
         "General": "Generale",
         "Proactivity": "Proactivité",
@@ -148,6 +157,15 @@ const AssessmentCategoriesComponent = ({ language = 'fr' }) => {
       percentage: "Percentage:",
       categoryScores: "Category scores:",
       completed: "% completed",
+      categoriesIncomplete: "Incomplete Categories",
+      allCategoriesRequired: "All categories must be completed before submitting.",
+      followingCategoriesIncomplete: "The following categories are incomplete:",
+      completeAllRequired: "Please complete all required questions before submitting.",
+      categoryProgress: "Category Progress",
+      categoryCompleted: "% completed",
+      saveAndContinue: "Save and Continue",
+      nextCategory: "Next Category",
+      previousCategory: "Previous Category",
       error: "Error"
     }
   };
@@ -268,7 +286,10 @@ const AssessmentCategoriesComponent = ({ language = 'fr' }) => {
         try {
           const categoryName = categoryMapping[selectedCategory] || selectedCategory;
           const data = await ApiService.getQuestionsByCategory(categoryName);
-          setQuestions(data);
+          
+          // Trier les questions par ID
+          const sortedData = [...data].sort((a, b) => a.id - b.id);
+          setQuestions(sortedData);
         } catch (error) {
           console.error('Erreur lors du chargement des questions:', error);
           customSwal.fire({
@@ -281,10 +302,18 @@ const AssessmentCategoriesComponent = ({ language = 'fr' }) => {
           setLoading(false);
         }
       };
-
+  
       fetchQuestions();
     }
   }, [selectedCategory, language]);
+  
+  // Ajoutez ce nouvel useEffect pour sélectionner automatiquement la catégorie "General" au chargement
+  useEffect(() => {
+    // Sélectionner automatiquement la première catégorie (General) au démarrage
+    if (!selectedCategory && categoryItems.length > 0) {
+      handleCategoryClick("General");
+    }
+  }, [categoryItems]);
 
   const handleCategoryClick = (categoryName) => {
     const currentIndex = categoryItems.findIndex(item => item.name === selectedCategory);
@@ -362,22 +391,57 @@ const AssessmentCategoriesComponent = ({ language = 'fr' }) => {
     }
   };
 
+  const [allCategoryQuestions, setAllCategoryQuestions] = useState({});
+
+  const loadAllCategoryQuestions = async () => {
+    try {
+      const questionsMap = {};
+      for (const category of categoryItems) {
+        const categoryName = category.name;
+        const categoryMappedName = categoryMapping[categoryName] || categoryName;
+        const questions = await ApiService.getQuestionsByCategory(categoryMappedName);
+        questionsMap[categoryName] = questions;
+      }
+      setAllCategoryQuestions(questionsMap);
+    } catch (error) {
+      console.error('Error loading all category questions:', error);
+    }
+  };
+
+  useEffect(() => {
+    loadAllCategoryQuestions();
+  }, []);
+
   const handleSubmitAllAnswers = async () => {
-    const allCategoriesValid = categoryItems.every(category => {
-      const categoryAnswers = allAnswers[category.name] || {};
-      const categoryQuestions = questions.filter(q => q.category === categoryMapping[category.name]);
+    const isCategoryCompleted = (categoryName) => {
+      const categoryQuestions = allCategoryQuestions[categoryName] || [];
+      const categoryAnswers = allAnswers[categoryName] || {};
       
       return categoryQuestions.every(q => {
         if (!q.required) return true;
         return !!categoryAnswers[q.id];
       });
-    });
-
-    if (!allCategoriesValid) {
+    };
+    
+    const incompleteCategoryNames = categoryItems
+      .filter(category => !isCategoryCompleted(category.name))
+      .map(category => t.categoryNames[category.name]);
+      
+    if (incompleteCategoryNames.length > 0) {
       customSwal.fire({
         title: t.incompleteForm,
-        text: t.missingAnswers,
-        icon: 'error',
+        html: `
+          <p>${language === 'fr' 
+            ? 'Les catégories suivantes sont incomplètes :' 
+            : 'The following categories are incomplete:'}</p>
+          <ul>
+            ${incompleteCategoryNames.map(name => `<li>${name}</li>`).join('')}
+          </ul>
+          <p>${language === 'fr'
+            ? 'Veuillez compléter toutes les questions obligatoires avant de soumettre.'
+            : 'Please complete all required questions before submitting.'}</p>
+        `,
+        icon: 'warning',
         confirmButtonText: t.understood
       });
       return;
@@ -411,37 +475,12 @@ const AssessmentCategoriesComponent = ({ language = 'fr' }) => {
         text: t.submissionSuccess,
         icon: 'success',
         confirmButtonText: 'OK'
-      }).then(async () => {
-        try {
-          const results = await ApiService.getUserResults();
-          const totalScore = results.totalScore;
-          const percentage = totalScore.maxPossible > 0 
-            ? Math.round((totalScore.score / totalScore.maxPossible) * 100) 
-            : 0;
-          
-          customSwal.fire({
-            title: t.yourResults,
-            html: `
-              <p>${t.yourTotalScore} ${totalScore.score}/${totalScore.maxPossible}</p>
-              <p>${t.percentage} ${percentage}%</p>
-              <h3>${t.categoryScores}</h3>
-              <ul>
-                ${results.categoryScores
-                  .filter(cat => cat.category !== 'Basic')
-                  .map(cat => 
-                    `<li>${cat.category}: ${cat.rawScore}/${cat.maxPossible} (${Math.round((cat.rawScore/cat.maxPossible)*100)}%)</li>`
-                  ).join('')}
-              </ul>
-            `,
-            icon: 'success',
-            confirmButtonText: 'OK'
-          });
-        } catch (e) {
-          console.error('Error retrieving results:', e);
-        }
+      }).then(() => {
+        // Retour au menu après soumission réussie
+        onReturnToMenu();
       });
     } catch (error) {
-      console.error('Erreur lors de la soumission:', error);
+      console.error('Erreur lors de la soumission des réponses:', error);
       setSubmissionStatus('error');
       customSwal.fire({
         title: t.error,
@@ -451,6 +490,22 @@ const AssessmentCategoriesComponent = ({ language = 'fr' }) => {
       });
     } finally {
       setLoading(false);
+    }
+  };
+
+  const goToNextCategory = () => {
+    const currentIndex = categoryItems.findIndex(item => item.name === selectedCategory);
+    if (currentIndex < categoryItems.length - 1) {
+      setDirection(1);
+      handleCategoryClick(categoryItems[currentIndex + 1].name);
+    }
+  };
+
+  const goToPreviousCategory = () => {
+    const currentIndex = categoryItems.findIndex(item => item.name === selectedCategory);
+    if (currentIndex > 0) {
+      setDirection(-1);
+      handleCategoryClick(categoryItems[currentIndex - 1].name);
     }
   };
 
@@ -561,6 +616,16 @@ const AssessmentCategoriesComponent = ({ language = 'fr' }) => {
     return `${t.questionsFor} ${t.categoryNames[selectedCategory] || selectedCategory}`;
   };
 
+  const getCategoryCompletionPercentage = (categoryName) => {
+    const categoryQuestions = allCategoryQuestions[categoryName] || [];
+    if (categoryQuestions.length === 0) return 0;
+    
+    const categoryAnswers = allAnswers[categoryName] || {};
+    const answeredCount = categoryQuestions.filter(q => !!categoryAnswers[q.id]).length;
+    
+    return Math.round((answeredCount / categoryQuestions.length) * 100);
+  };
+
   return (
     <div className="text-white">
       <motion.div 
@@ -602,7 +667,17 @@ const AssessmentCategoriesComponent = ({ language = 'fr' }) => {
                     className="w-14 h-14" 
                   />
                 </div>
-                <span className="text-white text-center font-medium px-1">{category.displayName}</span>
+                <span id='name_categorie' className="text-white text-center font-medium px-1">{category.displayName}</span>
+                
+                <div className="w-3/4 h-1 bg-gray-700 rounded-full mt-2 relative overflow-hidden">
+                  <div 
+                    className="absolute top-0 left-0 h-full bg-green-500 transition-all duration-300"
+                    style={{ width: `${getCategoryCompletionPercentage(category.name)}%` }}
+                  />
+                </div>
+                <span className="text-xs text-gray-300 mt-1">
+                  {getCategoryCompletionPercentage(category.name)} {t.completed}
+                </span>
               </motion.div>
             ))}
           </div>
@@ -804,29 +879,55 @@ const AssessmentCategoriesComponent = ({ language = 'fr' }) => {
             </div>
 
             <motion.div 
-              className="flex justify-between p-6 pt-4 bg- border-t border-gray-800 rounded-b-xl sticky bottom-0"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.4 }}
-            >
-              <motion.button
-                onClick={handleSaveAnswers}
-                className="px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-700 text-white rounded-lg hover:from-orange-600 hover:to-orange-800 transition-all shadow-lg shadow-orange-500/30 hover:shadow-orange-500/50 cursor-pointer font-medium"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {t.saveAnswers}
-              </motion.button>
-              
-              <motion.button
-                onClick={handleSubmitAllAnswers}
-                className="px-6 py-3 bg-gradient-to-r from-green-600 to-green-800 text-white rounded-lg hover:from-green-700 hover:to-green-900 transition-all shadow-lg shadow-green-500/30 hover:shadow-green-500/50 cursor-pointer font-medium"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {t.submitAll}
-              </motion.button>
-            </motion.div>
+  className="flex justify-between p-6 pt-4 bg- border-t border-gray-800 rounded-b-xl sticky bottom-0"
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.3, delay: 0.4 }}
+>
+  <div className="flex space-x-3">
+    <motion.button
+      onClick={goToPreviousCategory}
+      className={`px-4 py-2 bg-gray-700 text-white rounded-lg transition-all hover:bg-gray-600  flex items-center
+        ${categoryItems.findIndex(item => item.name === selectedCategory) === 0 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      disabled={categoryItems.findIndex(item => item.name === selectedCategory) === 0}
+    >
+      <ChevronLeft className="mr-2" size={18} />
+    </motion.button>
+    
+    <motion.button
+      onClick={handleSaveAnswers}
+      className="px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-700 text-white rounded-lg hover:from-orange-600 hover:to-orange-800 transition-all shadow-lg shadow-orange-500/30 hover:shadow-orange-500/50 cursor-pointer font-medium"
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+    >
+      {getCategoryCompletionPercentage(selectedCategory) === 100 ? t.saveAndContinue : t.saveAnswers}
+    </motion.button>
+    <motion.button
+      onClick={goToNextCategory}
+      className={`px-4 py-2 bg-gray-700 text-white rounded-lg transition-all hover:bg-gray-600 cursor-pointer flex items-center
+        ${categoryItems.findIndex(item => item.name === selectedCategory) === categoryItems.length - 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      disabled={categoryItems.findIndex(item => item.name === selectedCategory) === categoryItems.length - 1}
+    >
+      <ChevronRight className="ml-2" size={18} />
+    </motion.button>
+  </div>
+  
+  
+   
+    
+    <motion.button
+      onClick={handleSubmitAllAnswers}
+      className="px-6 py-3 bg-gradient-to-r from-green-600 to-green-800 text-white rounded-lg hover:from-green-700 hover:to-green-900 transition-all shadow-lg shadow-green-500/30 hover:shadow-green-500/50 cursor-pointer font-medium"
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+    >
+      {t.submitAll}
+    </motion.button>
+</motion.div>
           </div>
         </motion.div>
       ) : null}
@@ -860,7 +961,11 @@ const AssessmentCategoriesComponent = ({ language = 'fr' }) => {
           outline: none;
           cursor: pointer;
         }
-        
+        #name_categorie{
+        font-size: 10px;
+            white-space: nowrap;
+
+        }
         input[type="radio"]:checked {
           border: 2px solid #ed8936;
           background-color: #ed8936;
@@ -882,4 +987,4 @@ const AssessmentCategoriesComponent = ({ language = 'fr' }) => {
   );
 };
 
-export default AssessmentCategoriesComponent;
+export default AssessmentCategoriesComponent;//
