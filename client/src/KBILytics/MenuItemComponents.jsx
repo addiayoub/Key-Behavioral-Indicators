@@ -3,11 +3,10 @@ import { Undo2 } from 'lucide-react';
 import './style/KBILyticsComponent.css';
 import AtGlanceComponent from './menu/AtGlanceComponent';
 import HowItWorksComponent from './menu/HowItWorksComponent';
-import AssessmentComponent from './menu/AssessmentComponent';
+import AssessmentComponent from './menu/AssessmentComponent/AssessmentComponent';
 import DashboardComponent from './menu/DashboardComponent';
 import ReportsComponent from './menu/ReportsComponent';
 import KnowledgeHubComponent from './menu/KnowledgeHubComponent';
-import LanguageSwitcher from '../Language/LanguageSwitcher ';
 
 const ContentViewHandler = ({ selectedItem, menuItems, onBackClick, language, setLanguage }) => {
   const renderContent = () => {

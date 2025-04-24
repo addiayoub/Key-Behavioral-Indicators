@@ -22,7 +22,7 @@ export default function FlipAnimation() {
         />
       </div>
 
-      <style jsx global>{`
+      <style >{`
         @keyframes flip {
           0% { transform: rotateY(0deg); }
           50% { transform: rotateY(180deg); }

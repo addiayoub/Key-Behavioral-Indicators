@@ -1,6 +1,6 @@
 import { Bookmark, BookmarkCheck } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import '../style/KBILyticsComponent.css';
+import '../../style/KBILyticsComponent.css';
 import AssessmentCategoriesComponent from './AssessmentCategoriesComponent';
 
 const AssessmentComponent = ({ language }) => {
@@ -52,12 +52,10 @@ const AssessmentComponent = ({ language }) => {
   }, []);
   
   const handleTestClick = () => {
-    console.log("Test button clicked");
     setShowCategories(true);
   };
   
   const handleParticipateClick = () => {
-    console.log("Participate button clicked");
     // Additional logic for participation
   };
   
