@@ -7,19 +7,9 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-// Configuration CORS
-const allowedOrigins = process.env.FRONTEND_URL ? 
-  process.env.FRONTEND_URL.split(',') : 'https://key-behavioral-indicators.vercel.app'
-  
-
+// Configuration CORS - Autoriser toutes les origines
 app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('CORS not allowed for this origin'));
-    }
-  },
+  origin: '*', // Permet toutes les origines
   credentials: true
 }));
 
