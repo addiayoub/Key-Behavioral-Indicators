@@ -1,0 +1,1926 @@
+[{
+  "_id": {
+    "$oid": "67dafedd15848743b308c5ec"
+  },
+  "userId": "user_1742337008234_oi5kneg",
+  "industry": "Banque / Assurance / Finance",
+  "industryAng": "Banking / Insurance / Finance",
+  "organizationType": "Post-changement",
+  "organizationTypeAng": "Post-Change Phase",
+  "changePhase": "Croissance",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T17:29:01.679Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4412a5a3dccb240c4501"
+  },
+  "userId": "user_1742423050669-1",
+  "industryAng": "Other",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:24:18.392Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4413a5a3dccb240c454a"
+  },
+  "userId": "user_1742423050670-2",
+  "industryAng": "Other",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:24:19.720Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4415a5a3dccb240c4593"
+  },
+  "userId": "user_1742423050670-3",
+  "industryAng": "Consulting",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:24:21.024Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4416a5a3dccb240c45dc"
+  },
+  "userId": "user_1742423050670-4",
+  "industryAng": "Manufacturing",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:24:22.341Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4417a5a3dccb240c4625"
+  },
+  "userId": "user_1742423050670-5",
+  "industryAng": "Manufacturing",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:24:23.615Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4418a5a3dccb240c466e"
+  },
+  "userId": "user_1742423050670-6",
+  "industryAng": "Construction",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:24:24.890Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db441aa5a3dccb240c46b7"
+  },
+  "userId": "user_1742423050670-7",
+  "industryAng": "Tourism",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:24:26.153Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db441ba5a3dccb240c4700"
+  },
+  "userId": "user_1742423050670-8",
+  "industryAng": "Manufacturing",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:24:27.428Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db441da5a3dccb240c4749"
+  },
+  "userId": "user_1742423050671-9",
+  "industryAng": "Manufacturing",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:24:29.119Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db441ea5a3dccb240c4792"
+  },
+  "userId": "user_1742423050671-10",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:24:30.373Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db441fa5a3dccb240c47db"
+  },
+  "userId": "user_1742423050671-11",
+  "industryAng": "Education",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:24:31.626Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4420a5a3dccb240c4824"
+  },
+  "userId": "user_1742423050671-12",
+  "industryAng": "Banking / Insurance / Finance",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:24:32.884Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4422a5a3dccb240c486d"
+  },
+  "userId": "user_1742423050671-13",
+  "industryAng": "Manufacturing",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:24:34.162Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4423a5a3dccb240c48b6"
+  },
+  "userId": "user_1742423050671-14",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:24:35.614Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4424a5a3dccb240c48ff"
+  },
+  "userId": "user_1742423050671-15",
+  "industryAng": "Transport",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:24:36.882Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4426a5a3dccb240c4948"
+  },
+  "userId": "user_1742423050671-16",
+  "industryAng": "Education",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:24:38.133Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4427a5a3dccb240c4991"
+  },
+  "userId": "user_1742423050671-17",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:24:39.392Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4428a5a3dccb240c49da"
+  },
+  "userId": "user_1742423050671-18",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:24:40.709Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4429a5a3dccb240c4a23"
+  },
+  "userId": "user_1742423050671-19",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:24:41.986Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db442ba5a3dccb240c4a6c"
+  },
+  "userId": "user_1742423050671-20",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:24:43.253Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db442ca5a3dccb240c4ab5"
+  },
+  "userId": "user_1742423050671-21",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:24:44.516Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db442da5a3dccb240c4afe"
+  },
+  "userId": "user_1742423050672-22",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:24:45.771Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db442fa5a3dccb240c4b47"
+  },
+  "userId": "user_1742423050672-23",
+  "industryAng": "Manufacturing",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:24:47.026Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4430a5a3dccb240c4b90"
+  },
+  "userId": "user_1742423050672-24",
+  "industryAng": "Construction",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:24:48.283Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4431a5a3dccb240c4bd9"
+  },
+  "userId": "user_1742423050672-25",
+  "industryAng": "Other",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:24:49.561Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4432a5a3dccb240c4c22"
+  },
+  "userId": "user_1742423050672-26",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:24:50.828Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4434a5a3dccb240c4c6b"
+  },
+  "userId": "user_1742423050672-27",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:24:52.075Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4435a5a3dccb240c4cb4"
+  },
+  "userId": "user_1742423050672-28",
+  "industryAng": "Banking / Insurance / Finance",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:24:53.391Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4436a5a3dccb240c4cfd"
+  },
+  "userId": "user_1742423050672-29",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:24:54.671Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4437a5a3dccb240c4d46"
+  },
+  "userId": "user_1742423050672-30",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:24:55.921Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4439a5a3dccb240c4d8f"
+  },
+  "userId": "user_1742423050672-31",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:24:57.187Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db443aa5a3dccb240c4dd8"
+  },
+  "userId": "user_1742423050672-32",
+  "industryAng": "Banking / Insurance / Finance",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:24:58.452Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db443ba5a3dccb240c4e21"
+  },
+  "userId": "user_1742423050672-33",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:24:59.719Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db443ca5a3dccb240c4e6a"
+  },
+  "userId": "user_1742423050672-34",
+  "industryAng": "Education",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:00.964Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db443ea5a3dccb240c4eb3"
+  },
+  "userId": "user_1742423050672-35",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:02.207Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db443fa5a3dccb240c4efc"
+  },
+  "userId": "user_1742423050672-36",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:03.449Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4440a5a3dccb240c4f45"
+  },
+  "userId": "user_1742423050673-37",
+  "industryAng": "Manufacturing",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:04.695Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4441a5a3dccb240c4f8e"
+  },
+  "userId": "user_1742423050673-38",
+  "industryAng": "Manufacturing",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:05.946Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4443a5a3dccb240c4fd7"
+  },
+  "userId": "user_1742423050673-39",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:07.207Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4444a5a3dccb240c5020"
+  },
+  "userId": "user_1742423050673-40",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:08.452Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4445a5a3dccb240c5069"
+  },
+  "userId": "user_1742423050673-41",
+  "industryAng": "Construction",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:09.692Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4446a5a3dccb240c50b2"
+  },
+  "userId": "user_1742423050673-42",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:10.943Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4448a5a3dccb240c50fb"
+  },
+  "userId": "user_1742423050673-43",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:12.201Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4449a5a3dccb240c5144"
+  },
+  "userId": "user_1742423050673-44",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:13.445Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db444aa5a3dccb240c518d"
+  },
+  "userId": "user_1742423050673-45",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:14.699Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db444ba5a3dccb240c51d6"
+  },
+  "userId": "user_1742423050673-46",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:15.945Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db444da5a3dccb240c521f"
+  },
+  "userId": "user_1742423050673-47",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:17.198Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db444ea5a3dccb240c5268"
+  },
+  "userId": "user_1742423050673-48",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:18.485Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db444fa5a3dccb240c52b1"
+  },
+  "userId": "user_1742423050673-49",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:19.754Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4450a5a3dccb240c52fa"
+  },
+  "userId": "user_1742423050673-50",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:20.995Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4452a5a3dccb240c5343"
+  },
+  "userId": "user_1742423050673-51",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:22.254Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4453a5a3dccb240c538c"
+  },
+  "userId": "user_1742423050674-52",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:23.495Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4454a5a3dccb240c53d5"
+  },
+  "userId": "user_1742423050674-53",
+  "industryAng": "Other",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:24.760Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4456a5a3dccb240c541e"
+  },
+  "userId": "user_1742423050674-54",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:26.005Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4457a5a3dccb240c5467"
+  },
+  "userId": "user_1742423050674-55",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:27.244Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4458a5a3dccb240c54b0"
+  },
+  "userId": "user_1742423050674-56",
+  "industryAng": "Manufacturing",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:28.487Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4459a5a3dccb240c54f9"
+  },
+  "userId": "user_1742423050674-57",
+  "industryAng": "Consulting",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:29.725Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db445aa5a3dccb240c5542"
+  },
+  "userId": "user_1742423050674-58",
+  "industryAng": "Retail",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:30.979Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db445ca5a3dccb240c558b"
+  },
+  "userId": "user_1742423050674-59",
+  "industryAng": "Supply chain / Logistics ",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:32.231Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db445da5a3dccb240c55d4"
+  },
+  "userId": "user_1742423050674-60",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:33.476Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db445ea5a3dccb240c561d"
+  },
+  "userId": "user_1742423050674-61",
+  "industryAng": "Banking / Insurance / Finance",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:34.716Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db445fa5a3dccb240c5666"
+  },
+  "userId": "user_1742423050674-62",
+  "industryAng": "Supply chain / Logistics ",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:35.961Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4461a5a3dccb240c56af"
+  },
+  "userId": "user_1742423050674-63",
+  "industryAng": "Banking / Insurance / Finance",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:37.201Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4462a5a3dccb240c56f8"
+  },
+  "userId": "user_1742423050676-64",
+  "industryAng": "Manufacturing",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:38.733Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4464a5a3dccb240c5741"
+  },
+  "userId": "user_1742423050676-65",
+  "industryAng": "Manufacturing",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:40.113Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4465a5a3dccb240c578a"
+  },
+  "userId": "user_1742423050676-66",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:41.351Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4466a5a3dccb240c57d3"
+  },
+  "userId": "user_1742423050676-67",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:42.598Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4467a5a3dccb240c581c"
+  },
+  "userId": "user_1742423050676-68",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:43.855Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4469a5a3dccb240c5865"
+  },
+  "userId": "user_1742423050676-69",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:45.111Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db446aa5a3dccb240c58ae"
+  },
+  "userId": "user_1742423050676-70",
+  "industryAng": "Banking / Insurance / Finance",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:46.359Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db446ba5a3dccb240c58f7"
+  },
+  "userId": "user_1742423050676-71",
+  "industryAng": "Other",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:47.623Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db446ca5a3dccb240c5940"
+  },
+  "userId": "user_1742423050676-72",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:48.871Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db446ea5a3dccb240c5989"
+  },
+  "userId": "user_1742423050676-73",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:50.108Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db446fa5a3dccb240c59d2"
+  },
+  "userId": "user_1742423050676-74",
+  "industryAng": "Transport",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:51.358Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4470a5a3dccb240c5a1b"
+  },
+  "userId": "user_1742423050676-75",
+  "industryAng": "Other",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:52.595Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4471a5a3dccb240c5a64"
+  },
+  "userId": "user_1742423050677-76",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:53.839Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4473a5a3dccb240c5aad"
+  },
+  "userId": "user_1742423050677-77",
+  "industryAng": "Construction",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:55.079Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4474a5a3dccb240c5af6"
+  },
+  "userId": "user_1742423050677-78",
+  "industryAng": "Transport",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:56.345Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4475a5a3dccb240c5b3f"
+  },
+  "userId": "user_1742423050677-79",
+  "industryAng": "Manufacturing",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:57.618Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4476a5a3dccb240c5b88"
+  },
+  "userId": "user_1742423050677-80",
+  "industryAng": "Supply chain / Logistics ",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:25:58.869Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4478a5a3dccb240c5bd1"
+  },
+  "userId": "user_1742423050677-81",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:26:00.217Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4479a5a3dccb240c5c1a"
+  },
+  "userId": "user_1742423050677-82",
+  "industryAng": "Banking / Insurance / Finance",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:26:01.460Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db447aa5a3dccb240c5c63"
+  },
+  "userId": "user_1742423050677-83",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:26:02.708Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db447ba5a3dccb240c5cac"
+  },
+  "userId": "user_1742423050677-84",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:26:03.956Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db447da5a3dccb240c5cf5"
+  },
+  "userId": "user_1742423050677-85",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:26:05.203Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db447ea5a3dccb240c5d3e"
+  },
+  "userId": "user_1742423050677-86",
+  "industryAng": "Banking / Insurance / Finance",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:26:06.459Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db447fa5a3dccb240c5d87"
+  },
+  "userId": "user_1742423050677-87",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:26:07.723Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4480a5a3dccb240c5dd0"
+  },
+  "userId": "user_1742423050677-88",
+  "industryAng": "Manufacturing",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:26:08.979Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4482a5a3dccb240c5e19"
+  },
+  "userId": "user_1742423050677-89",
+  "industryAng": "Education",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:26:10.229Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4483a5a3dccb240c5e62"
+  },
+  "userId": "user_1742423050678-90",
+  "industryAng": "Tourism",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:26:11.492Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4484a5a3dccb240c5eab"
+  },
+  "userId": "user_1742423050678-91",
+  "industryAng": "Supply chain / Logistics ",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:26:12.776Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4486a5a3dccb240c5ef4"
+  },
+  "userId": "user_1742423050678-92",
+  "industryAng": "Manufacturing",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:26:14.050Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4487a5a3dccb240c5f3d"
+  },
+  "userId": "user_1742423050678-93",
+  "industryAng": "Transport",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:26:15.315Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4488a5a3dccb240c5f86"
+  },
+  "userId": "user_1742423050678-94",
+  "industryAng": "Transport",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:26:16.582Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4489a5a3dccb240c5fcf"
+  },
+  "userId": "user_1742423050678-95",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:26:17.833Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db448ba5a3dccb240c6018"
+  },
+  "userId": "user_1742423050678-96",
+  "industryAng": "Other",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:26:19.094Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db448ca5a3dccb240c6061"
+  },
+  "userId": "user_1742423050678-97",
+  "industryAng": "Other",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:26:20.361Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db448da5a3dccb240c60aa"
+  },
+  "userId": "user_1742423050678-98",
+  "industryAng": "Other",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:26:21.634Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db448ea5a3dccb240c60f3"
+  },
+  "userId": "user_1742423050678-99",
+  "industryAng": "Tourism",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:26:22.903Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4590a5a3dccb240c613c"
+  },
+  "userId": "user_1742423429307-1",
+  "industryAng": "Other",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:30:40.220Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4592a5a3dccb240c6185"
+  },
+  "userId": "user_1742423429308-2",
+  "industryAng": "Other",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:30:42.037Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4593a5a3dccb240c61ce"
+  },
+  "userId": "user_1742423429308-3",
+  "industryAng": "Consulting",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:30:43.856Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4595a5a3dccb240c6217"
+  },
+  "userId": "user_1742423429308-4",
+  "industryAng": "Manufacturing",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:30:45.118Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4596a5a3dccb240c6260"
+  },
+  "userId": "user_1742423429308-5",
+  "industryAng": "Manufacturing",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:30:46.376Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4597a5a3dccb240c62a9"
+  },
+  "userId": "user_1742423429308-6",
+  "industryAng": "Construction",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:30:47.647Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db4598a5a3dccb240c62f2"
+  },
+  "userId": "user_1742423429308-7",
+  "industryAng": "Tourism",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:30:48.886Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db459aa5a3dccb240c633b"
+  },
+  "userId": "user_1742423429308-8",
+  "industryAng": "Manufacturing",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:30:50.127Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db459ba5a3dccb240c6384"
+  },
+  "userId": "user_1742423429308-9",
+  "industryAng": "Manufacturing",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:30:51.385Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db459ca5a3dccb240c63cd"
+  },
+  "userId": "user_1742423429309-10",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:30:52.666Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db459da5a3dccb240c6416"
+  },
+  "userId": "user_1742423429309-11",
+  "industryAng": "Education",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:30:53.919Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db459fa5a3dccb240c645f"
+  },
+  "userId": "user_1742423429309-12",
+  "industryAng": "Banking / Insurance / Finance",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:30:55.182Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db45a0a5a3dccb240c64a8"
+  },
+  "userId": "user_1742423429309-13",
+  "industryAng": "Manufacturing",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:30:56.428Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db45a1a5a3dccb240c64f1"
+  },
+  "userId": "user_1742423429309-14",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:30:57.696Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db45a2a5a3dccb240c653a"
+  },
+  "userId": "user_1742423429309-15",
+  "industryAng": "Transport",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:30:58.957Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db45a4a5a3dccb240c6583"
+  },
+  "userId": "user_1742423429309-16",
+  "industryAng": "Education",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:31:00.201Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db45a5a5a3dccb240c65cc"
+  },
+  "userId": "user_1742423429309-17",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:31:01.438Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db45a6a5a3dccb240c6615"
+  },
+  "userId": "user_1742423429309-18",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:31:02.675Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db45a7a5a3dccb240c665e"
+  },
+  "userId": "user_1742423429309-19",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:31:03.910Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db45a9a5a3dccb240c66a7"
+  },
+  "userId": "user_1742423429309-20",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:31:05.156Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db45aaa5a3dccb240c66f0"
+  },
+  "userId": "user_1742423429309-21",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:31:06.400Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db45aba5a3dccb240c6739"
+  },
+  "userId": "user_1742423429309-22",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:31:07.636Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db45ada5a3dccb240c6782"
+  },
+  "userId": "user_1742423429309-23",
+  "industryAng": "Manufacturing",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:31:09.061Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db45aea5a3dccb240c67cb"
+  },
+  "userId": "user_1742423429309-24",
+  "industryAng": "Construction",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:31:10.467Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db45afa5a3dccb240c6814"
+  },
+  "userId": "user_1742423429309-25",
+  "industryAng": "Other",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:31:11.878Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db45b1a5a3dccb240c685d"
+  },
+  "userId": "user_1742423429309-26",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:31:13.294Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db45b2a5a3dccb240c68a6"
+  },
+  "userId": "user_1742423429310-27",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:31:14.717Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db45b4a5a3dccb240c68ef"
+  },
+  "userId": "user_1742423429310-28",
+  "industryAng": "Banking / Insurance / Finance",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:31:16.134Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db45b5a5a3dccb240c6938"
+  },
+  "userId": "user_1742423429310-29",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:31:17.544Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db45b7a5a3dccb240c6981"
+  },
+  "userId": "user_1742423429310-30",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:31:19.193Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db45b8a5a3dccb240c69ca"
+  },
+  "userId": "user_1742423429310-31",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:31:20.659Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db45baa5a3dccb240c6a13"
+  },
+  "userId": "user_1742423429310-32",
+  "industryAng": "Banking / Insurance / Finance",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:31:22.070Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db45bba5a3dccb240c6a5c"
+  },
+  "userId": "user_1742423429310-33",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:31:23.470Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db45bca5a3dccb240c6aa5"
+  },
+  "userId": "user_1742423429310-34",
+  "industryAng": "Education",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:31:24.886Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db45bea5a3dccb240c6aee"
+  },
+  "userId": "user_1742423429310-35",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:31:26.334Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db45bfa5a3dccb240c6b37"
+  },
+  "userId": "user_1742423429310-36",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:31:27.579Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db45c0a5a3dccb240c6b80"
+  },
+  "userId": "user_1742423429310-37",
+  "industryAng": "Manufacturing",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:31:28.848Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db45c2a5a3dccb240c6bc9"
+  },
+  "userId": "user_1742423429310-38",
+  "industryAng": "Manufacturing",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:31:30.153Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db45c3a5a3dccb240c6c12"
+  },
+  "userId": "user_1742423429310-39",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:31:31.393Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db45c4a5a3dccb240c6c5b"
+  },
+  "userId": "user_1742423429310-40",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:31:32.651Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db45c5a5a3dccb240c6ca4"
+  },
+  "userId": "user_1742423429310-41",
+  "industryAng": "Construction",
+  "organizationTypeAng": "change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:31:33.906Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db45c7a5a3dccb240c6ced"
+  },
+  "userId": "user_1742423429310-42",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Post-change",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-19T22:31:35.330Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67db45c8a5a3dccb240c6d36"
+  },
+  "userId": "user_1742423429310-43",
+  "industryAng": "IT / Telecom",
+  "organizationTypeAng": "Pre-change",
+  "changePhaseAng": "Mature Organization",
+  "createdAt": {
+    "$date": "2025-03-19T22:31:36.793Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67e9d8de8daea16d6340fd53"
+  },
+  "userId": "user_1743378654269_6pkyboq",
+  "industry": "Secteur public",
+  "industryAng": "Public sector",
+  "organizationType": "Post-changement",
+  "organizationTypeAng": "Post-Change Phase",
+  "changePhase": "Croissance",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-03-30T23:50:54.828Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "680635b6244cb8e448422a84"
+  },
+  "userId": "user_1744657655444_elwi7sc",
+  "industry": "Secteur public",
+  "industryAng": "Public sector",
+  "organizationType": "Changement",
+  "organizationTypeAng": "Change Phase",
+  "changePhase": "Croissance",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-04-21T12:10:30.583Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "680b5373b7652bf7fd677671"
+  },
+  "userId": "user_1745572724835_2x1lidp",
+  "industry": "Chaîne d'approvisionnement / Logistique",
+  "industryAng": "Supply chain / Logistics",
+  "organizationType": "Pré-changement",
+  "organizationTypeAng": "Pre-Change Phase",
+  "changePhase": "Croissance",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-04-25T09:18:43.053Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "680b5cd8b7652bf7fd6776f3"
+  },
+  "userId": "user_1745575128202_0aqs6c6",
+  "industry": "IT / Télécom",
+  "industryAng": "IT / Telecom",
+  "organizationType": "Changement",
+  "organizationTypeAng": "Change Phase",
+  "changePhase": "Croissance",
+  "changePhaseAng": "Growth Phase",
+  "createdAt": {
+    "$date": "2025-04-25T09:58:48.937Z"
+  },
+  "__v": 0
+}]
