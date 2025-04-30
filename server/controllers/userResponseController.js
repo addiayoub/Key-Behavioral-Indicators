@@ -7,10 +7,6 @@ const mongoose = require('mongoose');
 const userResponseController = {
   // Enregistrer les réponses d'un utilisateur
   saveUserResponses: async (req, res) => {
-    // Démarrer une session de transaction pour garantir l'atomicité
-    const session = await mongoose.startSession();
-    session.startTransaction();
-    
     try {
       const { userId, responses } = req.body;
       
@@ -234,6 +230,10 @@ const userResponseController = {
         ciScore = weightedCi;
       }
 
+      // Supprimer les anciennes données
+      await UserResponse.deleteOne({ userId });
+      await KeyResponse.deleteOne({ userId });
+
       // Créer l'objet de réponse utilisateur avec la structure mise à jour
       const userResponseObj = new UserResponse({
         userId,
@@ -262,16 +262,9 @@ const userResponseController = {
         changePhaseAng: keyResponsesAng[9]
       });
 
-      // Sauvegarder les données dans les modèles séparés
-      await UserResponse.deleteOne({ userId }, { session });
-      await KeyResponse.deleteOne({ userId }, { session });
-      
       // Sauvegarder les nouveaux documents
-      await userResponseObj.save({ session });
-      await keyResponseObj.save({ session });
-      
-      // Valider la transaction
-      await session.commitTransaction();
+      await userResponseObj.save();
+      await keyResponseObj.save();
       
       res.status(201).json({
         message: 'Réponses enregistrées avec succès',
@@ -305,13 +298,8 @@ const userResponseController = {
         }
       });
     } catch (error) {
-      // En cas d'erreur, annuler la transaction
-      await session.abortTransaction();
       console.error('Erreur:', error);
       res.status(500).json({ message: 'Erreur serveur', error: error.message });
-    } finally {
-      // Terminer la session
-      session.endSession();
     }
   },
 
@@ -354,40 +342,42 @@ const userResponseController = {
       res.status(500).json({ message: 'Erreur serveur', error: error.message });
     }
   },
- // Dans controllers/userResponseController.js
-saveImportedResponses: async (req, res) => {
-  try {
-    const { importedData } = req.body;
+  
+  // Dans controllers/userResponseController.js
+  saveImportedResponses: async (req, res) => {
+    try {
+      const { importedData } = req.body;
 
-    if (!Array.isArray(importedData)) {
-      return res.status(400).json({ message: 'Données importées invalides' });
-    }
-
-    // Utiliser bulkWrite pour optimiser les performances
-    const bulkOps = importedData.map(data => ({
-      updateOne: {
-        filter: { userId: data.userId },
-        update: { $setOnInsert: data },
-        upsert: true
+      if (!Array.isArray(importedData)) {
+        return res.status(400).json({ message: 'Données importées invalides' });
       }
-    }));
 
-    const result = await UserResponse.bulkWrite(bulkOps);
+      // Utiliser bulkWrite pour optimiser les performances
+      const bulkOps = importedData.map(data => ({
+        updateOne: {
+          filter: { userId: data.userId },
+          update: { $setOnInsert: data },
+          upsert: true
+        }
+      }));
 
-    res.status(201).json({
-      message: 'Import terminé',
-      inserted: result.upsertedCount,
-      modified: result.modifiedCount,
-      total: importedData.length
-    });
-  } catch (error) {
-    console.error('Erreur lors de l\'import:', error);
-    res.status(500).json({ 
-      message: 'Erreur lors de l\'import',
-      error: error.message 
-    });
-  }
-},
+      const result = await UserResponse.bulkWrite(bulkOps);
+
+      res.status(201).json({
+        message: 'Import terminé',
+        inserted: result.upsertedCount,
+        modified: result.modifiedCount,
+        total: importedData.length
+      });
+    } catch (error) {
+      console.error('Erreur lors de l\'import:', error);
+      res.status(500).json({ 
+        message: 'Erreur lors de l\'import',
+        error: error.message 
+      });
+    }
+  },
+  
   // Récupérer uniquement les réponses d'un utilisateur
   getUserResponses: async (req, res) => {
     try {
@@ -473,4 +463,4 @@ saveImportedResponses: async (req, res) => {
   }
 };
 
-module.exports = userResponseController;//
+module.exports = userResponseController;
