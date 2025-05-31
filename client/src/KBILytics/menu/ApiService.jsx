@@ -44,23 +44,36 @@ const ApiService = {
   },
 
   // Récupérer toutes les catégories disponibles
-  getAllCategories: async () => {
+  getAllCategories: async (lang = 'fr') => {
     try {
       if (categoriesCache) {
         return categoriesCache;
       }
 
-      const allQuestions = await ApiService.getAllQuestions();
-      const categories = new Set();
+      const response = await api.get(`/categories?lang=${lang}`);
       
-      allQuestions.forEach(question => {
-        if (question.category) {
-          categories.add(question.category);
+      // Analyser la réponse pour identifier le format
+      let categories = [];
+      
+      if (Array.isArray(response.data)) {
+        categories = response.data;
+      } else if (response.data && response.data.success && Array.isArray(response.data.data)) {
+        categories = response.data.data;
+      } else if (response.data && typeof response.data === 'object') {
+        // Vérifier si la réponse contient des catégories directement
+        const possibleCategories = Object.values(response.data).filter(item => 
+          item && typeof item === 'object' && (item._id || item.id)
+        );
+        
+        if (possibleCategories.length > 0) {
+          categories = possibleCategories;
         }
-      });
+      }
       
-      categoriesCache = Array.from(categories);
-      return categoriesCache;
+      // Mettre à jour le cache
+      categoriesCache = categories;
+      return categories;
+      
     } catch (error) {
       console.error('Erreur lors du chargement des catégories:', error);
       throw error;
@@ -140,6 +153,23 @@ const ApiService = {
       }
       
       return [];
+    }
+  },
+  
+  getCategoryById: async (categoryId) => {
+    try {
+      const response = await api.get(`/categories/${categoryId}`);
+      
+      if (response.data && response.data.success && response.data.data) {
+        return response.data.data;
+      } else if (response.data) {
+        return response.data;
+      }
+      
+      return null;
+    } catch (error) {
+      console.error(`Erreur lors de la récupération de la catégorie ID: ${categoryId}:`, error);
+      throw error;
     }
   },
   

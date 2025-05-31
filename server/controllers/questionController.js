@@ -1,4 +1,5 @@
 const Question = require('../models/Question');
+const mongoose = require('mongoose');
 
 const questionController = {
   // Récupérer toutes les questions
