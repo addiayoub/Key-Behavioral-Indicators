@@ -9,7 +9,7 @@ import ClientsManager from './components/founder-dashboard/ClientsManager';
 import PonderationsManager from './components/founder-dashboard/PonderationsManager';
 import QuestionsManager from './components/founder-dashboard/QuestionsManager';
 import UserResponsesManager from './components/founder-dashboard/UserResponsesManager';
-import CategoriesManager from './components/founder-dashboard/CategoriesManager'; // Import ajouté
+import CategoriesManager from './components/founder-dashboard/CategoriesManager';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -24,38 +24,51 @@ const FounderDashboard = () => {
     totalResponses: 0
   });
   
-  const [categories, setCategories] = useState([]); // État déjà présent mais pas utilisé
-  
-  // États pour les données
+  const [categories, setCategories] = useState([]);
   const [clients, setClients] = useState([]);
   const [ponderations, setPonderations] = useState([]);
   const [questions, setQuestions] = useState([]);
   
-  // États pour les modals
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState('');
   const [editingItem, setEditingItem] = useState(null);
 
-  // Configuration API
-  const apiRequest = async (url, options = {}) => {
-    const token = localStorage.getItem('adminToken');
-    const response = await fetch(`${API_BASE_URL}${url}`, {
-      headers: {
-        'Content-Type': 'application/json',
+  const apiRequest = async (url, options = {}, skipContentType = false) => {
+    try {
+      const token = localStorage.getItem('adminToken');
+      if (!token) {
+        throw new Error('Aucun token d\'authentification trouvé');
+      }
+
+      console.log('Envoi requête API:', { url, method: options.method, body: options.body });
+
+      const headers = {
         'Authorization': `Bearer ${token}`,
         ...options.headers
-      },
-      ...options
-    });
-    
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      };
+
+      if (!skipContentType) {
+        headers['Content-Type'] = 'application/json';
+      }
+
+      const response = await fetch(`${API_BASE_URL}${url}`, {
+        ...options,
+        headers
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Erreur API:', { status: response.status, errorText });
+        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+      }
+
+      return response.json();
+    } catch (error) {
+      console.error('Erreur API dans apiRequest:', error);
+      throw error;
     }
-    
-    return response.json();
   };
 
-  // Charger les données initiales
   useEffect(() => {
     loadDashboardData();
   }, []);
@@ -68,14 +81,14 @@ const FounderDashboard = () => {
         apiRequest('/admin/clients'),
         apiRequest('/admin/ponderations'),
         apiRequest('/admin/questions'),
-        apiRequest('/admin/categories') // Ajout de l'appel pour les catégories
+        apiRequest('/admin/categories')
       ]);
       
       setDashboardStats(statsData);
       setClients(clientsData);
       setPonderations(ponderationsData);
       setQuestions(questionsData);
-      setCategories(categoriesData); // Mise à jour de l'état des catégories
+      setCategories(categoriesData);
     } catch (error) {
       console.error('Erreur chargement données:', error);
     } finally {
@@ -85,7 +98,7 @@ const FounderDashboard = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('adminToken');
-    window.location.href = '/founder';
+    window.location.href = '/';
   };
 
   const openModal = (type, item = null) => {
@@ -97,14 +110,14 @@ const FounderDashboard = () => {
   const renderContent = () => {
     switch (activeTab) {
       case 'dashboard':
-        return <DashboardStats stats={dashboardStats} clients={clients} />;
+        return <DashboardStats stats={dashboardStats} apiRequest={apiRequest} clients={clients} />;
       case 'clients':
-        return <ClientsManager clients={clients} onOpenModal={openModal} reloadData={loadDashboardData} />;
+        return <ClientsManager clients={clients} apiRequest={apiRequest} onOpenModal={openModal} reloadData={loadDashboardData} />;
       case 'ponderations':
-        return <PonderationsManager ponderations={ponderations} onOpenModal={openModal} reloadData={loadDashboardData} />;
+        return <PonderationsManager ponderations={ponderations} apiRequest={apiRequest} onOpenModal={openModal} reloadData={loadDashboardData} />;
       case 'questions':
         return <QuestionsManager questions={questions} apiRequest={apiRequest} reloadData={loadDashboardData} />;
-      case 'categories': // Ajout du cas pour les catégories
+      case 'categories':
         return <CategoriesManager categories={categories} apiRequest={apiRequest} reloadData={loadDashboardData} />;
       case 'employees':
         return <div className="text-white">Section Employés - En développement</div>;

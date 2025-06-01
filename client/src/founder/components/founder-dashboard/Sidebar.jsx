@@ -35,17 +35,15 @@ const Sidebar = ({ activeTab, setActiveTab, sidebarOpen, handleLogout }) => {
       <div className="p-6">
         {/* Logo */}
         <div className="flex items-center gap-3 mb-8">
-          <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-lg">K</span>
-          </div>
-          <div>
-            <h1 className="font-bold text-xl text-white">KBILytics</h1>
-            <p className="text-sm text-gray-400">Dashboard Admin</p>
-          </div>
+          <div className=" flex items-center justify-center">
+            <div className="flex items-center justify-center mx-auto mb-7">
+                <img src="/Picture2.png" alt="Logo" className="w-100" />
+            </div>          </div>
+        
         </div>
 
         {/* Navigation */}
-        <nav className="space-y-2">
+        <nav className="space-y-2 cursor-pointer">
           {sidebarItems.map((item) => {
             const Icon = item.icon;
             return (
@@ -54,7 +52,7 @@ const Sidebar = ({ activeTab, setActiveTab, sidebarOpen, handleLogout }) => {
                 whileHover={{ scale: 1.02, x: 5 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setActiveTab(item.id)}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
+                className={`w-full flex items-center cursor-pointer gap-3 px-4 py-3 rounded-lg transition-all ${
                   activeTab === item.id
                     ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30'
                     : 'text-gray-300 hover:bg-gray-800 hover:text-white'
@@ -73,7 +71,7 @@ const Sidebar = ({ activeTab, setActiveTab, sidebarOpen, handleLogout }) => {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-all"
+            className="w-full flex cursor-pointer items-center gap-3 px-4 py-3 rounded-lg text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-all"
           >
             <LogOut className="h-5 w-5" />
             <span className="font-medium">Déconnexion</span>

@@ -13,6 +13,7 @@ const clientRoutes = require('./routes/clientRoutes');
 const employeeRoutes = require('./routes/employeeRoutes');
 const guestRoutes = require('./routes/guestRoutes');
 const app = express();
+const clientAdminRoutes = require('./routes/clientAdminRoutes');
 
 // Configuration CORS - Autoriser toutes les origines
 app.use(cors({
@@ -26,7 +27,8 @@ app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
 
 // Servir les fichiers statiques du dossier uploads
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
+// Dans server.js
+app.use('/uploads/icons', express.static(path.join(__dirname, 'uploads', 'icons')));
 // Connexion à la base de données
 connectDB();
 
@@ -36,6 +38,7 @@ app.use('/responses', userResponseRoutes);
 app.use('/categories', categorieRoutes);
 app.use('/auth', authRoutes);
 app.use('/admin', adminRoutes);
+app.use('/client-admin', clientAdminRoutes);
 app.use('/client', clientRoutes);
 app.use('/employee', employeeRoutes);
 app.use('/guest', guestRoutes);

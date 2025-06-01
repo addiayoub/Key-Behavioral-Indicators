@@ -6,6 +6,7 @@ import FlipAnimation from './FlipAnimation';
 import FounderAuth from './founder/FounderAuth';
 import FounderDashboard from './founder/FounderDashboard';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import ClientApp from './client/ClientApp';
 
 // Composant pour protéger les routes
 const ProtectedRoute = ({ children }) => {
@@ -42,7 +43,9 @@ function App() {
             <FounderAuth />
           </AuthRoute>
         } />
-        
+        <Route path="/client-login" element={<ClientApp />} />
+
+
         <Route path="/founder/dashboard" element={
           <ProtectedRoute>
             <FounderDashboard />

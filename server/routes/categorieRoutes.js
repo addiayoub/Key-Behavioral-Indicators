@@ -7,26 +7,28 @@ const {
   createCategorie,
   updateCategorie,
   deleteCategorie,
-  uploadIcon,
   updateOrdre
 } = require('../controllers/categorieController');
+const uploadIcon = require('../config/uploadIcon');
+const categorieController = require('../controllers/categorieController');
 
-// Routes pour les catégories
+// Routes spécifiques AVANT les routes avec paramètres
+router.route('/:id/ordre')
+  .put(updateOrdre)
+  .patch(updateOrdre); // Garder les deux pour compatibilité
+
+router.post('/:id/icon', uploadIcon.single('icon'), categorieController.uploadIcon);
+
+
+// Routes générales
 router.route('/')
   .get(getAllCategories)
   .post(upload.single('icon'), createCategorie);
 
+// Routes avec paramètres ID (APRÈS les routes spécifiques)
 router.route('/:id')
   .get(getCategorieById)
   .put(upload.single('icon'), updateCategorie)
   .delete(deleteCategorie);
-
-// Route spécifique pour le téléchargement d'icône
-router.route('/:id/icon')
-  .post(upload.single('icon'), uploadIcon);
-
-// Route spécifique pour mettre à jour l'ordre
-router.route('/:id/ordre')
-  .patch(updateOrdre);
 
 module.exports = router;

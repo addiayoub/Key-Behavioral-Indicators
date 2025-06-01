@@ -203,7 +203,64 @@ exports.createClient = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
-
+// Alternative version with cascade deletion
+exports.deleteClient = async (req, res) => {
+  try {
+    const clientId = req.params.id;
+    const { force } = req.query; // Allow ?force=true in URL
+    
+    // Find the client first
+    const client = await Client.findById(clientId);
+    if (!client) {
+      return res.status(404).json({ message: 'Client not found' });
+    }
+    
+    // Check for associated data
+    const [employeeCount, responseCount] = await Promise.all([
+      Employee.countDocuments({ clientId }),
+      UserResponse.countDocuments({ clientId })
+    ]);
+    
+    // If force=true, delete associated data
+    if (force === 'true') {
+      await Promise.all([
+        Employee.deleteMany({ clientId }),
+        UserResponse.deleteMany({ clientId })
+      ]);
+    } else if (employeeCount > 0 || responseCount > 0) {
+      return res.status(400).json({ 
+        message: `Cannot delete client. Found ${employeeCount} employees and ${responseCount} responses. Use ?force=true to force deletion.`
+      });
+    }
+    
+    // Delete the client
+    await Client.findByIdAndDelete(clientId);
+    
+    // Clean up logo file
+    if (client.logo) {
+      const logoPath = path.join(__dirname, '../uploads/logos', path.basename(client.logo));
+      if (fs.existsSync(logoPath)) {
+        fs.unlinkSync(logoPath);
+      }
+    }
+    
+    res.json({ 
+      message: 'Client deleted successfully',
+      deletedClient: {
+        _id: client._id,
+        companyName: client.companyName
+      },
+      cascadeDeleted: force === 'true' ? {
+        employees: employeeCount,
+        responses: responseCount
+      } : null
+    });
+    
+  } catch (error) {
+    console.error('Error deleting client:', error);
+    res.status(500).json({ message: error.message });
+  }
+};
 // Mise à jour d'un client
 exports.updateClient = async (req, res) => {
   try {
@@ -347,11 +404,65 @@ exports.createQuestion = async (req, res) => {
     await newQuestion.save();
     res.status(201).json(newQuestion);
   } catch (error) {
-    console.error('Erreur:', error);
+    console.error('Erreur createQuestion:', error);
     res.status(500).json({ message: 'Erreur serveur', error: error.message });
   }
 };
+// Add these methods to your existing adminController.js file
 
+// Add this method to handle ponderation creation
+exports.createPonderation = async (req, res) => {
+  try {
+    const { id, possibilite, Pr, Co, Op, Ad, Ci } = req.body;
+    
+    // Check if ponderation with this ID already exists
+    const existingPonderation = await Ponderation.findOne({ id });
+    if (existingPonderation) {
+      return res.status(400).json({ message: 'Une pondération avec cet ID existe déjà' });
+    }
+    
+    const newPonderation = new Ponderation({
+      id,
+      possibilite,
+      Pr,
+      Co,
+      Op,
+      Ad,
+      Ci
+    });
+    
+    const savedPonderation = await newPonderation.save();
+    res.status(201).json(savedPonderation);
+  } catch (error) {
+    console.error('Erreur création pondération:', error);
+    res.status(400).json({ message: error.message });
+  }
+};
+
+// Add this method to get all ponderations
+exports.getAllPonderations = async (req, res) => {
+  try {
+    const ponderations = await Ponderation.find().sort({ id: 1 });
+    res.json(ponderations);
+  } catch (error) {
+    console.error('Erreur getAllPonderations:', error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Add this method to delete ponderations
+exports.deletePonderation = async (req, res) => {
+  try {
+    const ponderation = await Ponderation.findByIdAndDelete(req.params.id);
+    if (!ponderation) {
+      return res.status(404).json({ message: 'Pondération non trouvée' });
+    }
+    res.json({ message: 'Pondération supprimée avec succès' });
+  } catch (error) {
+    console.error('Erreur suppression pondération:', error);
+    res.status(500).json({ message: error.message });
+  }
+};
 exports.deleteQuestion = async (req, res) => {
   try {
     const question = await Question.findByIdAndDelete(req.params.id);
