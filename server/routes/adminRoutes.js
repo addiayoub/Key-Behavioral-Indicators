@@ -39,7 +39,7 @@ router.delete('/clients/:id', adminController.deleteClient);
 // Routes réponses
 router.get('/responses', adminController.getAllResponses);
 router.get('/responses/:userId', adminController.getUserResponses);
-
+router.delete('/responses/:userId', adminController.deleteUserResponse); // A
 // Routes admin
 router.post('/create-admin', adminController.createAdmin);
 

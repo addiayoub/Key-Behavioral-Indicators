@@ -145,7 +145,32 @@ exports.uploadClientLogo = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+// Add this method to your adminController.js
 
+exports.deleteUserResponse = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    
+    // Delete the user response
+    const userResponse = await UserResponse.findOneAndDelete({ userId });
+    
+    if (!userResponse) {
+      return res.status(404).json({ message: 'User response not found' });
+    }
+    
+    // Also delete the associated key response
+    await KeyResponse.findOneAndDelete({ userId });
+    
+    res.json({ 
+      message: 'User responses deleted successfully',
+      deletedUserId: userId
+    });
+    
+  } catch (error) {
+    console.error('Error deleting user response:', error);
+    res.status(500).json({ message: error.message });
+  }
+};
 // Fonction pour supprimer un logo
 exports.deleteClientLogo = async (req, res) => {
   try {

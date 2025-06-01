@@ -40,7 +40,7 @@ const AssessmentCategoriesComponent = ({ language = 'fr', onReturnToMenu }) => {
   const t = Translations[language] || Translations.fr;
 
   // Charger les catégories depuis l'API
-  useEffect(() => {
+useEffect(() => {
     const fetchCategories = async () => {
       setLoading(true);
       try {
@@ -50,7 +50,7 @@ const AssessmentCategoriesComponent = ({ language = 'fr', onReturnToMenu }) => {
         const formattedCategories = response.map(cat => ({
           id: cat._id,
           name: cat.nom.fr, // Utiliser le nom français comme clé
-          displayName: language === 'fr' ? cat.nom.fr : cat.nom.en,
+          displayName: language === 'fr' ? cat.nom.fr : cat.nom.en || cat.nom.fr, // Fallback to French if English name is missing
           iconPath: cat.icon,
           delay: 0.1 * (response.indexOf(cat) + 1)
         }));
@@ -235,27 +235,51 @@ const AssessmentCategoriesComponent = ({ language = 'fr', onReturnToMenu }) => {
     }
   };
 
-  const handleSubmitAllAnswers = async () => {
+ const handleSubmitAllAnswers = async () => {
     // Vérifier que toutes les catégories sont complètes
-    const incompleteCategories = categoryItems.filter(category => {
-      const categoryQuestions = questions.filter(q => q.category === category.name);
+    const incompleteCategories = [];
+    
+    for (const category of categoryItems) {
+      // Récupérer les questions de la catégorie
+      let categoryQuestions;
+      try {
+        categoryQuestions = await ApiService.getQuestionsByCategory(
+          language === 'fr' ? category.name : categories.find(cat => cat.nom.fr === category.name)?.nom.en || category.name
+        );
+      } catch (error) {
+        console.error(`Erreur lors de la récupération des questions pour la catégorie ${category.displayName}:`, error);
+        continue;
+      }
+
       const categoryAnswers = allAnswers[category.name] || {};
       
-      return categoryQuestions.some(q => 
+      // Vérifier les questions obligatoires non répondues
+      const unansweredRequiredQuestions = categoryQuestions.filter(q => 
         q.required && !categoryAnswers[q.id]
       );
-    }).map(cat => cat.displayName);
+      
+      if (unansweredRequiredQuestions.length > 0) {
+        incompleteCategories.push({
+          displayName: category.displayName,
+          missingQuestions: unansweredRequiredQuestions.map(q => q.id)
+        });
+      }
+    }
     
     if (incompleteCategories.length > 0) {
+      const errorMessage = `
+        <p>${t.incompleteCategories}</p>
+        <ul>
+          ${incompleteCategories.map(cat => `
+            <li>${cat.displayName}: ${t.missingQuestions} ${cat.missingQuestions.join(', ')}</li>
+          `).join('')}
+        </ul>
+        <p>${t.completeAllRequired}</p>
+      `;
+      
       customSwal.fire({
         title: t.incompleteForm,
-        html: `
-          <p>${t.incompleteCategories}</p>
-          <ul>
-            ${incompleteCategories.map(name => `<li>${name}</li>`).join('')}
-          </ul>
-          <p>${t.completeAllRequired}</p>
-        `,
+        html: errorMessage,
         icon: 'warning',
         confirmButtonText: t.understood
       });
@@ -303,7 +327,6 @@ const AssessmentCategoriesComponent = ({ language = 'fr', onReturnToMenu }) => {
       setLoading(false);
     }
   };
-
   const goToNextCategory = () => {
     const currentIndex = categoryItems.findIndex(item => item.name === selectedCategory);
     if (currentIndex < categoryItems.length - 1) {
