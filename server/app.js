@@ -12,13 +12,19 @@ const adminRoutes = require('./routes/adminRoutes');
 const clientRoutes = require('./routes/clientRoutes');
 const employeeRoutes = require('./routes/employeeRoutes');
 const guestRoutes = require('./routes/guestRoutes');
-const app = express();
 const clientAdminRoutes = require('./routes/clientAdminRoutes');
 
-// Configuration CORS - Autoriser toutes les origines
+// Charger les variables d'environnement
+require('dotenv').config();
+
+const app = express();
+
+// Configuration CORS - Utiliser l'URL du frontend depuis .env
 app.use(cors({
-  origin: '*', // Permet toutes les origines
-  credentials: true
+  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
 
 // Configuration des limites de taille
@@ -27,8 +33,8 @@ app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
 
 // Servir les fichiers statiques du dossier uploads
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-// Dans server.js
 app.use('/uploads/icons', express.static(path.join(__dirname, 'uploads', 'icons')));
+
 // Connexion à la base de données
 connectDB();
 
