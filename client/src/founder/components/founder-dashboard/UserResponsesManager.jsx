@@ -394,48 +394,31 @@ const UserResponsesManager = ({ apiRequest, reloadData }) => {
                 </div>
                 
                 {/* KBI Scores */}
-                <div className="bg-gray-700 p-4 rounded-lg">
-                  <h4 className="text-lg font-semibold text-orange-400 mb-3">Scores KBI</h4>
-                  <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
-                    <div className="bg-gray-800 p-3 rounded text-center">
-                      <p className="text-sm text-gray-400">Pr</p>
-                      <p className="text-2xl font-bold text-blue-400">
-                        {Math.round(selectedResponse.kbiScores?.Pr || 0)}%
-                      </p>
-                    </div>
-                    <div className="bg-gray-800 p-3 rounded text-center">
-                      <p className="text-sm text-gray-400">Co</p>
-                      <p className="text-2xl font-bold text-green-400">
-                        {Math.round(selectedResponse.kbiScores?.Co || 0)}%
-                      </p>
-                    </div>
-                    <div className="bg-gray-800 p-3 rounded text-center">
-                      <p className="text-sm text-gray-400">Op</p>
-                      <p className="text-2xl font-bold text-purple-400">
-                        {Math.round(selectedResponse.kbiScores?.Op || 0)}%
-                      </p>
-                    </div>
-                    <div className="bg-gray-800 p-3 rounded text-center">
-                      <p className="text-sm text-gray-400">Ad</p>
-                      <p className="text-2xl font-bold text-yellow-400">
-                        {Math.round(selectedResponse.kbiScores?.Ad || 0)}%
-                      </p>
-                    </div>
-                    <div className="bg-gray-800 p-3 rounded text-center">
-                      <p className="text-sm text-gray-400">Ci</p>
-                      <p className="text-2xl font-bold text-red-400">
-                        {Math.round(selectedResponse.kbiScores?.Ci || 0)}%
-                      </p>
-                    </div>
-                    <div className="bg-gray-800 p-3 rounded text-center border-2 border-orange-500">
-                      <p className="text-sm text-orange-400">KBI CONSO</p>
-                      <p className="text-2xl font-bold text-orange-400">
-                        {Math.round(selectedResponse.kbiScores?.KBICONSO || 0)}%
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                
+          <div className="bg-gray-700 p-4 rounded-lg">
+  <h4 className="text-lg font-semibold text-orange-400 mb-3">Scores par Catégorie</h4>
+  <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
+    {selectedResponse.categoryScores && selectedResponse.categoryScores.length > 0 ? (
+      selectedResponse.categoryScores.map((category, i) => (
+        <div key={i} className="bg-gray-800 p-3 rounded text-center">
+          <p className="text-sm text-gray-400">{category.categoryShort || category.categoryAngShort}</p>
+          <p className="text-2xl font-bold text-blue-400">
+            {Math.round(category.score || 0)}%
+          </p>
+        </div>
+      ))
+    ) : (
+      <div className="col-span-5 bg-gray-800 p-3 rounded text-center">
+        <p className="text-sm text-gray-400">Aucun score disponible</p>
+      </div>
+    )}
+    <div className="bg-gray-800 p-3 rounded text-center border-2 border-orange-500">
+      <p className="text-sm text-orange-400">KBI CONSO</p>
+      <p className="text-2xl font-bold text-orange-400">
+        {Math.round(selectedResponse.kbiScores?.KBICONSO || 0)}%
+      </p>
+    </div>
+  </div>
+</div>
                 {/* Category Scores */}
                 {selectedResponse.categoryScores && selectedResponse.categoryScores.length > 0 && (
                   <div className="bg-gray-700 p-4 rounded-lg">

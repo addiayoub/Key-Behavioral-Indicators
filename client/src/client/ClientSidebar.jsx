@@ -20,8 +20,10 @@ import {
   Activity
 } from 'lucide-react';
 
-// Configuration de l'API
-const ClientSidebar = ({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen, clientData, handleLogout }) => {
+// Configuration de l'API - Ajoutez votre URL backend ici
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
+const ClientSidebar = ({ activeTab, setActiveTab, sidebarOpen,  clientData, handleLogout }) => {
   const sidebarItems = [
     { id: 'dashboard', label: 'Dashboard', icon: Home },
     { id: 'employees', label: 'Employés', icon: Users },
@@ -29,6 +31,19 @@ const ClientSidebar = ({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen, c
     { id: 'analytics', label: 'Analyses', icon: BarChart3 },
     { id: 'settings', label: 'Paramètres', icon: Settings },
   ];
+
+  // Fonction pour construire l'URL complète du logo
+  const getLogoUrl = (logoPath) => {
+    if (!logoPath) return null;
+    
+    // Si le logoPath commence déjà par http, on le retourne tel quel
+    if (logoPath.startsWith('http')) {
+      return logoPath;
+    }
+    
+    // Sinon, on construit l'URL complète avec le backend
+    return `${API_BASE_URL}${logoPath.startsWith('/') ? '' : '/'}${logoPath}`;
+  };
 
   return (
     <motion.div
@@ -42,12 +57,29 @@ const ClientSidebar = ({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen, c
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
             {clientData.logo ? (
-              <img src={clientData.logo} alt="Logo" className="w-10 h-10 rounded-lg" />
-            ) : (
+              <img 
+                src={getLogoUrl(clientData.logo)} 
+                alt="Logo" 
+                className="w-10 h-10 rounded-lg object-cover"
+                onError={(e) => {
+                  // En cas d'erreur de chargement, afficher l'icône par défaut
+                  e.target.style.display = 'none';
+                  e.target.nextElementSibling.style.display = 'flex';
+                }}
+              />
+            ) : null}
+            {!clientData.logo && (
               <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
                 <Building2 className="h-6 w-6 text-white" />
               </div>
             )}
+            {/* Div de fallback en cas d'erreur de chargement du logo */}
+            <div 
+              className="w-10 h-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg items-center justify-center"
+              style={{ display: 'none' }}
+            >
+              <Building2 className="h-6 w-6 text-white" />
+            </div>
             <div>
               <h1 className="font-bold text-lg text-white truncate">{clientData.companyName}</h1>
               <p className="text-sm text-gray-400">Dashboard Client</p>
@@ -94,4 +126,5 @@ const ClientSidebar = ({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen, c
     </motion.div>
   );
 };
-export default ClientSidebar
+
+export default ClientSidebar;

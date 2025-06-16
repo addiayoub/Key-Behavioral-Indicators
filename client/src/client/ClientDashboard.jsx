@@ -1,27 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Home,
-  Users, 
-  BarChart3, 
-  Settings,
-  LogOut,
-  FileText,
-  Building2,
-  Menu,
-  X,
-  Eye,
-  EyeOff,
-  Lock,
-  User,
-  TrendingUp,
-  UserCheck,
-  Clock,
   Activity
 } from 'lucide-react';
 import DashboardStats from './DashboardStats';
 import ClientHeader from './ClientHeader';
 import ClientSidebar from './ClientSidebar';
+import ClientResponsesSection from './ClientResponsesSection';
 
 // Configuration de l'API
 const API_BASE_URL = import.meta.env.VITE_API_URL;
@@ -134,15 +119,10 @@ const ClientDashboard = ({ clientData, onLogout }) => {
             </div>
           </div>
         );
-      case 'responses':
-        return (
-          <div className="text-white">
-            <h2 className="text-2xl font-bold mb-6">Réponses des Employés</h2>
-            <div className="bg-gray-900/50 backdrop-blur-xl rounded-xl p-6 border border-gray-700/50">
-              <p className="text-gray-400">Total des réponses: {dashboardData.responsesCount}</p>
-            </div>
-          </div>
-        );
+   case 'responses':
+  return (
+    <ClientResponsesSection clientData={clientData} />
+  );
       case 'analytics':
         return (
           <div className="text-white">

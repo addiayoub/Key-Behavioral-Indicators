@@ -189,6 +189,7 @@ exports.deleteClientLogo = async (req, res) => {
   }
 };
 
+// Updated createClient method with better error handling
 exports.createClient = async (req, res) => {
   try {
     const { 
@@ -201,31 +202,189 @@ exports.createClient = async (req, res) => {
       maxEmployees 
     } = req.body;
     
+    // Validate required fields
+    if (!companyName || !adminLogin || !adminPassword || !employeeLogin || !employeePassword) {
+      return res.status(400).json({ 
+        message: 'All required fields must be provided',
+        required: ['companyName', 'adminLogin', 'adminPassword', 'employeeLogin', 'employeePassword']
+      });
+    }
+    
+    // Check if company name already exists
+    const existingCompany = await Client.findOne({ companyName: companyName.trim() });
+    if (existingCompany) {
+      return res.status(409).json({ 
+        message: 'Company name already exists',
+        field: 'companyName'
+      });
+    }
+    
+    // Check if admin login already exists
+    const existingAdmin = await Client.findOne({ 'admin.login': adminLogin.toLowerCase().trim() });
+    if (existingAdmin) {
+      return res.status(409).json({ 
+        message: 'Admin login already exists',
+        field: 'adminLogin'
+      });
+    }
+    
     const client = await Client.create({
-      companyName,
-      logo,
+      companyName: companyName.trim(),
+      logo: logo || null,
       admin: {
-        login: adminLogin,
+        login: adminLogin.toLowerCase().trim(),
         password: adminPassword
       },
       employeeAccess: {
-        login: employeeLogin,
+        login: employeeLogin.toLowerCase().trim(),
         password: employeePassword
       },
-      maxEmployees,
+      maxEmployees: maxEmployees || 10,
       currentEmployees: 0
     });
     
     res.status(201).json({
-      _id: client._id,
-      companyName: client.companyName,
-      logo: client.logo,
-      adminLogin: client.admin.login,
-      employeeLogin: client.employeeAccess.login,
-      maxEmployees: client.maxEmployees
+      success: true,
+      message: 'Client created successfully',
+      client: {
+        _id: client._id,
+        companyName: client.companyName,
+        logo: client.logo,
+        adminLogin: client.admin.login,
+        employeeLogin: client.employeeAccess.login,
+        maxEmployees: client.maxEmployees,
+        currentEmployees: client.currentEmployees,
+        createdAt: client.createdAt
+      }
     });
+    
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    console.error('Error creating client:', error);
+    
+    // Handle specific MongoDB errors
+    if (error.code === 11000) {
+      const field = Object.keys(error.keyPattern)[0];
+      const value = error.keyValue[field];
+      
+      return res.status(409).json({ 
+        message: `Duplicate value for ${field}: ${value}`,
+        field: field,
+        type: 'duplicate_key_error'
+      });
+    }
+    
+    // Handle validation errors
+    if (error.name === 'ValidationError') {
+      const validationErrors = Object.keys(error.errors).map(key => ({
+        field: key,
+        message: error.errors[key].message
+      }));
+      
+      return res.status(400).json({
+        message: 'Validation error',
+        errors: validationErrors,
+        type: 'validation_error'
+      });
+    }
+    
+    res.status(500).json({ 
+      message: 'Internal server error',
+      type: 'server_error'
+    });
+  }
+};
+
+// Updated updateClient method
+exports.updateClient = async (req, res) => {
+  try {
+    const clientId = req.params.id;
+    const updateData = { ...req.body };
+    
+    // Remove sensitive fields that shouldn't be updated directly
+    delete updateData._id;
+    delete updateData.createdAt;
+    
+    // Handle password updates
+    if (updateData.adminPassword) {
+      updateData['admin.password'] = updateData.adminPassword;
+      delete updateData.adminPassword;
+    }
+    
+    if (updateData.employeePassword) {
+      updateData['employeeAccess.password'] = updateData.employeePassword;
+      delete updateData.employeePassword;
+    }
+    
+    // Handle login updates
+    if (updateData.adminLogin) {
+      updateData['admin.login'] = updateData.adminLogin.toLowerCase().trim();
+      delete updateData.adminLogin;
+    }
+    
+    if (updateData.employeeLogin) {
+      updateData['employeeAccess.login'] = updateData.employeeLogin.toLowerCase().trim();
+      delete updateData.employeeLogin;
+    }
+    
+    // Trim company name
+    if (updateData.companyName) {
+      updateData.companyName = updateData.companyName.trim();
+    }
+    
+    const client = await Client.findByIdAndUpdate(
+      clientId, 
+      updateData, 
+      { 
+        new: true,
+        runValidators: true,
+        context: 'query'
+      }
+    );
+    
+    if (!client) {
+      return res.status(404).json({ 
+        message: 'Client not found',
+        clientId 
+      });
+    }
+    
+    res.json({
+      success: true,
+      message: 'Client updated successfully',
+      client
+    });
+    
+  } catch (error) {
+    console.error('Error updating client:', error);
+    
+    // Handle duplicate key errors
+    if (error.code === 11000) {
+      const field = Object.keys(error.keyPattern)[0];
+      return res.status(409).json({ 
+        message: `Value already exists for ${field}`,
+        field: field,
+        type: 'duplicate_key_error'
+      });
+    }
+    
+    // Handle validation errors
+    if (error.name === 'ValidationError') {
+      const validationErrors = Object.keys(error.errors).map(key => ({
+        field: key,
+        message: error.errors[key].message
+      }));
+      
+      return res.status(400).json({
+        message: 'Validation error',
+        errors: validationErrors,
+        type: 'validation_error'
+      });
+    }
+    
+    res.status(500).json({ 
+      message: 'Internal server error',
+      type: 'server_error'
+    });
   }
 };
 // Alternative version with cascade deletion
@@ -287,56 +446,7 @@ exports.deleteClient = async (req, res) => {
   }
 };
 // Mise à jour d'un client
-exports.updateClient = async (req, res) => {
-  try {
-    const clientId = req.params.id;
-    const updateData = req.body;
-    
-    // Si un nouveau mot de passe admin est fourni, l'encoder
-    if (updateData.adminPassword) {
-      updateData['admin.password'] = updateData.adminPassword;
-      delete updateData.adminPassword;
-    }
-    
-    // Si un nouveau mot de passe employé est fourni, l'encoder
-    if (updateData.employeePassword) {
-      updateData['employeeAccess.password'] = updateData.employeePassword;
-      delete updateData.employeePassword;
-    }
-    
-    // Mise à jour des autres champs
-    if (updateData.adminLogin) {
-      updateData['admin.login'] = updateData.adminLogin;
-      delete updateData.adminLogin;
-    }
-    
-    if (updateData.employeeLogin) {
-      updateData['employeeAccess.login'] = updateData.employeeLogin;
-      delete updateData.employeeLogin;
-    }
-    
-    const client = await Client.findByIdAndUpdate(
-      clientId, 
-      updateData, 
-      { 
-        new: true,
-        runValidators: true 
-      }
-    ).select('-admin.password -employeeAccess.password');
-    
-    if (!client) {
-      return res.status(404).json({ message: 'Client non trouvé' });
-    }
-    
-    res.json({
-      message: 'Client mis à jour avec succès',
-      client
-    });
-  } catch (error) {
-    console.error('Erreur mise à jour client:', error);
-    res.status(400).json({ message: error.message });
-  }
-};
+
 
 exports.getClientResponses = async (req, res) => {
   try {

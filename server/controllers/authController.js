@@ -1,6 +1,6 @@
 const Admin = require('../models/Admin');
 const Client = require('../models/Client');
-const Employee = require('../models/Employee');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Guest = require('../models/Guest');
 const UserResponse = require('../models/UserResponse');
@@ -43,29 +43,68 @@ exports.clientAdminLogin = async (req, res) => {
 
 exports.employeeLogin = async (req, res) => {
   try {
-    const { login, password } = req.body;
-    const client = await Client.findOne({ 'employeeAccess.login': login });
+    const { username, password } = req.body;
     
-    if (!client) return res.status(404).json({ message: 'Accès employé non trouvé' });
-    
-    const isMatch = await bcrypt.compare(password, client.employeeAccess.password);
-    if (!isMatch) return res.status(400).json({ message: 'Identifiants invalides' });
-    
-    if (client.currentEmployees >= client.maxEmployees) {
-      return res.status(400).json({ message: 'Nombre maximum de participants atteint' });
+    if (!username || !password) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Username et password requis' 
+      });
     }
 
-    const sessionId = crypto.randomBytes(16).toString('hex');
-    res.json({ 
-      sessionId,
-      clientId: client._id,
-      companyName: client.companyName 
+    const client = await Client.findOne({ 
+      'employeeAccess.login': username 
     });
+    
+    if (!client) {
+      return res.status(401).json({ 
+        success: false, 
+        message: 'Identifiants invalides' 
+      });
+    }
+
+    const isMatch = await bcrypt.compare(password, client.employeeAccess.password);
+    
+    if (!isMatch) {
+      return res.status(401).json({ 
+        success: false, 
+        message: 'Identifiants invalides' 
+      });
+    }
+
+    const token = jwt.sign(
+      { 
+        clientId: client._id,
+        companyName: client.companyName,
+        role: 'employee',
+        login: username
+      },
+      process.env.JWT_SECRET || 'your-secret-key',
+      { expiresIn: '8h' }
+    );
+
+    res.json({
+      success: true,
+      message: 'Connexion réussie',
+      token,
+      client: {
+        _id: client._id,
+        companyName: client.companyName,
+        logo: client.logo, // Assurez-vous que le modèle Client a ce champ
+        maxEmployees: client.maxEmployees,
+        currentEmployees: client.currentEmployees
+      }
+    });
+    
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error('Erreur employeeLogin:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Erreur interne du serveur',
+      error: error.message 
+    });
   }
 };
-
 exports.guestAccess = async (req, res) => {
   try {
     const sessionId = require('crypto').randomBytes(16).toString('hex');

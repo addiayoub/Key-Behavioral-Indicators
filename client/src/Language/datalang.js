@@ -26,6 +26,10 @@ export const Translations = {
       saveAndContinue: "Enregistrer et continuer",
       nextCategory: "Catégorie suivante",
       previousCategory: "Catégorie précédente",
+        maxParticipantsReachedTitle: "Nombre maximum de participants atteint",
+    maxParticipantsReachedMessage: "Désolé, le nombre maximum de participants autorisés pour cette évaluation a été atteint.",
+    maxParticipantsContactAdmin: "Veuillez contacter votre administrateur pour plus d'informations.",
+    returnToMenu: "Retour au menu principal" ,
       categoryNames: {
         "General": "Generale",
         "Proactivity": "Proactivité",
@@ -60,6 +64,7 @@ export const Translations = {
       percentage: "Pourcentage:",
       categoryScores: "Scores par catégorie:",
       completed: "% complété",
+      
       error: "Erreur"
     ,
     // AssessmentComponent
@@ -121,6 +126,10 @@ export const Translations = {
       startNow: "Start Now",
       previous: "Previous",
       next: "Next",
+       maxParticipantsReachedTitle: "Maximum participants reached",
+    maxParticipantsReachedMessage: "Sorry, the maximum number of allowed participants for this assessment has been reached.",
+    maxParticipantsContactAdmin: "Please contact your administrator for more information.",
+    returnToMenu: "Return to main menu",
       submit: "Submit",
       incompleteForm: "Incomplete Form",
       answerAllQuestions: "Please answer all required questions before continuing.",
