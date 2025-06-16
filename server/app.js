@@ -19,13 +19,59 @@ require('dotenv').config();
 
 const app = express();
 
-// Configuration CORS - Utiliser l'URL du frontend depuis .env
-app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+// Configuration CORS améliorée
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Autoriser les requêtes sans origin (mobile apps, etc.)
+    if (!origin) return callback(null, true);
+    
+    // Liste des domaines autorisés
+    const allowedOrigins = [
+      'https://kbi.nhancit.com',
+      'http://localhost:3000',
+      'http://localhost:3001',
+      process.env.FRONTEND_URL
+    ].filter(Boolean); // Enlever les valeurs undefined
+    
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      console.log('CORS: Origin non autorisé:', origin);
+      callback(new Error('Non autorisé par CORS'));
+    }
+  },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
-}));
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: [
+    'Origin',
+    'X-Requested-With',
+    'Content-Type',
+    'Accept',
+    'Authorization',
+    'Cache-Control',
+    'Pragma'
+  ],
+  exposedHeaders: ['Authorization'],
+  maxAge: 86400, // 24 heures
+  preflightContinue: false,
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
+
+// Middleware pour gérer les requêtes OPTIONS manuellement (fallback)
+app.use((req, res, next) => {
+  if (req.method === 'OPTIONS') {
+    res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Cache-Control, Pragma');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    res.header('Access-Control-Max-Age', '86400');
+    res.status(200).end();
+    return;
+  }
+  next();
+});
 
 // Configuration des limites de taille
 app.use(bodyParser.json({ limit: '100mb' }));
@@ -54,6 +100,12 @@ app.get('/', (req, res) => {
   res.send('API de gestion des questionnaires KBI');
 });
 
+// Middleware de débogage CORS
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.path} - Origin: ${req.headers.origin}`);
+  next();
+});
+
 // Gestion des erreurs
 app.use((err, req, res, next) => {
   console.error(err.stack);
@@ -65,6 +117,7 @@ const HOST = process.env.HOST || '0.0.0.0';
 
 app.listen(PORT, HOST, () => {
   console.log(`Serveur lancé sur http://${HOST}:${PORT}`);
+  console.log('CORS configuré pour:', corsOptions.origin);
 });
 
 module.exports = app;
