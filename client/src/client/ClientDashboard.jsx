@@ -132,15 +132,7 @@ const ClientDashboard = ({ clientData, onLogout }) => {
             </div>
           </div>
         );
-      case 'settings':
-        return (
-          <div className="text-white">
-            <h2 className="text-2xl font-bold mb-6">Paramètres</h2>
-            <div className="bg-gray-900/50 backdrop-blur-xl rounded-xl p-6 border border-gray-700/50">
-              <p className="text-gray-400">Section en développement - Paramètres du compte</p>
-            </div>
-          </div>
-        );
+   
       default:
         return null;
     }

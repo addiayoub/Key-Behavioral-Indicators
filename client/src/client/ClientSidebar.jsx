@@ -26,10 +26,8 @@ const API_BASE_URL = import.meta.env.VITE_API_URL;
 const ClientSidebar = ({ activeTab, setActiveTab, sidebarOpen,  clientData, handleLogout }) => {
   const sidebarItems = [
     { id: 'dashboard', label: 'Dashboard', icon: Home },
-    { id: 'employees', label: 'Employés', icon: Users },
     { id: 'responses', label: 'Réponses', icon: FileText },
     { id: 'analytics', label: 'Analyses', icon: BarChart3 },
-    { id: 'settings', label: 'Paramètres', icon: Settings },
   ];
 
   // Fonction pour construire l'URL complète du logo

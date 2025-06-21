@@ -131,16 +131,28 @@ const userResponseController = {
           score = question.Note[answerId] || 0;
         }
         
-        // Récupérer ou utiliser le texte de la réponse
-        const finalAnswerText = answerText || question.answers[answerId] || "";
-        const finalAnswerTextAng = answerTextAng || question.answersAng[answerId] || "";
+        // CORRECTION: Toujours récupérer la version française ET anglaise depuis la base de données
+        let finalAnswerText = '';
+        let finalAnswerTextAng = '';
+        
+        // Si c'est une réponse personnalisée (Autre/Other)
+        if (answerId !== undefined && 
+            (question.answers[answerId] === "Autre" || question.answersAng[answerId] === "Other")) {
+          // Utiliser le texte personnalisé fourni
+          finalAnswerText = answerText || question.answers[answerId] || "";
+          finalAnswerTextAng = answerTextAng || answerText || ""; // Si pas d'anglais fourni, utiliser le français
+        } else {
+          // Utiliser les réponses prédéfinies de la base de données
+          finalAnswerText = question.answers[answerId] || answerText || "";
+          finalAnswerTextAng = question.answersAng[answerId] || answerTextAng || "";
+        }
         
         // Ajouter à la liste des réponses traitées
         processedResponses.push({
           questionId,
           answerId,
           answerText: finalAnswerText,
-          answerTextAng: finalAnswerTextAng,
+          answerTextAng: finalAnswerTextAng, // Maintenant correctement en anglais
           questionText: question.question,
           questionTextAng: question.questionAng,
           score,

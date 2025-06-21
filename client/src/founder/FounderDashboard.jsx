@@ -10,7 +10,8 @@ import PonderationsManager from './components/founder-dashboard/PonderationsMana
 import QuestionsManager from './components/founder-dashboard/QuestionsManager';
 import UserResponsesManager from './components/founder-dashboard/UserResponsesManager';
 import CategoriesManager from './components/founder-dashboard/CategoriesManager';
-import AdminSettings from './components/AdminSettings';
+import AdminSettings from './components/founder-dashboard/AdminSettings';
+import EmployeesManager from './components/founder-dashboard/EmployeesManager';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -123,7 +124,7 @@ const FounderDashboard = () => {
       case 'categories':
         return <CategoriesManager categories={categories} apiRequest={apiRequest} reloadData={loadDashboardData} />;
       case 'employees':
-        return <div className="text-white">Section Employés - En développement</div>;
+        return <EmployeesManager apiRequest={apiRequest} reloadData={loadDashboardData} />;
       case 'settings':
         return <AdminSettings categories={categories} apiRequest={apiRequest} reloadData={loadDashboardData}/>;
     case 'responses':

@@ -1,5 +1,5 @@
 const Client = require('../models/Client');
-const Employee = require('../models/Employee');
+const Employee = require('../models/EmployeeResponse');
 const UserResponse = require('../models/UserResponse');
 const Categorie = require('../models/Categorie');
 const Question = require('../models/Question');
@@ -8,6 +8,8 @@ const Admin = require('../models/Admin');
 const fs = require('fs');
 const path = require('path');
 const KeyResponse = require('../models/KeyResponse');
+const mongoose = require('mongoose');
+const EmployeeResponse = require('../models/EmployeeResponse');
 
 // Nouvelle fonction pour les statistiques du dashboard
 exports.getDashboardStats = async (req, res) => {
@@ -189,7 +191,6 @@ exports.deleteClientLogo = async (req, res) => {
   }
 };
 
-// Updated createClient method with better error handling
 exports.createClient = async (req, res) => {
   try {
     const { 
@@ -587,7 +588,656 @@ exports.updateAdminProfile = async (req, res) => {
     res.status(500).json({ message: 'Erreur serveur' });
   }
 };
+// Ajoutez cette méthode dans votre adminController.js
 
+// Solution 1: Vérifier d'abord où sont stockées les réponses des employés
+// Version corrigée et simplifiée de getAllEmployeesWithResponses
+exports.getAllEmployeesWithResponses = async (req, res) => {
+  try {
+    const { clientId, limit, skip, sortBy = 'createdAt', sortOrder = -1 } = req.query;
+    
+    console.log('Paramètres reçus:', { clientId, limit, skip, sortBy, sortOrder });
+    
+    // Construction du filtre pour les employés
+    let employeeFilter = {};
+    if (clientId) {
+      employeeFilter.clientId = new mongoose.Types.ObjectId(clientId);
+    }
+    
+    // Récupérer tous les employés avec pagination optionnelle
+    const employeesQuery = Employee.find(employeeFilter).select('-password');
+    
+    if (limit) {
+      employeesQuery.limit(parseInt(limit));
+    }
+    if (skip) {
+      employeesQuery.skip(parseInt(skip));
+    }
+    
+    employeesQuery.sort({ [sortBy]: parseInt(sortOrder) });
+    const employees = await employeesQuery.exec();
+    
+    console.log(`Employés trouvés: ${employees.length}`);
+    
+    // Si on filtre par clientId, récupérer toutes les réponses de ce client
+    let allResponses = [];
+    
+    if (clientId) {
+      // Récupérer toutes les réponses pour ce client
+      allResponses = await EmployeeResponse.find({
+        clientId: new mongoose.Types.ObjectId(clientId)
+      }).sort({ createdAt: -1 });
+      
+      console.log(`Réponses trouvées pour le client ${clientId}: ${allResponses.length}`);
+    } else {
+      // Si pas de clientId spécifique, récupérer toutes les réponses
+      allResponses = await EmployeeResponse.find({}).sort({ createdAt: -1 });
+      console.log(`Total des réponses: ${allResponses.length}`);
+    }
+    
+    // Récupérer les informations des clients
+    const clientIds = [...new Set(employees.map(emp => emp.clientId?.toString()).filter(Boolean))];
+    const clients = await Client.find({ _id: { $in: clientIds } }).select('companyName logo');
+    
+    // Créer un map pour faciliter la recherche des clients
+    const clientsMap = new Map();
+    clients.forEach(client => {
+      clientsMap.set(client._id.toString(), client);
+    });
+    
+    // Créer un map pour les réponses par employé
+    // La clé sera basée sur différents critères possibles
+    const responsesMap = new Map();
+    
+    allResponses.forEach(response => {
+      // Créer une clé de recherche basée sur les informations disponibles
+      let searchKeys = [];
+      
+      // Utiliser employeeId si disponible
+      if (response.employeeId) {
+        searchKeys.push(response.employeeId.toString());
+      }
+      
+      // Utiliser sessionId si disponible
+      if (response.sessionId) {
+        searchKeys.push(response.sessionId);
+      }
+      
+      // Utiliser userId si disponible
+      if (response.userId) {
+        searchKeys.push(response.userId);
+      }
+      
+      // Essayer de matcher avec les employés
+      employees.forEach(employee => {
+        const empId = employee._id.toString();
+        
+        // Vérifier si une des clés correspond à l'ID de l'employé
+        if (searchKeys.includes(empId)) {
+          if (!responsesMap.has(empId)) {
+            responsesMap.set(empId, []);
+          }
+          responsesMap.get(empId).push(response);
+        }
+        
+        // Vérifier si le sessionId contient des informations de l'employé
+        // ou si d'autres champs correspondent
+        if (response.employeeEmail && employee.email === response.employeeEmail) {
+          if (!responsesMap.has(empId)) {
+            responsesMap.set(empId, []);
+          }
+          responsesMap.get(empId).push(response);
+        }
+        
+        if (response.employeeName && employee.name === response.employeeName) {
+          if (!responsesMap.has(empId)) {
+            responsesMap.set(empId, []);
+          }
+          responsesMap.get(empId).push(response);
+        }
+      });
+    });
+    
+    console.log(`Réponses mappées pour ${responsesMap.size} employés`);
+    
+    // Combiner les données des employés avec leurs réponses
+    const employeesWithResponses = employees.map(employee => {
+      const empId = employee._id.toString();
+      const empResponses = responsesMap.get(empId) || [];
+      const client = clientsMap.get(employee.clientId?.toString());
+      
+      // Calculer les statistiques
+      const totalResponses = empResponses.length;
+      const lastResponseDate = empResponses.length > 0 ? empResponses[0].createdAt : null;
+      const averageScore = empResponses.length > 0 
+        ? empResponses.reduce((sum, resp) => sum + (resp.score || 0), 0) / empResponses.length 
+        : null;
+      
+      return {
+        // Informations de base de l'employé
+        _id: employee._id,
+        name: employee.name,
+        email: employee.email,
+        clientId: employee.clientId,
+        isActive: employee.isActive,
+        createdAt: employee.createdAt,
+        updatedAt: employee.updatedAt,
+        
+        // Informations du client
+        client: client ? {
+          _id: client._id,
+          companyName: client.companyName,
+          logo: client.logo
+        } : null,
+        
+        // Statistiques des réponses
+        responseStats: {
+          totalResponses,
+          lastResponseDate,
+          averageScore: averageScore ? Math.round(averageScore * 100) / 100 : null
+        },
+        
+        // Toutes les réponses détaillées
+        responses: empResponses.map(response => ({
+          _id: response._id,
+          sessionId: response.sessionId,
+          userId: response.userId,
+          employeeId: response.employeeId,
+          
+          // Scores détaillés
+          scores: {
+            total: {
+              score: response.score,
+              rawScore: response.rawScore,
+              maxPossible: response.maxPossible
+            },
+            categories: response.categoryScores || [],
+            kbi: {
+              profile: response.profile,
+              Pr: response.Pr,
+              Co: response.Co,
+              Op: response.Op,
+              Ad: response.Ad,
+              Ci: response.Ci,
+              KBICONSO: response.KBICONSO
+            }
+          },
+          
+          // Réponses aux questions
+          questionResponses: response.responses || [],
+          
+          // Réponses clés
+          keyResponses: response.keyResponses || {},
+          
+          // Métadonnées
+          metadata: {
+            userAgent: response.metadata?.userAgent,
+            ipAddress: response.metadata?.ipAddress,
+            completionTime: response.metadata?.completionTime,
+            language: response.metadata?.language || 'fr',
+            ponderationFound: response.metadata?.ponderationFound,
+            ponderationId: response.metadata?.ponderationId
+          },
+          
+          createdAt: response.createdAt,
+          updatedAt: response.updatedAt
+        }))
+      };
+    });
+    
+    // Statistiques globales
+    const totalEmployees = await Employee.countDocuments(employeeFilter);
+    const totalResponses = allResponses.length;
+    const employeesWithResponsesCount = employeesWithResponses.filter(emp => emp.responses.length > 0).length;
+    
+    res.json({
+      success: true,
+      data: {
+        employees: employeesWithResponses,
+        pagination: {
+          total: totalEmployees,
+          returned: employees.length,
+          limit: limit ? parseInt(limit) : null,
+          skip: skip ? parseInt(skip) : 0
+        },
+        statistics: {
+          totalEmployees,
+          totalResponses,
+          employeesWithResponses: employeesWithResponsesCount,
+          employeesWithoutResponses: totalEmployees - employeesWithResponsesCount,
+          averageResponsesPerEmployee: totalEmployees > 0 ? Math.round((totalResponses / totalEmployees) * 100) / 100 : 0
+        },
+        debug: {
+          searchCriteria: {
+            clientId: clientId,
+            employeeFilter: employeeFilter
+          },
+          responsesFound: {
+            totalResponses: allResponses.length,
+            employeesWithMappedResponses: responsesMap.size
+          },
+          mappingDetails: Array.from(responsesMap.entries()).map(([empId, responses]) => ({
+            employeeId: empId,
+            responseCount: responses.length,
+            sessionIds: responses.map(r => r.sessionId)
+          }))
+        }
+      }
+    });
+    
+  } catch (error) {
+    console.error('Erreur getAllEmployeesWithResponses:', error);
+    res.status(500).json({ 
+      success: false,
+      message: 'Erreur lors de la récupération des employés avec leurs réponses',
+      error: error.message 
+    });
+  }
+};
+
+// Méthode alternative spécifiquement pour un client
+// Fixed version of getAllEmployeesWithResponses method
+exports.getAllEmployeesWithResponses = async (req, res) => {
+  try {
+    const { clientId, limit, skip, sortBy = 'createdAt', sortOrder = -1 } = req.query;
+    
+    console.log('Paramètres reçus:', { clientId, limit, skip, sortBy, sortOrder });
+    
+    // Construction du filtre pour les employés
+    let employeeFilter = {};
+    if (clientId) {
+      employeeFilter.clientId = new mongoose.Types.ObjectId(clientId);
+    }
+    
+    // Récupérer tous les employés avec pagination optionnelle
+    const employeesQuery = Employee.find(employeeFilter).select('-password');
+    
+    if (limit) {
+      employeesQuery.limit(parseInt(limit));
+    }
+    if (skip) {
+      employeesQuery.skip(parseInt(skip));
+    }
+    
+    employeesQuery.sort({ [sortBy]: parseInt(sortOrder) });
+    const employees = await employeesQuery.exec();
+    
+    console.log(`Employés trouvés: ${employees.length}`);
+    
+    // CORRECTION: Récupérer les réponses avec le bon filtre
+    let responseFilter = {};
+    if (clientId) {
+      responseFilter.clientId = new mongoose.Types.ObjectId(clientId);
+    }
+    
+    const allResponses = await EmployeeResponse.find(responseFilter).sort({ createdAt: -1 });
+    console.log(`Réponses trouvées: ${allResponses.length}`);
+    
+    // Récupérer les informations des clients
+    const clientIds = [...new Set(employees.map(emp => emp.clientId?.toString()).filter(Boolean))];
+    const clients = await Client.find({ _id: { $in: clientIds } }).select('companyName logo');
+    
+    // Créer un map pour faciliter la recherche des clients
+    const clientsMap = new Map();
+    clients.forEach(client => {
+      clientsMap.set(client._id.toString(), client);
+    });
+    
+    // CORRECTION: Améliorer le mapping des réponses
+    const responsesMap = new Map();
+    
+    // Debug: afficher quelques exemples de réponses pour comprendre la structure
+    if (allResponses.length > 0) {
+      console.log('Exemple de réponse:', {
+        _id: allResponses[0]._id,
+        clientId: allResponses[0].clientId,
+        employeeId: allResponses[0].employeeId,
+        sessionId: allResponses[0].sessionId,
+        userId: allResponses[0].userId
+      });
+    }
+    
+    // Debug: afficher quelques exemples d'employés
+    if (employees.length > 0) {
+      console.log('Exemple d\'employé:', {
+        _id: employees[0]._id,
+        name: employees[0].name,
+        email: employees[0].email,
+        clientId: employees[0].clientId
+      });
+    }
+    
+    allResponses.forEach(response => {
+      let matchedEmployeeId = null;
+      
+      // Stratégie 1: Correspondance directe par employeeId
+      if (response.employeeId) {
+        const empIdStr = response.employeeId.toString();
+        const matchingEmployee = employees.find(emp => emp._id.toString() === empIdStr);
+        if (matchingEmployee) {
+          matchedEmployeeId = matchingEmployee._id.toString();
+          console.log(`Correspondance trouvée par employeeId: ${empIdStr}`);
+        }
+      }
+      
+      // Stratégie 2: Si employeeId est un sessionId, chercher par sessionId patterns
+      if (!matchedEmployeeId && response.sessionId) {
+        // Parfois le sessionId peut contenir des informations utiles
+        const sessionId = response.sessionId.toString();
+        
+        // Si le sessionId commence par "session_" et contient un timestamp
+        if (sessionId.startsWith('session_')) {
+          // Dans ce cas, nous devons trouver une autre méthode de correspondance
+          // Peut-être par timing ou par d'autres métadonnées
+          
+          // Pour l'instant, essayons de voir si il y a une correspondance par email ou nom
+          if (response.employeeEmail) {
+            const matchingEmployee = employees.find(emp => emp.email === response.employeeEmail);
+            if (matchingEmployee) {
+              matchedEmployeeId = matchingEmployee._id.toString();
+              console.log(`Correspondance trouvée par email: ${response.employeeEmail}`);
+            }
+          }
+          
+          if (!matchedEmployeeId && response.employeeName) {
+            const matchingEmployee = employees.find(emp => emp.name === response.employeeName);
+            if (matchingEmployee) {
+              matchedEmployeeId = matchingEmployee._id.toString();
+              console.log(`Correspondance trouvée par nom: ${response.employeeName}`);
+            }
+          }
+        }
+      }
+      
+      // Stratégie 3: Si aucune correspondance directe, essayer par userId
+      if (!matchedEmployeeId && response.userId) {
+        const userIdStr = response.userId.toString();
+        const matchingEmployee = employees.find(emp => emp._id.toString() === userIdStr);
+        if (matchingEmployee) {
+          matchedEmployeeId = matchingEmployee._id.toString();
+          console.log(`Correspondance trouvée par userId: ${userIdStr}`);
+        }
+      }
+      
+      // NOUVELLE STRATÉGIE: Si l'employeeId est un sessionId, 
+      // chercher dans la collection Employee pour voir si ce sessionId correspond à un employé
+      if (!matchedEmployeeId && response.employeeId && response.employeeId.toString().startsWith('session_')) {
+        // Dans ce cas, l'employeeId est probablement un identifiant de session
+        // Nous devons utiliser d'autres critères pour faire la correspondance
+        
+        // Option 1: Correspondance par timing (employé créé récemment avant la réponse)
+        const responseTime = new Date(response.createdAt);
+        const candidateEmployees = employees.filter(emp => {
+          const empCreationTime = new Date(emp.createdAt);
+          const timeDiff = responseTime - empCreationTime;
+          // Si l'employé a été créé dans les 24 heures avant la réponse
+          return timeDiff >= 0 && timeDiff <= 24 * 60 * 60 * 1000;
+        });
+        
+        if (candidateEmployees.length === 1) {
+          matchedEmployeeId = candidateEmployees[0]._id.toString();
+          console.log(`Correspondance trouvée par timing: employé ${matchedEmployeeId} pour session ${response.employeeId}`);
+        } else if (candidateEmployees.length > 1) {
+          console.log(`Plusieurs candidats trouvés pour la session ${response.employeeId}:`, candidateEmployees.map(e => e._id));
+          // Prendre le plus récent
+          candidateEmployees.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+          matchedEmployeeId = candidateEmployees[0]._id.toString();
+          console.log(`Prise du plus récent: ${matchedEmployeeId}`);
+        }
+      }
+      
+      // Si on a trouvé une correspondance, ajouter la réponse
+      if (matchedEmployeeId) {
+        if (!responsesMap.has(matchedEmployeeId)) {
+          responsesMap.set(matchedEmployeeId, []);
+        }
+        responsesMap.get(matchedEmployeeId).push(response);
+      } else {
+        console.log('❌ Réponse non mappée:', {
+          responseId: response._id,
+          employeeId: response.employeeId,
+          sessionId: response.sessionId,
+          userId: response.userId,
+          employeeEmail: response.employeeEmail,
+          employeeName: response.employeeName,
+          createdAt: response.createdAt
+        });
+      }
+    });
+    
+    console.log(`Responsesmap contient ${responsesMap.size} employés avec des réponses`);
+    
+    // Combiner les données des employés avec leurs réponses
+    const employeesWithResponses = employees.map(employee => {
+      const empId = employee._id.toString();
+      const empResponses = responsesMap.get(empId) || [];
+      const client = clientsMap.get(employee.clientId?.toString());
+      
+      // Calculer les statistiques
+      const totalResponses = empResponses.length;
+      const lastResponseDate = empResponses.length > 0 ? empResponses[0].createdAt : null;
+      const averageScore = empResponses.length > 0 
+        ? empResponses.reduce((sum, resp) => sum + (resp.score || 0), 0) / empResponses.length 
+        : null;
+      
+      return {
+        // Informations de base de l'employé
+        _id: employee._id,
+        name: employee.name,
+        email: employee.email,
+        clientId: employee.clientId,
+        isActive: employee.isActive,
+        createdAt: employee.createdAt,
+        updatedAt: employee.updatedAt,
+        
+        // Informations du client
+        client: client ? {
+          _id: client._id,
+          companyName: client.companyName,
+          logo: client.logo
+        } : null,
+        
+        // Statistiques des réponses
+        responseStats: {
+          totalResponses,
+          lastResponseDate,
+          averageScore: averageScore ? Math.round(averageScore * 100) / 100 : null
+        },
+        
+        // Toutes les réponses détaillées
+        responses: empResponses.map(response => ({
+          _id: response._id,
+          sessionId: response.sessionId,
+          userId: response.userId,
+          employeeId: response.employeeId,
+          
+          // Scores détaillés
+          scores: {
+            total: {
+              score: response.score,
+              rawScore: response.rawScore,
+              maxPossible: response.maxPossible
+            },
+            categories: response.categoryScores || [],
+            kbi: {
+              profile: response.profile,
+              Pr: response.Pr,
+              Co: response.Co,
+              Op: response.Op,
+              Ad: response.Ad,
+              Ci: response.Ci,
+              KBICONSO: response.KBICONSO
+            }
+          },
+          
+          // Réponses aux questions
+          questionResponses: response.responses || [],
+          
+          // Réponses clés
+          keyResponses: response.keyResponses || {},
+          
+          // Métadonnées
+          metadata: {
+            userAgent: response.metadata?.userAgent,
+            ipAddress: response.metadata?.ipAddress,
+            completionTime: response.metadata?.completionTime,
+            language: response.metadata?.language || 'fr',
+            ponderationFound: response.metadata?.ponderationFound,
+            ponderationId: response.metadata?.ponderationId
+          },
+          
+          createdAt: response.createdAt,
+          updatedAt: response.updatedAt
+        }))
+      };
+    });
+    
+    // Statistiques globales
+    const totalEmployees = await Employee.countDocuments(employeeFilter);
+    const totalResponses = allResponses.length;
+    const employeesWithResponsesCount = employeesWithResponses.filter(emp => emp.responses.length > 0).length;
+    
+    res.json({
+      success: true,
+      data: {
+        employees: employeesWithResponses,
+        pagination: {
+          total: totalEmployees,
+          returned: employees.length,
+          limit: limit ? parseInt(limit) : null,
+          skip: skip ? parseInt(skip) : 0
+        },
+        statistics: {
+          totalEmployees,
+          totalResponses,
+          employeesWithResponses: employeesWithResponsesCount,
+          employeesWithoutResponses: totalEmployees - employeesWithResponsesCount,
+          averageResponsesPerEmployee: totalEmployees > 0 ? Math.round((totalResponses / totalEmployees) * 100) / 100 : 0
+        },
+        debug: {
+          searchCriteria: {
+            clientId: clientId,
+            employeeFilter: employeeFilter,
+            responseFilter: responseFilter
+          },
+          responsesFound: {
+            totalResponses: allResponses.length,
+            employeesWithMappedResponses: responsesMap.size
+          },
+          mappingDetails: Array.from(responsesMap.entries()).map(([empId, responses]) => ({
+            employeeId: empId,
+            responseCount: responses.length,
+            sessionIds: responses.map(r => r.sessionId),
+            employeeIds: responses.map(r => r.employeeId)
+          }))
+        }
+      }
+    });
+    
+  } catch (error) {
+    console.error('Erreur getAllEmployeesWithResponses:', error);
+    res.status(500).json({ 
+      success: false,
+      message: 'Erreur lors de la récupération des employés avec leurs réponses',
+      error: error.message 
+    });
+  }
+};
+
+// Méthode alternative pour récupérer un employé spécifique avec ses réponses
+exports.getEmployeeWithResponses = async (req, res) => {
+  try {
+    const { employeeId } = req.params;
+    
+    // Récupérer l'employé
+    const employee = await Employee.findById(employeeId).select('-password');
+    
+    if (!employee) {
+      return res.status(404).json({ 
+        success: false,
+        message: 'Employé non trouvé' 
+      });
+    }
+    
+    // Récupérer les réponses de l'employé
+    const responses = await EmployeeResponse.find({ 
+      employeeId: employeeId 
+    }).sort({ createdAt: -1 });
+    
+    // Récupérer les informations du client
+    const client = employee.clientId ? await Client.findById(employee.clientId).select('companyName logo') : null;
+    
+    res.json({
+      success: true,
+      data: {
+        // Informations de l'employé
+        employee: {
+          _id: employee._id,
+          name: employee.name,
+          email: employee.email,
+          clientId: employee.clientId,
+          isActive: employee.isActive,
+          createdAt: employee.createdAt,
+          updatedAt: employee.updatedAt
+        },
+        
+        // Informations du client
+        client: client ? {
+          _id: client._id,
+          companyName: client.companyName,
+          logo: client.logo
+        } : null,
+        
+        // Statistiques des réponses
+        responseStats: {
+          totalResponses: responses.length,
+          lastResponseDate: responses.length > 0 ? responses[0].createdAt : null,
+          averageScore: responses.length > 0 
+            ? responses.reduce((sum, resp) => sum + (resp.score || 0), 0) / responses.length 
+            : null,
+          completionDates: responses.map(r => r.createdAt)
+        },
+        
+        // Toutes les réponses
+        responses: responses.map(response => ({
+          _id: response._id,
+          sessionId: response.sessionId,
+          userId: response.userId,
+          scores: {
+            total: {
+              score: response.score,
+              rawScore: response.rawScore,
+              maxPossible: response.maxPossible
+            },
+            categories: response.categoryScores || [],
+            kbi: {
+              profile: response.profile,
+              Pr: response.Pr,
+              Co: response.Co,
+              Op: response.Op,
+              Ad: response.Ad,
+              Ci: response.Ci,
+              KBICONSO: response.KBICONSO
+            }
+          },
+          questionResponses: response.responses || [],
+          keyResponses: response.keyResponses || {},
+          metadata: response.metadata || {},
+          createdAt: response.createdAt,
+          updatedAt: response.updatedAt
+        }))
+      }
+    });
+    
+  } catch (error) {
+    console.error('Erreur getEmployeeWithResponses:', error);
+    res.status(500).json({ 
+      success: false,
+      message: 'Erreur lors de la récupération de l\'employé avec ses réponses',
+      error: error.message 
+    });
+  }
+};
 // Changer uniquement le mot de passe
 exports.changeAdminPassword = async (req, res) => {
   try {

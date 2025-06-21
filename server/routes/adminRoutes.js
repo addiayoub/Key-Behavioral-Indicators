@@ -28,6 +28,11 @@ router.get('/dashboard-stats', adminController.getDashboardStats);
 router.get('/profile', adminController.getAdminProfile);
 router.put('/profile', adminController.updateAdminProfile);
 router.put('/profile/password', adminController.changeAdminPassword);
+router.get('/employees/with-responses', adminController.getAllEmployeesWithResponses);
+
+// Route pour récupérer un employé spécifique avec ses réponses
+router.get('/employees/:employeeId/with-responses', adminController.getEmployeeWithResponses);
+
 // Routes clients
 router.get('/clients', adminController.getAllClients);
 router.post('/clients', adminController.createClient);

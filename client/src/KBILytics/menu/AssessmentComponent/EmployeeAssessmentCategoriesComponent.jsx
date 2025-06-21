@@ -405,15 +405,27 @@ const handleSubmitAllAnswers = async () => {
     language === 'fr' ? question.answers : (question.answersAng || question.answers)
   );
 
-  const getCategoryCompletionPercentage = (categoryName) => {
-    const categoryQuestions = questions.filter(q => q.category === categoryName);
-    if (categoryQuestions.length === 0) return 0;
-    
+ const getCategoryCompletionPercentage = (categoryName) => {
+  // Pour la catégorie actuellement sélectionnée, utiliser les questions chargées
+  if (categoryName === selectedCategory && questions.length > 0) {
     const categoryAnswers = allAnswers[categoryName] || {};
-    const answeredCount = categoryQuestions.filter(q => !!categoryAnswers[q.id]).length;
-    
-    return Math.round((answeredCount / categoryQuestions.length) * 100);
-  };
+    const answeredCount = questions.filter(q => !!categoryAnswers[q.id]).length;
+    return Math.round((answeredCount / questions.length) * 100);
+  }
+  
+  // Pour les autres catégories, vérifier s'il y a des réponses sauvegardées
+  const categoryAnswers = allAnswers[categoryName] || {};
+  const answeredCount = Object.keys(categoryAnswers).length;
+  
+  // Si aucune réponse n'est sauvegardée, retourner 0
+  if (answeredCount === 0) {
+    return 0;
+  }
+  
+  // Vous pouvez aussi essayer de récupérer le nombre total de questions 
+  // depuis l'API si nécessaire, mais pour l'instant on utilise les réponses existantes
+  return answeredCount > 0 ? Math.min(100, (answeredCount / 10) * 100) : 0; // Estimation
+};
 
   const questionVariants = {
     hidden: { opacity: 0, x: 50 * direction },
