@@ -446,7 +446,197 @@ exports.deleteClient = async (req, res) => {
   }
 };
 // Mise à jour d'un client
+// Ajoutez ces méthodes à votre adminController.js
 
+// Obtenir le profil de l'admin connecté
+exports.getAdminProfile = async (req, res) => {
+  try {
+    const admin = await Admin.findById(req.user.id).select('-password');
+    
+    if (!admin) {
+      return res.status(404).json({ message: 'Admin non trouvé' });
+    }
+    
+    res.json({
+      success: true,
+      admin: {
+        _id: admin._id,
+        username: admin.username,
+        role: admin.role,
+        createdAt: admin.createdAt
+      }
+    });
+  } catch (error) {
+    console.error('Erreur getAdminProfile:', error);
+    res.status(500).json({ message: 'Erreur serveur' });
+  }
+};
+
+// Mettre à jour le profil admin (username et/ou password)
+exports.updateAdminProfile = async (req, res) => {
+  try {
+    const { username, currentPassword, newPassword } = req.body;
+    const adminId = req.user.id;
+    
+    // Récupérer l'admin avec le mot de passe pour vérification
+    const admin = await Admin.findById(adminId);
+    
+    if (!admin) {
+      return res.status(404).json({ message: 'Admin non trouvé' });
+    }
+    
+    // Vérifier le mot de passe actuel si on veut changer des informations
+    if (currentPassword && !(await admin.comparePassword(currentPassword))) {
+      return res.status(400).json({ 
+        message: 'Mot de passe actuel incorrect',
+        field: 'currentPassword'
+      });
+    }
+    
+    const updateData = {};
+    
+    // Mettre à jour le username si fourni
+    if (username && username.trim() !== admin.username) {
+      // Vérifier si le nouveau username existe déjà
+      const existingAdmin = await Admin.findOne({ 
+        username: username.trim(),
+        _id: { $ne: adminId }
+      });
+      
+      if (existingAdmin) {
+        return res.status(409).json({ 
+          message: 'Ce nom d\'utilisateur existe déjà',
+          field: 'username'
+        });
+      }
+      
+      updateData.username = username.trim();
+    }
+    
+    // Mettre à jour le mot de passe si fourni
+    if (newPassword) {
+      if (!currentPassword) {
+        return res.status(400).json({ 
+          message: 'Le mot de passe actuel est requis pour changer le mot de passe',
+          field: 'currentPassword'
+        });
+      }
+      
+      if (newPassword.length < 6) {
+        return res.status(400).json({ 
+          message: 'Le nouveau mot de passe doit contenir au moins 6 caractères',
+          field: 'newPassword'
+        });
+      }
+      
+      updateData.password = newPassword;
+    }
+    
+    // Si aucune donnée à mettre à jour
+    if (Object.keys(updateData).length === 0) {
+      return res.status(400).json({ 
+        message: 'Aucune modification à apporter'
+      });
+    }
+    
+    // Effectuer la mise à jour
+    const updatedAdmin = await Admin.findByIdAndUpdate(
+      adminId,
+      updateData,
+      { 
+        new: true,
+        runValidators: true
+      }
+    ).select('-password');
+    
+    res.json({
+      success: true,
+      message: 'Profil mis à jour avec succès',
+      admin: {
+        _id: updatedAdmin._id,
+        username: updatedAdmin.username,
+        role: updatedAdmin.role,
+        createdAt: updatedAdmin.createdAt
+      }
+    });
+    
+  } catch (error) {
+    console.error('Erreur updateAdminProfile:', error);
+    
+    // Gérer les erreurs de validation
+    if (error.name === 'ValidationError') {
+      const validationErrors = Object.keys(error.errors).map(key => ({
+        field: key,
+        message: error.errors[key].message
+      }));
+      
+      return res.status(400).json({
+        message: 'Erreur de validation',
+        errors: validationErrors
+      });
+    }
+    
+    // Gérer les erreurs de clé dupliquée
+    if (error.code === 11000) {
+      return res.status(409).json({ 
+        message: 'Ce nom d\'utilisateur existe déjà',
+        field: 'username'
+      });
+    }
+    
+    res.status(500).json({ message: 'Erreur serveur' });
+  }
+};
+
+// Changer uniquement le mot de passe
+exports.changeAdminPassword = async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    const adminId = req.user.id;
+    
+    // Validation des données
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ 
+        message: 'Le mot de passe actuel et le nouveau mot de passe sont requis'
+      });
+    }
+    
+    if (newPassword.length < 6) {
+      return res.status(400).json({ 
+        message: 'Le nouveau mot de passe doit contenir au moins 6 caractères',
+        field: 'newPassword'
+      });
+    }
+    
+    // Récupérer l'admin
+    const admin = await Admin.findById(adminId);
+    
+    if (!admin) {
+      return res.status(404).json({ message: 'Admin non trouvé' });
+    }
+    
+    // Vérifier le mot de passe actuel
+    if (!(await admin.comparePassword(currentPassword))) {
+      return res.status(400).json({ 
+        message: 'Mot de passe actuel incorrect',
+        field: 'currentPassword'
+      });
+    }
+    
+    // Mettre à jour le mot de passe
+    admin.password = newPassword;
+    await admin.save();
+    
+    res.json({
+      success: true,
+      message: 'Mot de passe modifié avec succès'
+    });
+    
+  } catch (error) {
+    console.error('Erreur changeAdminPassword:', error);
+    res.status(500).json({ message: 'Erreur serveur' });
+  }
+};
 
 exports.getClientResponses = async (req, res) => {
   try {

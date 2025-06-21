@@ -22,7 +22,12 @@ router.use(authController.protect, authController.restrictTo('admin'));
 
 // Route pour les statistiques du dashboard
 router.get('/dashboard-stats', adminController.getDashboardStats);
+// Ajoutez ces routes à votre adminRoutes.js (après les autres routes admin)
 
+// Routes pour la gestion du profil admin
+router.get('/profile', adminController.getAdminProfile);
+router.put('/profile', adminController.updateAdminProfile);
+router.put('/profile/password', adminController.changeAdminPassword);
 // Routes clients
 router.get('/clients', adminController.getAllClients);
 router.post('/clients', adminController.createClient);

@@ -1,5 +1,5 @@
 const EmployeeResponse = require('../models/EmployeeResponse');
-const UserResponse = require('../models/UserResponse'); // Ajout de l'import
+const UserResponse = require('../models/UserResponse');
 const Client = require('../models/Client');
 const Employee = require('../models/Employee');
 const Question = require('../models/Question');
@@ -45,7 +45,7 @@ exports.saveResponse = async (req, res) => {
     
     let employeeId = null;
     let client = null;
-    let userIdForUserResponse = null; // ID à utiliser pour UserResponse
+    let userIdForUserResponse = null;
     
     // Gérer les deux cas: employé authentifié vs utilisateur anonyme
     if (clientId) {
@@ -78,13 +78,13 @@ exports.saveResponse = async (req, res) => {
       
       if (employee) {
         employeeId = employee._id;
-        userIdForUserResponse = employee._id.toString(); // Convertir ObjectId en string pour UserResponse
+        userIdForUserResponse = employee._id.toString();
         await Employee.findByIdAndUpdate(employee._id, { 
           hasCompletedSurvey: true 
         });
       } else {
         employeeId = sessionId;
-        userIdForUserResponse = sessionId; // Utiliser sessionId comme userId pour UserResponse
+        userIdForUserResponse = sessionId;
       }
       
       await Client.findByIdAndUpdate(clientId, { 
@@ -93,7 +93,7 @@ exports.saveResponse = async (req, res) => {
     } else if (userId) {
       console.log('Processing anonymous user response');
       employeeId = userId;
-      userIdForUserResponse = userId; // Utiliser directement le userId fourni
+      userIdForUserResponse = userId;
     } else {
       return res.status(400).json({ 
         success: false,
@@ -114,7 +114,7 @@ exports.saveResponse = async (req, res) => {
       console.warn("ATTENTION: Aucune pondération n'a été trouvée dans la base de données!");
     }
 
-    // Extraire les réponses spécifiques (6, 8, 9)
+    // Extraire les réponses spécifiques (6, 8, 9) - UTILISER UNIQUEMENT LES VERSIONS ANGLAISES
     const keyResponses = {};
     const keyResponsesAng = {};
     
@@ -122,23 +122,28 @@ exports.saveResponse = async (req, res) => {
       if ([6, 8, 9].includes(response.questionId)) {
         const question = questionMap.get(response.questionId);
         if (question) {
-          const answerText = question.answers[response.answerId] || response.answerText;
-          keyResponses[response.questionId] = answerText;
+          // CORRECTION : Toujours utiliser la version anglaise pour les keyResponses
           const answerTextAng = question.answersAng[response.answerId] || response.answerTextAng;
+          const answerText = question.answers[response.answerId] || response.answerText;
+          
+          // Stocker les deux versions mais privilégier l'anglais
+          keyResponses[response.questionId] = answerText;
           keyResponsesAng[response.questionId] = answerTextAng;
+          
+          console.log(`Question ${response.questionId} (FR): ${answerText}`);
           console.log(`Question ${response.questionId} (EN): ${answerTextAng}`);
         }
       }
     }
 
-    // Trouver la pondération applicable
+    // Trouver la pondération applicable - UTILISER LES VERSIONS ANGLAISES
     let applicablePonderation = null;
     if (keyResponsesAng[6] && keyResponsesAng[8] && keyResponsesAng[9]) {
       const industry = keyResponsesAng[6].trim();
       const orgType = keyResponsesAng[8].trim();
       const changePhase = keyResponsesAng[9].trim();
       
-      console.log("Recherche de pondération pour:", JSON.stringify([industry, orgType, changePhase]));
+      console.log("Recherche de pondération pour (EN):", JSON.stringify([industry, orgType, changePhase]));
       
       applicablePonderation = allPonderations.find(p => 
         p.possibilite && Array.isArray(p.possibilite) && p.possibilite.length >= 3 &&
@@ -159,10 +164,12 @@ exports.saveResponse = async (req, res) => {
       
       if (applicablePonderation) {
         console.log(`Pondération trouvée: ID ${applicablePonderation.id}`);
+      } else {
+        console.log("Aucune pondération trouvée pour:", [industry, orgType, changePhase]);
       }
     }
 
-    // Préparer les réponses avec les scores
+    // Préparer les réponses avec les scores - STOCKER EN ANGLAIS
     const processedResponses = [];
     const categoriesMap = new Map();
 
@@ -184,14 +191,15 @@ exports.saveResponse = async (req, res) => {
         score = question.Note[answerId] || 0;
       }
       
-      const finalAnswerText = answerText || question.answers[answerId] || "";
-      const finalAnswerTextAng = answerTextAng || question.answersAng[answerId] || "";
+      // CORRECTION : Privilégier les versions anglaises
+      const finalAnswerTextAng = question.answersAng[answerId] || answerTextAng || "";
+      const finalAnswerText = question.answers[answerId] || answerText || "";
       
       processedResponses.push({
         questionId,
         answerId,
         answerText: finalAnswerText,
-        answerTextAng: finalAnswerTextAng,
+        answerTextAng: finalAnswerTextAng, // Version anglaise prioritaire
         questionText: question.question,
         questionTextAng: question.questionAng,
         score,
@@ -201,9 +209,10 @@ exports.saveResponse = async (req, res) => {
         categoryAngShort: question.categoryAng.substring(0, 2)
       });
 
-      if (question.category.toLowerCase() !== "basic") {
-        if (!categoriesMap.has(question.category)) {
-          categoriesMap.set(question.category, {
+      // CORRECTION : Utiliser categoryAng pour les calculs
+      if (question.categoryAng.toLowerCase() !== "basic") {
+        if (!categoriesMap.has(question.categoryAng)) {
+          categoriesMap.set(question.categoryAng, {
             category: question.category,
             categoryAng: question.categoryAng,
             categoryShort: question.category.substring(0, 2),
@@ -214,7 +223,7 @@ exports.saveResponse = async (req, res) => {
           });
         }
         
-        const categoryData = categoriesMap.get(question.category);
+        const categoryData = categoriesMap.get(question.categoryAng);
         categoryData.score += score;
         const maxPossibleScore = Math.max(...question.Note);
         categoryData.maxPossible += maxPossibleScore;
@@ -252,6 +261,7 @@ exports.saveResponse = async (req, res) => {
     let kbiConsScore = 0;
 
     if (applicablePonderation) {
+      // CORRECTION : Utiliser les versions anglaises pour le profil
       profileText = `${keyResponsesAng[6]} - ${keyResponsesAng[8]} - ${keyResponsesAng[9]}`;
       
       prScore = categoryScores.find(c => c.categoryAngShort === 'Pr')?.score || 0;
@@ -273,6 +283,16 @@ exports.saveResponse = async (req, res) => {
       opScore = weightedOp;
       adScore = weightedAd;
       ciScore = weightedCi;
+      
+      console.log('KBI Scores calculés:', {
+        profile: profileText,
+        Pr: prScore,
+        Co: coScore,
+        Op: opScore,
+        Ad: adScore,
+        Ci: ciScore,
+        KBICONSO: kbiConsScore
+      });
     }
 
     // ============ SAUVEGARDE DANS EMPLOYEERESPONSE ============
@@ -307,7 +327,7 @@ exports.saveResponse = async (req, res) => {
         completionTime: metadata?.completionTime || 0,
         userAgent: req.headers['user-agent'] || null,
         ipAddress: req.ip || null,
-        language: 'fr',
+        language: 'en', // CORRECTION : Changer en 'en' pour l'anglais
         ponderationFound: !!applicablePonderation,
         ponderationId: applicablePonderation?.id || null
       },
@@ -350,7 +370,7 @@ exports.saveResponse = async (req, res) => {
         completionTime: metadata?.completionTime || 0,
         userAgent: req.headers['user-agent'] || null,
         ipAddress: req.ip || null,
-        language: 'fr',
+        language: 'en', // CORRECTION : Changer en 'en' pour l'anglais
         ponderationFound: !!applicablePonderation,
         ponderationId: applicablePonderation?.id || null
       },
@@ -366,11 +386,13 @@ exports.saveResponse = async (req, res) => {
     console.log(`Données sauvegardées avec succès:
     - EmployeeResponse ID: ${newEmployeeResponse._id}
     - UserResponse ID: ${newUserResponse._id}
-    - UserId utilisé: ${userIdForUserResponse}`);
+    - UserId utilisé: ${userIdForUserResponse}
+    - Language: en
+    - Profile: ${profileText}`);
     
     res.status(201).json({
       success: true,
-      message: 'Réponses sauvegardées avec succès dans les deux collections',
+      message: 'Réponses sauvegardées avec succès dans les deux collections (EN)',
       data: {
         employeeResponseId: newEmployeeResponse._id,
         userResponseId: newUserResponse._id,

@@ -10,6 +10,7 @@ import PonderationsManager from './components/founder-dashboard/PonderationsMana
 import QuestionsManager from './components/founder-dashboard/QuestionsManager';
 import UserResponsesManager from './components/founder-dashboard/UserResponsesManager';
 import CategoriesManager from './components/founder-dashboard/CategoriesManager';
+import AdminSettings from './components/AdminSettings';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -28,7 +29,7 @@ const FounderDashboard = () => {
   const [clients, setClients] = useState([]);
   const [ponderations, setPonderations] = useState([]);
   const [questions, setQuestions] = useState([]);
-  
+  const [userResponses, setUserResponses] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState('');
   const [editingItem, setEditingItem] = useState(null);
@@ -74,27 +75,29 @@ const FounderDashboard = () => {
   }, []);
 
   const loadDashboardData = async () => {
-    try {
-      setLoading(true);
-      const [statsData, clientsData, ponderationsData, questionsData, categoriesData] = await Promise.all([
-        apiRequest('/admin/dashboard-stats'),
-        apiRequest('/admin/clients'),
-        apiRequest('/admin/ponderations'),
-        apiRequest('/admin/questions'),
-        apiRequest('/admin/categories')
-      ]);
-      
-      setDashboardStats(statsData);
-      setClients(clientsData);
-      setPonderations(ponderationsData);
-      setQuestions(questionsData);
-      setCategories(categoriesData);
-    } catch (error) {
-      console.error('Erreur chargement données:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  try {
+    setLoading(true);
+    const [statsData, clientsData, ponderationsData, questionsData, categoriesData, responsesData] = await Promise.all([
+      apiRequest('/admin/dashboard-stats'),
+      apiRequest('/admin/clients'),
+      apiRequest('/admin/ponderations'),
+      apiRequest('/admin/questions'),
+      apiRequest('/admin/categories'),
+      apiRequest('/admin/responses') // Ajoutez cette ligne
+    ]);
+    
+    setDashboardStats(statsData);
+    setClients(clientsData);
+    setPonderations(ponderationsData);
+    setQuestions(questionsData);
+    setCategories(categoriesData);
+    setUserResponses(responsesData); // Ajoutez cette ligne
+  } catch (error) {
+    console.error('Erreur chargement données:', error);
+  } finally {
+    setLoading(false);
+  }
+};
 
   const handleLogout = () => {
     localStorage.removeItem('adminToken');
@@ -122,9 +125,13 @@ const FounderDashboard = () => {
       case 'employees':
         return <div className="text-white">Section Employés - En développement</div>;
       case 'settings':
-        return <div className="text-white">Section Paramètres - En développement</div>;
-      case 'responses':
-        return <UserResponsesManager apiRequest={apiRequest} reloadData={loadDashboardData} />;
+        return <AdminSettings categories={categories} apiRequest={apiRequest} reloadData={loadDashboardData}/>;
+    case 'responses':
+  return <UserResponsesManager 
+           apiRequest={apiRequest} 
+           reloadData={loadDashboardData} 
+           userResponses={userResponses} 
+         />;
       default:
         return <DashboardStats stats={dashboardStats} clients={clients} />;
     }

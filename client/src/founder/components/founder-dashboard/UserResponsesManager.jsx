@@ -22,12 +22,40 @@ const UserResponsesManager = ({ apiRequest, reloadData }) => {
     fetchResponses();
   }, []);
 
+  // Fonction pour extraire les valeurs des questions de base
+  const extractBasicInfo = (responses) => {
+    if (!responses || !Array.isArray(responses)) return {};
+    
+    const basicInfo = {};
+    responses.forEach(response => {
+      switch(response.questionId) {
+        case 6: // Industry
+          basicInfo.industry = response.answerTextAng || response.answerText;
+          break;
+        case 8: // Change Phase
+          basicInfo.changePhase = response.answerTextAng || response.answerText;
+          break;
+        case 9: // Organization Type (Maturity)
+          basicInfo.organizationType = response.answerTextAng || response.answerText;
+          break;
+      }
+    });
+    return basicInfo;
+  };
+
   const fetchResponses = async () => {
     try {
       setLoading(true);
       const data = await apiRequest('/admin/responses');
       console.log('Données reçues:', data);
-      setResponses(data);
+      
+      // Enrichir chaque réponse avec les informations de base extraites
+      const enrichedData = data.map(response => ({
+        ...response,
+        basicInfo: extractBasicInfo(response.responses)
+      }));
+      
+      setResponses(enrichedData);
     } catch (error) {
       console.error('Error fetching responses:', error);
       MySwal.fire({
@@ -90,17 +118,23 @@ const UserResponsesManager = ({ apiRequest, reloadData }) => {
   };
 
   const filteredResponses = responses.filter(response => {
+    // Utiliser basicInfo au lieu de keyResponses
+    const industry = response.basicInfo?.industry || response.keyResponses?.industry;
+    const organizationType = response.basicInfo?.organizationType || response.keyResponses?.organizationType;
+    const changePhase = response.basicInfo?.changePhase || response.keyResponses?.changePhase;
+    
     // Filter by search term
     const matchesSearch = 
       response.userId.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (response.keyResponses?.industry && response.keyResponses.industry.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      (response.keyResponses?.organizationType && response.keyResponses.organizationType.toLowerCase().includes(searchTerm.toLowerCase()));
+      (industry && industry.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (organizationType && organizationType.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (changePhase && changePhase.toLowerCase().includes(searchTerm.toLowerCase()));
     
     // Filter by selected filters
     const matchesFilters = 
-      (!filters.industry || (response.keyResponses?.industry && response.keyResponses.industry === filters.industry)) &&
-      (!filters.organizationType || (response.keyResponses?.organizationType && response.keyResponses.organizationType === filters.organizationType)) &&
-      (!filters.changePhase || (response.keyResponses?.changePhase && response.keyResponses.changePhase === filters.changePhase));
+      (!filters.industry || (industry && industry === filters.industry)) &&
+      (!filters.organizationType || (organizationType && organizationType === filters.organizationType)) &&
+      (!filters.changePhase || (changePhase && changePhase === filters.changePhase));
     
     return matchesSearch && matchesFilters;
   });
@@ -108,11 +142,13 @@ const UserResponsesManager = ({ apiRequest, reloadData }) => {
   const getUniqueValues = (field) => {
     const values = new Set();
     responses.forEach(response => {
-      if (response.keyResponses?.[field]) {
-        values.add(response.keyResponses[field]);
+      // Chercher dans basicInfo d'abord, puis dans keyResponses
+      const value = response.basicInfo?.[field] || response.keyResponses?.[field];
+      if (value) {
+        values.add(value);
       }
     });
-    return Array.from(values);
+    return Array.from(values).sort();
   };
 
   const exportToCSV = () => {
@@ -123,11 +159,15 @@ const UserResponsesManager = ({ apiRequest, reloadData }) => {
     
     // Data rows
     filteredResponses.forEach(response => {
+      const industry = response.basicInfo?.industry || response.keyResponses?.industry || '';
+      const organizationType = response.basicInfo?.organizationType || response.keyResponses?.organizationType || '';
+      const changePhase = response.basicInfo?.changePhase || response.keyResponses?.changePhase || '';
+      
       const row = [
         response.userId,
-        response.keyResponses?.industry || '',
-        response.keyResponses?.organizationType || '',
-        response.keyResponses?.changePhase || '',
+        industry,
+        organizationType,
+        changePhase,
         Math.round(response.totalScore?.score || 0),
         Math.round(response.kbiScores?.Pr || 0),
         Math.round(response.kbiScores?.Co || 0),
@@ -190,6 +230,7 @@ const UserResponsesManager = ({ apiRequest, reloadData }) => {
       </div>
 
       {/* Search and Filters */}
+       {/* Search and Filters */}
       <div className="bg-gray-800 p-4 rounded-lg">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div className="relative col-span-1 md:col-span-2">
@@ -229,11 +270,12 @@ const UserResponsesManager = ({ apiRequest, reloadData }) => {
         </div>
       </div>
 
+
       {/* Statistics Summary */}
       {responses.length > 0 && (
         <div className="bg-gray-800 p-4 rounded-lg">
           <h3 className="text-lg font-semibold text-white mb-3">Résumé</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             <div className="text-center">
               <p className="text-2xl font-bold text-orange-500">{responses.length}</p>
               <p className="text-sm text-gray-400">Total Réponses</p>
@@ -256,6 +298,12 @@ const UserResponsesManager = ({ apiRequest, reloadData }) => {
               </p>
               <p className="text-sm text-gray-400">Types Org.</p>
             </div>
+            <div className="text-center">
+              <p className="text-2xl font-bold text-cyan-500">
+                {getUniqueValues('changePhase').length}
+              </p>
+              <p className="text-sm text-gray-400">Phases</p>
+            </div>
           </div>
         </div>
       )}
@@ -272,6 +320,7 @@ const UserResponsesManager = ({ apiRequest, reloadData }) => {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">ID Utilisateur</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Industrie</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Type Organisation</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Phase de Changement</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Score Total</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">KBI CONSO</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Date</th>
@@ -279,60 +328,67 @@ const UserResponsesManager = ({ apiRequest, reloadData }) => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-700">
-              {filteredResponses.map((response) => (
-                <motion.tr 
-                  key={response.userId}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  whileHover={{ backgroundColor: 'rgba(55, 65, 81, 0.5)' }}
-                  className="text-gray-300"
-                >
-                  <td className="px-6 py-4 whitespace-nowrap font-medium">{response.userId}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{response.keyResponses?.industry || '-'}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{response.keyResponses?.organizationType || '-'}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center">
-                      <div className="h-2 w-16 bg-gray-700 rounded-full mr-2">
-                        <div 
-                          className="h-2 rounded-full bg-gradient-to-r from-orange-500 to-orange-600" 
-                          style={{ width: `${Math.min(response.totalScore?.score || 0, 100)}%` }}
-                        ></div>
+              {filteredResponses.map((response) => {
+                const industry = response.basicInfo?.industry || response.keyResponses?.industry;
+                const organizationType = response.basicInfo?.organizationType || response.keyResponses?.organizationType;
+                const changePhase = response.basicInfo?.changePhase || response.keyResponses?.changePhase;
+                
+                return (
+                  <motion.tr 
+                    key={response.userId}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    whileHover={{ backgroundColor: 'rgba(55, 65, 81, 0.5)' }}
+                    className="text-gray-300"
+                  >
+                    <td className="px-6 py-4 whitespace-nowrap font-medium">{response.userId}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{industry || '-'}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{organizationType || '-'}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{changePhase || '-'}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="flex items-center">
+                        <div className="h-2 w-16 bg-gray-700 rounded-full mr-2">
+                          <div 
+                            className="h-2 rounded-full bg-gradient-to-r from-orange-500 to-orange-600" 
+                            style={{ width: `${Math.min(response.totalScore?.score || 0, 100)}%` }}
+                          ></div>
+                        </div>
+                        <span>{Math.round(response.totalScore?.score || 0)}%</span>
                       </div>
-                      <span>{Math.round(response.totalScore?.score || 0)}%</span>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="text-green-400 font-semibold">
-                      {Math.round(response.kbiScores?.KBICONSO || 0)}%
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {new Date(response.createdAt).toLocaleDateString()}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right">
-                    <div className="flex justify-end gap-2">
-                      <motion.button
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        onClick={() => openDetails(response)}
-                        className="text-blue-400 hover:text-blue-300 p-1"
-                        title="Détails"
-                      >
-                        <Info size={18} />
-                      </motion.button>
-                      <motion.button
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        onClick={() => handleDelete(response.userId)}
-                        className="text-red-400 hover:text-red-300 p-1"
-                        title="Supprimer"
-                      >
-                        <Trash2 size={18} />
-                      </motion.button>
-                    </div>
-                  </td>
-                </motion.tr>
-              ))}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className="text-green-400 font-semibold">
+                        {Math.round(response.kbiScores?.KBICONSO || 0)}%
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {new Date(response.createdAt).toLocaleDateString()}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right">
+                      <div className="flex justify-end gap-2">
+                        <motion.button
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.9 }}
+                          onClick={() => openDetails(response)}
+                          className="text-blue-400 hover:text-blue-300 p-1"
+                          title="Détails"
+                        >
+                          <Info size={18} />
+                        </motion.button>
+                        <motion.button
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.9 }}
+                          onClick={() => handleDelete(response.userId)}
+                          className="text-red-400 hover:text-red-300 p-1"
+                          title="Supprimer"
+                        >
+                          <Trash2 size={18} />
+                        </motion.button>
+                      </div>
+                    </td>
+                  </motion.tr>
+                );
+              })}
             </tbody>
           </table>
           
@@ -380,45 +436,52 @@ const UserResponsesManager = ({ apiRequest, reloadData }) => {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
                       <p className="text-sm text-gray-400">Industrie</p>
-                      <p className="text-white">{selectedResponse.keyResponses?.industry || '-'}</p>
+                      <p className="text-white">
+                        {selectedResponse.basicInfo?.industry || selectedResponse.keyResponses?.industry || '-'}
+                      </p>
                     </div>
                     <div>
                       <p className="text-sm text-gray-400">Type d'Organisation</p>
-                      <p className="text-white">{selectedResponse.keyResponses?.organizationType || '-'}</p>
+                      <p className="text-white">
+                        {selectedResponse.basicInfo?.organizationType || selectedResponse.keyResponses?.organizationType || '-'}
+                      </p>
                     </div>
                     <div>
                       <p className="text-sm text-gray-400">Phase de Changement</p>
-                      <p className="text-white">{selectedResponse.keyResponses?.changePhase || '-'}</p>
+                      <p className="text-white">
+                        {selectedResponse.basicInfo?.changePhase || selectedResponse.keyResponses?.changePhase || '-'}
+                      </p>
                     </div>
                   </div>
                 </div>
                 
                 {/* KBI Scores */}
-          <div className="bg-gray-700 p-4 rounded-lg">
-  <h4 className="text-lg font-semibold text-orange-400 mb-3">Scores par Catégorie</h4>
-  <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
-    {selectedResponse.categoryScores && selectedResponse.categoryScores.length > 0 ? (
-      selectedResponse.categoryScores.map((category, i) => (
-        <div key={i} className="bg-gray-800 p-3 rounded text-center">
-          <p className="text-sm text-gray-400">{category.categoryShort || category.categoryAngShort}</p>
-          <p className="text-2xl font-bold text-blue-400">
-            {Math.round(category.score || 0)}%
-          </p>
-        </div>
-      ))
-    ) : (
-      <div className="col-span-5 bg-gray-800 p-3 rounded text-center">
-        <p className="text-sm text-gray-400">Aucun score disponible</p>
-      </div>
-    )}
-    <div className="bg-gray-800 p-3 rounded text-center border-2 border-orange-500">
-      <p className="text-sm text-orange-400">KBI CONSO</p>
-      <p className="text-2xl font-bold text-orange-400">
-        {Math.round(selectedResponse.kbiScores?.KBICONSO || 0)}%
-      </p>
-    </div>
-  </div>
-</div>
+                <div className="bg-gray-700 p-4 rounded-lg">
+                  <h4 className="text-lg font-semibold text-orange-400 mb-3">Scores par Catégorie</h4>
+                  <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
+                    {selectedResponse.categoryScores && selectedResponse.categoryScores.length > 0 ? (
+                      selectedResponse.categoryScores.map((category, i) => (
+                        <div key={i} className="bg-gray-800 p-3 rounded text-center">
+                          <p className="text-sm text-gray-400">{category.categoryShort || category.categoryAngShort}</p>
+                          <p className="text-2xl font-bold text-blue-400">
+                            {Math.round(category.score || 0)}%
+                          </p>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="col-span-5 bg-gray-800 p-3 rounded text-center">
+                        <p className="text-sm text-gray-400">Aucun score disponible</p>
+                      </div>
+                    )}
+                    <div className="bg-gray-800 p-3 rounded text-center border-2 border-orange-500">
+                      <p className="text-sm text-orange-400">KBI CONSO</p>
+                      <p className="text-2xl font-bold text-orange-400">
+                        {Math.round(selectedResponse.kbiScores?.KBICONSO || 0)}%
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
                 {/* Category Scores */}
                 {selectedResponse.categoryScores && selectedResponse.categoryScores.length > 0 && (
                   <div className="bg-gray-700 p-4 rounded-lg">
@@ -489,15 +552,14 @@ const UserResponsesManager = ({ apiRequest, reloadData }) => {
                                           </span>
                                         )}
                                       </div>
-                                      
                                       <p className="font-medium text-white mb-2 leading-relaxed">
-                                        {response.questionText || response.questionTextAng || 'Question non disponible'}
+                                        {response.questionTextAng || response.questionText || 'Question non disponible'}
                                       </p>
-                                      
+
                                       <div className="bg-gray-900 p-2 rounded">
                                         <p className="text-sm text-gray-400 mb-1">Réponse:</p>
                                         <p className="text-orange-400 font-medium">
-                                          {response.answerText || response.answerTextAng || 'Réponse non disponible'}
+                                          {response.answerTextAng || response.answerText || 'Réponse non disponible'}
                                         </p>
                                       </div>
                                     </div>
