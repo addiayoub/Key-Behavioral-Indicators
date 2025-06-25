@@ -132,8 +132,9 @@ const userResponseController = {
         }
         
         // CORRECTION: Toujours récupérer la version française ET anglaise depuis la base de données
-        let finalAnswerText = '';
-        let finalAnswerTextAng = '';
+      finalAnswerText = '';
+finalAnswerTextAng = '';
+
         
         // Si c'est une réponse personnalisée (Autre/Other)
         if (answerId !== undefined && 

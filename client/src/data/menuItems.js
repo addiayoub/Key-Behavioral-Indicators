@@ -45,19 +45,7 @@ const MenuItems = [
       textEn: "Assessment creation process description. Management tools overview. How to run behavioral evaluations."
     }
   },
-  {
-    icon: dashboardIcon,
-    title: "Tableau de bord",
-    titleEn: "Dashboard",
-    description: "Aperçus rapides, hub de navigation",
-    descriptionEn: "Quick insights, navigation hub",
-    content: {
-      title: "Aperçus rapides, hub de navigation",
-      titleEn: "Quick insights, navigation hub",
-      text: "Aperçu des fonctionnalités du tableau de bord. Comment naviguer dans l'interface. Visualisation des informations clés.",
-      textEn: "Dashboard features overview. How to navigate the interface. Key insights visualization."
-    }
-  },
+
   {
     icon: reportsIcon,
     title: "Rapports",
@@ -83,7 +71,20 @@ const MenuItems = [
       text: "Informations générales sur les Indicateurs Comportementaux Clés. Résultats de recherche et livres blancs. Études de cas et histoires de réussite.",
       textEn: "Key Behavioral Indicators background. Research findings and white papers. Case studies and success stories."
     }
-  }
+  },
+    {
+    icon: dashboardIcon,
+    title: "Recherche psychologique ",
+    titleEn: "Psychological research: ",
+    description: "Fondement Scientifique de l'Évaluation KBIlytics",
+    descriptionEn: "Scientific Foundation of the KBIlytics Assessment",
+    content: {
+      title: "Aperçus rapides, hub de navigation",
+      titleEn: "Quick insights, navigation hub",
+      text: "Aperçu des fonctionnalités du tableau de bord. Comment naviguer dans l'interface. Visualisation des informations clés.",
+      textEn: "Dashboard features overview. How to navigate the interface. Key insights visualization."
+    }
+  },
 ];
 
 export default MenuItems;

@@ -2,6 +2,37 @@
     animation: fadeIn 0.9s;
 
 }
+/* Table styles */
+table {
+  min-width: 800px;
+}
+
+th, td {
+  padding: 12px 15px;
+}
+
+tr {
+  transition: all 0.3s ease;
+}
+
+/* Scrollbar styles for table */
+.overflow-x-auto::-webkit-scrollbar {
+  height: 8px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb {
+  background: rgba(249, 115, 22, 0.5);
+  border-radius: 10px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb:hover {
+  background: rgba(249, 115, 22, 0.8);
+}
 #img_equipe{
     animation: fadeIn 0.9s;
 }

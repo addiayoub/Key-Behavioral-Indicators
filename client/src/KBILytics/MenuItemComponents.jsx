@@ -17,12 +17,13 @@ const ContentViewHandler = ({ selectedItem, menuItems, onBackClick, language, se
         return <HowItWorksComponent icon={menuItems[selectedItem].icon} title={language === 'fr' ? menuItems[selectedItem].title : (menuItems[selectedItem].titleEn || menuItems[selectedItem].title)} language={language} />;
       case 2:
         return <AssessmentComponent icon={menuItems[selectedItem].icon} title={language === 'fr' ? menuItems[selectedItem].title : (menuItems[selectedItem].titleEn || menuItems[selectedItem].title)} language={language} />;
-      case 3:
-        return <DashboardComponent icon={menuItems[selectedItem].icon} title={language === 'fr' ? menuItems[selectedItem].title : (menuItems[selectedItem].titleEn || menuItems[selectedItem].title)} language={language} />;
-      case 4:
-        return <ReportsComponent icon={menuItems[selectedItem].icon} title={language === 'fr' ? menuItems[selectedItem].title : (menuItems[selectedItem].titleEn || menuItems[selectedItem].title)} language={language} />;
+      case 3:        return <ReportsComponent icon={menuItems[selectedItem].icon} title={language === 'fr' ? menuItems[selectedItem].title : (menuItems[selectedItem].titleEn || menuItems[selectedItem].title)} language={language} />;
+
+      case 4:        return <KnowledgeHubComponent icon={menuItems[selectedItem].icon} title={language === 'fr' ? menuItems[selectedItem].title : (menuItems[selectedItem].titleEn || menuItems[selectedItem].title)} language={language} />;
+
       case 5:
-        return <KnowledgeHubComponent icon={menuItems[selectedItem].icon} title={language === 'fr' ? menuItems[selectedItem].title : (menuItems[selectedItem].titleEn || menuItems[selectedItem].title)} language={language} />;
+                return <DashboardComponent icon={menuItems[selectedItem].icon} title={language === 'fr' ? menuItems[selectedItem].title : (menuItems[selectedItem].titleEn || menuItems[selectedItem].title)} language={language} />;
+
       default:
         return <div>No content available</div>;
     }

@@ -1,36 +1,105 @@
 // DashboardComponent.jsx
+import React from 'react';
 import '../style/KBILyticsComponent.css';
+import { motion } from 'framer-motion';
+import { Brain, Users, MessageCircle, ArrowLeftRight, TrendingUp } from 'lucide-react';
 
 const DashboardComponent = ({ language }) => {
   // Translations for dashboard content
   const content = {
     en: {
-      featuresTitle: "Dashboard Features",
-      featuresDescription: "The KBIlytics dashboard provides a comprehensive overview of your organization's behavioral indicators, with intuitive navigation and real-time data visualization.",
-      keyFeaturesTitle: "Key Features",
-      keyFeatures: [
-        "Interactive data visualizations",
-        "Customizable views based on departments or teams",
-        "Real-time updates as assessment data comes in",
-        "Trend tracking over time",
-        "Quick access to detailed reports"
+      title: "Psychological Research: Scientific Foundation of the KBIlytics Assessment",
+      description: "KBIlytics is not just a behavioral tool, but a scientifically grounded framework that draws upon validated research across organizational behavior, psychology, and learning science. Each question in the assessment is mapped to one or more of these theoretical pillars — bringing clarity and credibility to the behavioral metrics used.",
+      tableHeaders: [
+        "KBI",
+        "Behavioral Focus Areas",
+        "Supporting Psychological Theories & Concepts",
+        "Example Scholars / Sources"
       ],
-      navTipsTitle: "Navigation Tips",
-      navTipsDescription: "The dashboard is designed for intuitive use with filters, sorting options, and drill-down capabilities to explore data at different levels of granularity."
+      tableData: [
+        {
+          kbi: "Proactivity",
+          icon: <TrendingUp className="text-orange-500" size={40} />,
+          areas: "Initiative, problem-solving, decision-making",
+          theories: "Self-Determination Theory, Locus of Control, Goal Orientation",
+          sources: "Deci & Ryan, Bandura, Locke & Latham"
+        },
+        {
+          kbi: "Collaboration",
+          icon: <Users className="text-orange-500" size={40} />,
+          areas: "Teamwork, trust, conflict resolution, communication",
+          theories: "Social Interdependence Theory, Psychological Safety, Group Dynamics",
+          sources: "Tuckman, Edmondson, Deutsch"
+        },
+        {
+          kbi: "Openness to Feedback",
+          icon: <MessageCircle className="text-orange-500" size={40} />,
+          areas: "Receptiveness, emotional intelligence, growth mindset",
+          theories: "Feedback Intervention Theory, Emotional Regulation, Growth Mindset",
+          sources: "Kluger & DeNisi, Dweck, Goleman"
+        },
+        {
+          kbi: "Adaptability",
+          icon: <ArrowLeftRight className="text-orange-500" size={40} />,
+          areas: "Change acceptance, resilience, cognitive flexibility",
+          theories: "Stress Appraisal Theory, Learning Agility, Tolerance of Ambiguity",
+          sources: "Lazarus & Folkman, Pulakos, Fredrickson"
+        },
+        {
+          kbi: "Continuous Improvement",
+          icon: <Brain className="text-orange-500" size={40} />,
+          areas: "Innovation, lifelong learning, error-based learning",
+          theories: "Kaizen Principles, Organizational Learning Theory, Self-Directed Learning",
+          sources: "Imai, Senge, Knowles"
+        }
+      ]
     },
     fr: {
-      featuresTitle: "Fonctionnalités du Tableau de Bord",
-      featuresDescription: "Le tableau de bord KBIlytics offre une vue d'ensemble complète des indicateurs comportementaux de votre organisation, avec une navigation intuitive et une visualisation des données en temps réel.",
-      keyFeaturesTitle: "Caractéristiques Principales",
-      keyFeatures: [
-        "Visualisations de données interactives",
-        "Vues personnalisables basées sur les départements ou les équipes",
-        "Mises à jour en temps réel à mesure que les données d'évaluation arrivent",
-        "Suivi des tendances dans le temps",
-        "Accès rapide aux rapports détaillés"
+      title: "Recherche psychologique : Fondement Scientifique de l'Évaluation KBIlytics",
+      description: "KBIlytics n'est pas simplement un outil comportemental, mais bien un cadre rigoureux et scientifique, fondé sur des recherches validées en psychologie, management et sciences de l'apprentissage. Chaque question du questionnaire est liée à un ou plusieurs de ces fondements théoriques, assurant la crédibilité, la rigueur et la valeur actionnable des indicateurs comportementaux mesurés.",
+      tableHeaders: [
+        "KBI",
+        "Axes Comportementaux Clés",
+        "Théories Psychologiques et Concepts Associés",
+        "Références / Chercheurs"
       ],
-      navTipsTitle: "Conseils de Navigation",
-      navTipsDescription: "Le tableau de bord est conçu pour une utilisation intuitive avec des filtres, des options de tri et des capacités d'exploration pour analyser les données à différents niveaux de granularité."
+      tableData: [
+        {
+          kbi: "Proactivité",
+          icon: <TrendingUp className="text-orange-500" size={40} />,
+          areas: "Initiative, résolution de problèmes, prise de décision",
+          theories: "Théorie de l'autodétermination, Locus de contrôle, Orientation vers les objectifs",
+          sources: "Deci & Ryan, Bandura, Locke & Latham"
+        },
+        {
+          kbi: "Collaboration",
+          icon: <Users className="text-orange-500" size={40} />,
+          areas: "Travail d'équipe, confiance, résolution de conflits, communication",
+          theories: "Théorie de l'interdépendance sociale, Sécurité psychologique, Dynamiques de groupe",
+          sources: "Tuckman, Edmondson, Deutsch"
+        },
+        {
+          kbi: "Ouverture au Feedback",
+          icon: <MessageCircle className="text-orange-500" size={40} />,
+          areas: "Réceptivité, intelligence émotionnelle, état d'esprit de développement",
+          theories: "Théorie de l'intervention par le feedback, Régulation émotionnelle, Growth Mindset",
+          sources: "Kluger & DeNisi, Dweck, Goleman"
+        },
+        {
+          kbi: "Adaptabilité",
+          icon: <ArrowLeftRight className="text-orange-500" size={40} />,
+          areas: "Acceptation du changement, résilience, flexibilité cognitive",
+          theories: "Théorie de l'évaluation du stress, Agilité d'apprentissage, Tolérance à l'ambiguïté",
+          sources: "Lazarus & Folkman, Pulakos, Fredrickson"
+        },
+        {
+          kbi: "Amélioration Continue",
+          icon: <Brain className="text-orange-500" size={40} />,
+          areas: "Innovation, apprentissage continu, apprentissage par l'erreur",
+          theories: "Principes Kaizen, Théorie de l'apprentissage organisationnel, Autoformation",
+          sources: "Imai, Senge, Knowles"
+        }
+      ]
     }
   };
 
@@ -38,25 +107,115 @@ const DashboardComponent = ({ language }) => {
   const t = language === 'fr' ? content.fr : content.en;
 
   return (
-    <div className="w-full h-full flex flex-col">
-      <div className="w-full border border-white rounded-2xl p-8 border_content">
-        <div className="text-lg text-white">
-          <h3 className="text-xl font-semibold text-orange-500 mb-4">{t.featuresTitle}</h3>
-          <p className="mb-4">
-            {t.featuresDescription}
+    <div className="w-full h-full flex flex-col" style={{ 
+      isolation: 'isolate', 
+      zIndex: 1,
+      overflow: 'hidden',
+      position: 'relative'
+    }}>
+      <div className="w-full border border-white rounded-2xl p-4 sm:p-6 lg:p-10 border_content">
+        <div className="text-sm sm:text-base lg:text-lg text-white">
+          <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold text-orange-500 mb-4">
+            {t.title}
+          </h3>
+          <p className="mb-6 leading-relaxed">
+            {t.description}
           </p>
           
-          <h3 className="text-xl font-semibold text-orange-500 mb-4">{t.keyFeaturesTitle}</h3>
-          <ul className="space-y-2">
-            {t.keyFeatures.map((feature, index) => (
-              <li key={index}>• {feature}</li>
+          {/* Version Desktop/Tablette - Tableau classique */}
+          <div className="hidden md:block overflow-x-auto" style={{ 
+            willChange: 'auto', 
+            transform: 'translateZ(0)',
+            contain: 'layout style paint',
+            overflow: 'hidden'
+          }}>
+            <table className="w-full border-collapse min-w-[800px]" style={{ backfaceVisibility: 'hidden' }}>
+              <thead>
+                <tr className="bg-gray-800">
+                  {t.tableHeaders.map((header, index) => (
+                    <th 
+                      key={index} 
+                      className="p-3 text-left border-b border-orange-500 text-orange-500 text-sm lg:text-base"
+                    >
+                      {header}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {t.tableData.map((row, index) => (
+                  <tr 
+                    key={index}
+                    className="border-b border-gray-700 hover:bg-orange-500/10 transition-transform duration-200 ease-in-out hover:scale-[1.01] origin-center"
+                    style={{ transformOrigin: 'center', contain: 'layout style paint' }}
+                  >
+                    <td className="p-3 flex items-center">
+                      <div className="flex-shrink-0">
+                        {React.cloneElement(row.icon, { size: 32 })}
+                      </div>
+                      <span className="ml-2 font-medium text-sm lg:text-base">{row.kbi}</span>
+                    </td>
+                    <td className="p-3 text-sm lg:text-base">{row.areas}</td>
+                    <td className="p-3 text-sm lg:text-base">{row.theories}</td>
+                    <td className="p-3 text-sm lg:text-base">{row.sources}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Version Mobile - Cards */}
+          <div className="md:hidden space-y-4">
+            {t.tableData.map((row, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="bg-gray-800/50 rounded-lg p-4 border border-gray-700 hover:border-orange-500/50 transition-colors duration-200"
+              >
+                {/* En-tête de la card */}
+                <div className="flex items-center mb-3 pb-3 border-b border-gray-700">
+                  <div className="flex-shrink-0">
+                    {React.cloneElement(row.icon, { size: 28 })}
+                  </div>
+                  <h4 className="ml-3 text-lg font-semibold text-orange-500">
+                    {row.kbi}
+                  </h4>
+                </div>
+
+                {/* Contenu de la card */}
+                <div className="space-y-3">
+                  <div>
+                    <h5 className="text-sm font-medium text-orange-400 mb-1">
+                      {t.tableHeaders[1]}
+                    </h5>
+                    <p className="text-sm text-gray-300 leading-relaxed">
+                      {row.areas}
+                    </p>
+                  </div>
+
+                  <div>
+                    <h5 className="text-sm font-medium text-orange-400 mb-1">
+                      {t.tableHeaders[2]}
+                    </h5>
+                    <p className="text-sm text-gray-300 leading-relaxed">
+                      {row.theories}
+                    </p>
+                  </div>
+
+                  <div>
+                    <h5 className="text-sm font-medium text-orange-400 mb-1">
+                      {t.tableHeaders[3]}
+                    </h5>
+                    <p className="text-sm text-gray-300 leading-relaxed">
+                      {row.sources}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
             ))}
-          </ul>
-          
-          <h3 className="text-xl font-semibold text-orange-500 mt-6 mb-4">{t.navTipsTitle}</h3>
-          <p>
-            {t.navTipsDescription}
-          </p>
+          </div>
         </div>
       </div>
     </div>
